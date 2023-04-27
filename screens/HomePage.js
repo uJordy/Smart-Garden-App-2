@@ -34,12 +34,12 @@ function HomePage(props) {
                 </View>
 
                 {/* Garden tasks */}
-                <View className="h-27 mx-2 rounded-lg">
+                <View className="h-27 mx-2 rounded-lg bg-slate-200 ">
                     {/* <Image className='h-5/6 w-28 bg-left float-left absolute left-2 top-2'resizeMode='cover' alignSelf='left' source={require('../app/assets/isometricgarden.png')}/> */}
-                    <Text className="text-2xl text-white font-medium p-1 px-2">Garden</Text> 
+                    <Text className="text-2xl font-medium p-1 px-2">Garden</Text> 
                     {/* List of plants for tasks */}
                     <View className=" bg-gardenorange w-full flex pb-1">
-                        <TouchableOpacity className="border-2 mx-2 rounded-full h-16  w-16 aspect-square">
+                        <TouchableOpacity className="border-[3px] border-sky-600 mx-2 rounded-full h-16  w-16 aspect-square">
                             <View className="mx-auto my-auto grid rounded-full w-[90%] h-[90%]">
                                 <Image className='w-full h-full rounded-full place-self-center' resizeMode='cover' source={require('../app/assets/exampleplant.webp')}/>
                                 <Image className='w-2/4 h-2/4 absolute z-20 float-right left-0' resizeMode='cover' source={require('../app/assets/drop.png')}/>
