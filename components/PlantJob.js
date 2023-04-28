@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TouchableOpacity, View, Image } from "react-native";
 
-function HomePage(props) {
+function HomePage({type}) {
   
   return (
     <TouchableOpacity className="border-[3px] border-sky-600 mx-2 rounded-full h-16  w-16 aspect-square">
@@ -9,12 +9,12 @@ function HomePage(props) {
         <Image
           className="w-full h-full rounded-full place-self-center"
           resizeMode="cover"
-          source={require("../app/assets/exampleplant.webp")}
+          source={require("../assets/img/exampleplant.webp")}
         />
         <Image
           className="w-2/4 h-2/4 absolute z-20 float-right left-0 top-[-8px]"
           resizeMode="cover"
-          source={require("../app/assets/drop.png")}
+          source={require("../assets/img/drop.png")}
         />
       </View>
     </TouchableOpacity>
