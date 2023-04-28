@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { TouchableOpacity, View, Image } from "react-native";
 
+
+
 function HomePage({type}) {
   
   return (
-    <TouchableOpacity className="border-[3px] border-sky-600 mx-2 rounded-full h-16  w-16 aspect-square">
+    <TouchableOpacity className={`border-[3px] border-sky-600 ${type === 'fertilise' ? 'border-amber-500' : ''} mx-2 rounded-full h-16 w-16 aspect-square`}>
+      {/* <... className={`border-l-4 border-white ${window.location.pathname === '/' ? 'border-red-200' : ''}`}> */}
       <View className="mx-auto my-auto grid rounded-full w-[90%] h-[90%]">
         <Image
           className="w-full h-full rounded-full place-self-center"
@@ -15,6 +18,7 @@ function HomePage({type}) {
           className="w-2/4 h-2/4 absolute z-20 float-right left-0 top-[-8px]"
           resizeMode="cover"
           source={require("../assets/img/drop.png")}
+
         />
       </View>
     </TouchableOpacity>
