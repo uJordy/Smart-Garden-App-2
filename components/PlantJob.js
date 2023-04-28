@@ -14,8 +14,7 @@ function HomePage({ type }) {
 
 
   return (
-    <TouchableOpacity className={`border-[3px] border-sky-600 ${type === 'fertilise' ? 'border-amber-500' : ''} mx-2 rounded-full h-16 w-16 aspect-square`}>
-      {/* <... className={`border-l-4 border-white ${window.location.pathname === '/' ? 'border-red-200' : ''}`}> */}
+    <TouchableOpacity className={`border-[3px] border-sky-600 ${type === 'fertilise' ? 'border-orange-300' : ''} mx-2 rounded-full h-16 w-16 aspect-square`}>
       <View className="mx-auto my-auto grid rounded-full w-[90%] h-[90%]">
         <Image
           className="w-full h-full rounded-full place-self-center"
