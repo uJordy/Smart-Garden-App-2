@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import PlantJob from '../components/PlantJob';
 import { useNavigation } from '@react-navigation/native';
-import { NativeWindStyleSheet } from 'nativewind';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 function HomePage(props) {
@@ -35,35 +35,36 @@ function HomePage(props) {
                 </View>
 
                 {/* Garden tasks */}
-                <View className="h-27 mx-2 rounded-lg bg-slate-200 shadow">
+                <View className="h-27 mx-2 rounded-lg bg-slate-100 shadow-lg">
                     {/* <Image className='h-5/6 w-28 bg-left float-left absolute left-2 top-2'resizeMode='cover' alignSelf='left' source={require('../app/assets/isometricgarden.png')}/> */}
                     <Text className="text-2xl font-medium p-1 px-2">Garden</Text>
                     {/* List of plants for tasks */}
                     <ScrollView className="w-full flex pb-1" horizontal={true}>
-                        <PlantJob type="fertilise"/>
-                        <PlantJob type="water"/>
-                        <PlantJob type="fertilise"/>
-                        <PlantJob type="water"/>
-                        <PlantJob type="water"/>
-                        <PlantJob type="water"/>
-                        <PlantJob type="water"/>
+                        <PlantJob type="fertilise" />
+                        <PlantJob type="water" />
+                        <PlantJob type="fertilise" />
+                        <PlantJob type="water" />
+                        <PlantJob type="water" />
+                        <PlantJob type="water" />
+                        <PlantJob type="water" />
 
                     </ScrollView>
                 </View>
 
                 {/* Upcoming tasks? */}
 
-                <View className="h-[350px] mx-2 rounded-lg mt-3 shadow-lg ">
-            
-                    <Text className="text-5xl z-10 font-bold mt-auto pb-3 pl-3">Test Text</Text>
-                    <Image className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' source = {require("../assets/img/exampleplant2.webp")} />
+                <View className="h-[350px] mx-2 rounded-lg mt-3 shadow bg-slate-200 ">
+                    <LinearGradient
+                        colors={['rgba(0,0,0,0.8)', 'transparent']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 0.5, y: 0.5 }}
+                    >
 
+                        <Text className="text-5xl z-10 font-bold mt-auto pb-3 pl-3">Test Text</Text>
+                        <Image className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} />
+                    </LinearGradient>
                 </View>
 
-                <View className="mt-6 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
-                    <Text>Mooorree</Text>
-
-                </View>
 
             </ScrollView>
         </SafeAreaView>
