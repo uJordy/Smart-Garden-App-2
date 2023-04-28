@@ -3,6 +3,8 @@ import { Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image } from 'r
 import PlantJob from '../components/PlantJob';
 
 import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
 
@@ -43,7 +45,7 @@ function HomePage(props) {
                     <ScrollView className="w-full flex pb-1" horizontal={true}>
                         <PlantJob type="fertilise"/>
                         <PlantJob type="water"/>
-                        <PlantJob type="water"/>
+                        <PlantJob type="fertilise"/>
                         <PlantJob type="water"/>
                         <PlantJob type="water"/>
                         <PlantJob type="water"/>
