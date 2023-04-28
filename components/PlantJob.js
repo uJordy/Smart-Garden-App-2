@@ -10,7 +10,7 @@ function HomePage({ type }) {
   //     (type === 'water') ? '../assets/img/drop.png' : '';
 
     (type === 'fertilise') ? require('../assets/img/fertiliser.png') :
-      (type === 'water') ? require('../assets/img/drop.png') : '';
+      (type === 'water') ? require('../assets/img/drop.png') : require('../assets/img/drop.png');
 
 
   return (

@@ -43,16 +43,11 @@ function HomePage(props) {
                     <ScrollView className="w-full flex pb-1" horizontal={true}>
                         <PlantJob type="fertilise"/>
                         <PlantJob type="water"/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
-                        <PlantJob/>
+                        <PlantJob type="water"/>
+                        <PlantJob type="water"/>
+                        <PlantJob type="water"/>
+                        <PlantJob type="water"/>
+                        <PlantJob type="water"/>
 
                     </ScrollView>
                 </View>
