@@ -38,9 +38,6 @@ function App() {
         {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
-    // <View className="flex-1  bg-red-500">
-    //   <Text>Hellooooooo!!!</Text>
-    // </View>
   );
 }
 
