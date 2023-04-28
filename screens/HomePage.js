@@ -41,7 +41,7 @@ function HomePage(props) {
                     <Text className="text-2xl font-medium p-1 px-2">Garden</Text>
                     {/* List of plants for tasks */}
                     <ScrollView className="w-full flex pb-1" horizontal={true}>
-                        <PlantJob/>
+                        <PlantJob type="fertilise"/>
                         <PlantJob/>
                         <PlantJob/>
                         <PlantJob/>
