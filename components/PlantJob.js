@@ -3,8 +3,16 @@ import { TouchableOpacity, View, Image } from "react-native";
 
 
 
-function HomePage({type}) {
-  
+function HomePage({ type }) {
+
+  const imgSource =
+  //   (type === 'fertilise') ? '../assets/img/fertiliser.png' :
+  //     (type === 'water') ? '../assets/img/drop.png' : '';
+
+    (type === 'fertilise') ? require('../assets/img/fertiliser.png') :
+      (type === 'water') ? require('../assets/img/drop.png') : '';
+
+
   return (
     <TouchableOpacity className={`border-[3px] border-sky-600 ${type === 'fertilise' ? 'border-amber-500' : ''} mx-2 rounded-full h-16 w-16 aspect-square`}>
       {/* <... className={`border-l-4 border-white ${window.location.pathname === '/' ? 'border-red-200' : ''}`}> */}
@@ -17,7 +25,7 @@ function HomePage({type}) {
         <Image
           className="w-2/4 h-2/4 absolute z-20 float-right left-0 top-[-8px]"
           resizeMode="cover"
-          source={require("../assets/img/drop.png")}
+          source={imgSource}
 
         />
       </View>

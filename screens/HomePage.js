@@ -42,7 +42,7 @@ function HomePage(props) {
                     {/* List of plants for tasks */}
                     <ScrollView className="w-full flex pb-1" horizontal={true}>
                         <PlantJob type="fertilise"/>
-                        <PlantJob/>
+                        <PlantJob type="water"/>
                         <PlantJob/>
                         <PlantJob/>
                         <PlantJob/>
