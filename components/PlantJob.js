@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TouchableOpacity, View, Image } from "react-native";
 
 export default class PlantJob extends Component {
   render() {
