@@ -60,8 +60,9 @@ function HomePage(props) {
 
                 </View>
 
-                <View className="h-14 bg-gradient-to-r from-cyan-500 to-blue-500">
+                <View className="mt-6 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
                     <Text>Mooorree</Text>
+
                 </View>
 
             </ScrollView>
