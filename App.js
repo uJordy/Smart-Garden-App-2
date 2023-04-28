@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomePage from './screens/HomePage';
 
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import PlantPage from './screens/PlantPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,8 +22,8 @@ function App() {
 
 <NavigationContainer>
 <Tab.Navigator>
-  <Tab.Screen name="Home" component={HomeScreen} />
-  <Tab.Screen name="Settings" component={SettingsScreen} />
+  <Tab.Screen name="Home" component={HomePage} />
+  <Tab.Screen name="Settings" component={PlantPage} />
 </Tab.Navigator>
 </NavigationContainer>
   );
