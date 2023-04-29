@@ -2,7 +2,6 @@ import React, { useLayoutEffect } from 'react';
 import { Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import PlantJob from '../components/PlantJob';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 
 
 function HomePage(props) {
@@ -53,16 +52,11 @@ function HomePage(props) {
 
                 {/* Upcoming tasks? */}
 
-                <View className="h-[350px] mx-2 rounded-lg mt-3 shadow bg-slate-200 ">
-                    <LinearGradient
-                        colors={['rgba(0,0,0,0.8)', 'transparent']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0.5, y: 0.5 }}
-                    >
+                <View className="h-[350px] mx-2 rounded-lg mt-3 shadow bg-green-600 ">
 
-                        <Text className="text-5xl z-10 font-bold mt-auto pb-3 pl-3">Test Text</Text>
-                        <Image className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} />
-                    </LinearGradient>
+                    <Text className="text-5xl z-10 font-bold mt-auto pb-3 pl-3">Test Text</Text>
+                    <Image className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} />
+
                 </View>
 
 
