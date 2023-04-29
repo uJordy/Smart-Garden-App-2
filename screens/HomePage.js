@@ -3,6 +3,8 @@ import { Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, ImageBac
 import PlantJob from '../components/PlantJob';
 import { useNavigation } from '@react-navigation/native';
 
+import RedToTransparent from '../assets/svg/RedToTransparent'
+
 
 function HomePage(props) {
 
@@ -55,7 +57,8 @@ function HomePage(props) {
                 <View className="h-[350px] mx-2 rounded-lg mt-3 shadow bg-green-600 ">
 
                     <Text className="text-5xl z-10 font-bold mt-auto pb-3 pl-3">Test Text</Text>
-                    <Image className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} />
+                    {/* <Image className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} /> */}
+                    <RedToTransparent className="absolute w-full h-full rounded-lg " backgroundColor='#dee5db' />
 
                 </View>
 
