@@ -31,7 +31,7 @@ const RedToTransparent = (props) => (
 
 <Svg>
 {/* <Ellipse cx="150" cy="75" rx="85" ry="55" fill="url(#grad-1)" /> */}
-<Rect width="1600" height="900" rx={10} ry={10} fill="url(#grad-1)" />
+<Rect width="1600" height="900" fill="url(#grad-1)" />
 <Defs>
   <LinearGradient
     id="grad-1"
@@ -42,9 +42,10 @@ const RedToTransparent = (props) => (
     gradientUnits="userSpaceOnUse"
     gradientTransform="rotate(90)"
    >
-    <Stop offset="0.7" stopColor="rgb(255,255,255)" stopOpacity="0" />
-    <Stop offset="0.9" stopColor="rgb(255,255,255)" stopOpacity={1} />
-    <Stop offset="1" stopColor="rgb(255,255,255)" stopOpacity={1} />
+    <Stop offset="0" stopColor="rgb(255,255,255)" stopOpacity={0}/>
+    <Stop offset="0.9" stopColor="rgb(255,255,255)" stopOpacity={0}/>
+    {/* <Stop offset="0.5" stopColor="rgb(0,255,255)" stopOpacity={1} /> */}
+    <Stop offset="1" stopColor="rgb(255,255,0)" stopOpacity={0.9} />
     
   </LinearGradient>
 </Defs>

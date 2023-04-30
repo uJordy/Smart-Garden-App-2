@@ -56,7 +56,7 @@ function HomePage(props) {
 
                 <View className="h-[350px] flex-1 mx-2 rounded-lg mt-3 shadow bg-green-600 overflow-hidden">
 
-                <View className="absolute w-full h-full z-20  opacity-50">
+                <View className="absolute w-full h-full z-20">
                     <WhiteToTransparent className="flex-1"/>
                 </View>
                     <Text className="text-5xl z-50 font-bold mt-auto pb-3 pl-3">Test Text</Text>
