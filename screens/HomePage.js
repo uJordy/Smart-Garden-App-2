@@ -1,9 +1,9 @@
 import React, { useLayoutEffect } from 'react';
-import { Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { Text, SafeAreaView, View, ScrollView, Image } from 'react-native';
 import PlantJob from '../components/PlantJob';
 import { useNavigation } from '@react-navigation/native';
 
-import WhiteToTransparent from '../assets/svg/WhiteToTransparent'
+import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
 
 
 function HomePage(props) {
@@ -54,17 +54,18 @@ function HomePage(props) {
 
                 {/* Upcoming tasks? */}
 
-                <View className="h-[350px] flex-1 mx-2 rounded-lg mt-3 shadow bg-green-600 overflow-hidden">
+                <View className="h-[350px] mx-2 rounded-lg mt-3 drop-shadow-2xl bg-green-600 overflow-hidden">
 
-                <View className="absolute w-full h-full z-20">
-                    <WhiteToTransparent className="flex-1"/>
-                </View>
+                    <View className="absolute w-full h-1/2 bottom-0 z-20">
+                        <WhiteToTransparent className="flex-1" />
+                    </View>
                     <Text className="text-5xl z-50 font-bold mt-auto pb-3 pl-3">Test Text</Text>
                     <Image className="absolute w-full h-full z-10" backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} />
-    
-
                 </View>
 
+                <View className="h-[100px] mt-7 mx-2 rounded-lg bg-slate-100 shadow-lg">
+                    <Text>Te3hfwjef</Text>
+                </View>
 
             </ScrollView>
         </SafeAreaView>
