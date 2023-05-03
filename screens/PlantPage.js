@@ -26,10 +26,6 @@ function PlantPage(props) {
       <View className="mx-3 mt-12">
         <View className="flex-1 flex-row justify-between">
           <Text className="text-4xl font-bold">Not ALong PlantName</Text>
-          {/* <Image
-          className="h-5 w-5 stroke-blue-500"
-          source={require("../assets/svg/heart-o.svg")}
-          /> */}
           <View className="pr-8">
             <Heart width={35} height={35} fill={"red"} stroke={"red"}/>
           </View>
