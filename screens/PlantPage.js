@@ -14,7 +14,7 @@ function PlantPage(props) {
   }, []);
   return (
     <ScrollView>
-      <View className="h-[480px] bg-blue-600 shadow-2xl rounded-bl-[60px] rounded-br-[60px]">
+      <View className="h-[480px] bg-slate-200 shadow-2xl shadow-gray-300 rounded-bl-[60px] rounded-br-[60px]">
         <View className="flex-1 overflow-hidden rounded-bl-[60px] rounded-br-[60px]">
           <Image
             className="absolute w-full h-full z-10"
