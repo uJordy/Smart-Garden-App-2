@@ -33,7 +33,27 @@ function PlantPage(props) {
         <Text className="text-lg  text-slate-500">Nickname</Text>
 
         {/* Plant details */}
-        <Text></Text>
+        <View className="flex-1 flex-row justify-between mt-3">
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
+            <Text className="text-lg align-text-top leading-5">Easy</Text>
+          </View>
+
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
+            <Text className="text-lg align-text-top leading-5">Easy</Text>
+          </View>
+
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
+            <Text className="text-lg align-text-top leading-5">Easy</Text>
+          </View>
+
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
+            <Text className="text-lg align-text-top leading-5">Easy</Text>
+          </View>
+        </View>
 
         <Text className="mt-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
