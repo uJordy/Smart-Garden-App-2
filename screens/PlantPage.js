@@ -33,26 +33,24 @@ function PlantPage(props) {
         <Text className="text-lg  text-slate-500">Nickname</Text>
 
         {/* Plant details */}
-        <View className="flex-1 flex-row justify-between mt-3">
+        <View className="flex-1 flex-row justify-between mt-3 mx-2">
           <View>
-            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
-            <Text className="text-lg align-text-top leading-5">Easy</Text>
+            <Text className="text-lg font-bold align-text-bottom leading-tight text-center">Care</Text>
+            <Text className="text-lg align-text-top leading-5 text-center">Easy</Text>
+          </View>
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight text-center">Sunlight</Text>
+            <Text className="text-lg align-text-top leading-5 text-center">Part-sun</Text>
+          </View>
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight text-center">Watering</Text>
+            <Text className="text-lg align-text-top leading-5 text-center">Light</Text>
+          </View>
+          <View>
+            <Text className="text-lg font-bold align-text-bottom leading-tight text-center">Humidity</Text>
+            <Text className="text-lg align-text-top leading-5 text-center">High</Text>
           </View>
 
-          <View>
-            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
-            <Text className="text-lg align-text-top leading-5">Easy</Text>
-          </View>
-
-          <View>
-            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
-            <Text className="text-lg align-text-top leading-5">Easy</Text>
-          </View>
-
-          <View>
-            <Text className="text-lg font-bold align-text-bottom leading-tight">Care</Text>
-            <Text className="text-lg align-text-top leading-5">Easy</Text>
-          </View>
         </View>
 
         <Text className="mt-3">
