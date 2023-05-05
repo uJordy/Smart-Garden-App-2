@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { Text, View, SafeAreaView, ScrollView, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import Heart from '../assets/svg/heart-o.svg'
+import Heart from "../assets/svg/heart-o.svg";
 
 function PlantPage(props) {
   const navigation = useNavigation();
@@ -14,7 +14,7 @@ function PlantPage(props) {
   }, []);
   return (
     <ScrollView>
-      <View className="h-[480px] bg-slate-200 shadow-2xl shadow-gray-300 rounded-bl-[60px] rounded-br-[60px]">
+      <View className="h-[480px] bg-slate-200 shadow-2xl shadow-gray-3npx e00 rounded-bl-[60px] rounded-br-[60px]">
         <View className="flex-1 overflow-hidden rounded-bl-[60px] rounded-br-[60px]">
           <Image
             className="absolute w-full h-full z-10"
@@ -27,9 +27,14 @@ function PlantPage(props) {
         <View className="flex-1 flex-row justify-between">
           <Text className="text-4xl font-bold">Not ALong PlantName</Text>
           <View className="pr-8">
-            <Heart width={35} height={35} fill={"red"} stroke={"red"}/>
+            <Heart width={35} height={35} fill={"red"} stroke={"red"} />
           </View>
         </View>
+        <Text className="text-lg  text-slate-500">Nickname</Text>
+
+        {/* Plant details */}
+        <Text></Text>
+
         <Text className="mt-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
           reiciendis tenetur nostrum earum aliquam, maxime quam optio tempora
