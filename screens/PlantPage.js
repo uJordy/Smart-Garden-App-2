@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Text, View, SafeAreaView, ScrollView, Image } from "react-native";
+import { Text, View, SafeAreaView, ScrollView, Image, TouchableOpacity, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import Heart from "../assets/svg/heart-o.svg";
@@ -59,7 +59,12 @@ function PlantPage(props) {
           quod temporibus sapiente excepturi dignissimos inventore hic
           consequatur dolores sunt architecto doloribus.
         </Text>
+
+        <TouchableHighlight className="flex flex-col justify-center rounded-full bg-amber-400 h-12 mt-6 shadow">
+          <Text className="text-white text-center text-2xl font-semibold justify-center">Add to Garden</Text>
+        </TouchableHighlight>
       </View>
+
     </ScrollView>
   );
 }
