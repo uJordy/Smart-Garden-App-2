@@ -60,9 +60,9 @@ function PlantPage(props) {
           consequatur dolores sunt architecto doloribus.
         </Text>
 
-        <TouchableHighlight className="flex flex-col justify-center rounded-full bg-amber-400 h-12 mt-6 shadow">
+        <TouchableOpacity className="flex flex-col justify-center rounded-full bg-amber-400 h-12 mt-6 shadow">
           <Text className="text-white text-center text-2xl font-semibold justify-center">Add to Garden</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
 
     </ScrollView>
@@ -70,3 +70,4 @@ function PlantPage(props) {
 }
 
 export default PlantPage;
+  
