@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Image, Text, TouchableHighlight } from "react-n
 
 
 
-function HomePage({ type }) {
+function HomePageTask({ type }) {
 
   const imgSource =
     //   (type === 'fertilise') ? '../assets/img/fertiliser.png' :
@@ -14,7 +14,7 @@ function HomePage({ type }) {
 
 
   return (
-    <View className="h-20 w-[95%] mx-auto">
+    <TouchableOpacity className="h-20 w-[95%] mx-auto">
       <View className="flex flex-row items-center mx-auto my-auto rounded-full w-full h-full p-2">
         <Image
           className="w-16 h-16 rounded-full"
@@ -43,9 +43,9 @@ function HomePage({ type }) {
           />
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
-export default HomePage;
+export default HomePageTask;
 
