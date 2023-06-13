@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
 
+import SoilSVG from '../assets/svg/SoilAnalysis.svg';
+
 import { styled } from "nativewind";
 import { Svg, Rect } from "react-native-svg";
 // import SoilMoistureSVG from '../assets/svg/HelloTest';
@@ -58,7 +60,8 @@ function HomePage(props) {
                     </View>
                     <View className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
                         {/* <Image className="w-16 h-16 mx-auto" source={require("../assets/img/soil-analysis.png")} /> */}
-                        <SoilMoistureSVG fill="fill-blue-500" />
+                        {/* <SoilMoistureSVG fill="fill-blue-500" /> */}
+                        <SoilSVG width={120} height={40} className="fill-blue-500"/>
                         {/* <MyStyledSvg fill="fill-blue-500" />; */}
                     </View>
                     <View className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"></View>
