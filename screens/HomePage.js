@@ -5,22 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 
 import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
 
-import SoilSVG from '../assets/svg/SoilAnalysis.svg';
-
-import { styled } from "nativewind";
-import { Svg, Rect } from "react-native-svg";
-// import SoilMoistureSVG from '../assets/svg/HelloTest';
-import HelloTest from '../assets/svg/SoilMoistureSVG';
-
-// const StyledRect = styled(Rect, { classProps: ["fill", "stroke"] });
-
-// function MyStyledSvg({ stroke, ...props }) {
-//   return (
-//     <Svg height="100" width="100" {...props}>
-//       <StyledRect x="0" y="0" width="100" height="100" stroke={stroke} />
-//     </Svg>
-//   );
-// }
 
 
 
@@ -58,12 +42,11 @@ function HomePage(props) {
                     <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
                         
                     </View>
-                    <View className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
-                        {/* <Image className="w-16 h-16 mx-auto" source={require("../assets/img/soil-analysis.png")} /> */}
-                        {/* <SoilMoistureSVG fill="fill-blue-500" /> */}
-                        <SoilSVG width={120} height={40} className="fill-blue-500"/>
-                        {/* <MyStyledSvg fill="fill-blue-500" />; */}
-                    </View>
+                    <TouchableOpacity className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
+                        <View className="m-3"><SoilMoistureSVG fill="#fb923c"/></View>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-900">Soil moisture</Text>
+                        <Text className="ml-2 text-slate-800">High</Text>
+                    </TouchableOpacity>
                     <View className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"></View>
 
                 </View>
