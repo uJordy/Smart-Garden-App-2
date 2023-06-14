@@ -23,7 +23,7 @@ function HomePageTask({ type }) {
         />
 
         <View className="flex flex-column w-1/2 ml-2 ">
-          <Text className="h-[40%] text-xl font-bold">Plant Name</Text>
+          <Text className="h-[40%] text-xl font-bold">Watering</Text>
           <Text className="h-[40%] text-red-500">Over due by 3 days</Text>
         </View>
 
