@@ -1,9 +1,13 @@
 import React, { useLayoutEffect } from 'react';
-import { Text, SafeAreaView, View, ScrollView, Image } from 'react-native';
-import PlantJob from '../components/PlantJob';
+import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity } from 'react-native';
+import HomePageTask from '../components/HomePageTask';
 import { useNavigation } from '@react-navigation/native';
 
-import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
+import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
+import SunSVG from '../assets/svg/SunSVG';
+import HumiditySVG from '../assets/svg/HumiditySVG';
+
+
 
 
 function HomePage(props) {
@@ -17,56 +21,45 @@ function HomePage(props) {
     }, []);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
             <ScrollView>
+                <Image className="w-16 h-16 mx-auto" source={require("../assets/img/leaf-logo.png")} />
 
-                {/* Header */}
-                <View>
-                    <Text className="text-3xl font-bold px-6 pt-6 pb-2" >Welcome back, John</Text>
-
-                    {/* Upcoming tasks */}
-
-                    <View className="flex flex-row items-center  w-max mx-5 my-3 rounded" >
-                        <Text className="text-2xl">Upcoming Tasks</Text>
-
-                        <View className="bg-orange-500 mx-2 rounded-full">
-                            <Text className="text-2xl mx-2 rounded-full text-white">5</Text>
-                        </View>
-                    </View>
+                <View className="bg-orange-500 mx-auto mt-2 rounded-full h-8">
+                    <Text className="text-2xl rounded-full text-white mx-2">5 Tasks</Text>
                 </View>
 
-                {/* Garden tasks */}
-                <View className="h-27 mx-2 rounded-lg bg-slate-100 shadow-lg">
-                    {/* <Image className='h-5/6 w-28 bg-left float-left absolute left-2 top-2'resizeMode='cover' alignSelf='left' source={require('../app/assets/isometricgarden.png')}/> */}
-                    <Text className="text-2xl font-medium p-1 px-2">Garden</Text>
-                    {/* List of plants for tasks */}
-                    <ScrollView className="w-full flex pb-1" horizontal={true}>
-                        <PlantJob type="fertilise" />
-                        <PlantJob type="water" />
-                        <PlantJob type="fertilise" />
-                        <PlantJob type="water" />
-                        <PlantJob type="water" />
-                        <PlantJob type="water" />
-                        <PlantJob type="water" />
-
+                <TouchableOpacity className="w-[90%] mx-auto mt-2 bg-slate-50 rounded-2xl">
+                    <Text className="text-xl mx-2 mt-2">Tasks</Text>
+                    <ScrollView>
+                        <HomePageTask />
+                        <HomePageTask />
+                        <HomePageTask />
+                        <HomePageTask />
                     </ScrollView>
-                </View>
+                </TouchableOpacity>
 
-                {/* Upcoming tasks? */}
-
-                <View className="h-[350px] mx-2 rounded-lg mt-3 drop-shadow-2xl bg-green-600 overflow-hidden">
-
-                    <View className="absolute w-full h-1/2 bottom-0 z-20">
-                        <WhiteToTransparent className="flex-1" />
+              
+                <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
+                    <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
+                        <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
+                        <Text className="ml-2 text-slate-800">Dry</Text>
                     </View>
-                    <Text className="text-5xl z-50 font-bold mt-auto pb-3 pl-3">Test Text</Text>
-                    <Image className="absolute w-full h-full z-10" backgroundColor='#dee5db' source={require("../assets/img/exampleplant2.webp")} />
-                </View>
 
-                <View className="h-[100px] mt-7 mx-2 rounded-lg bg-slate-100 shadow-lg">
-                    <Text>Te3hfwjef</Text>
-                </View>
+                    <TouchableOpacity className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
+                        <View className="m-3"><SoilMoistureSVG fill="#fb923c"/></View>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Soil moisture</Text>
+                        <Text className="ml-2 text-slate-800">High</Text>
+                    </TouchableOpacity>
 
+                    <View className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square">
+                    <View className="m-3"><SunSVG fill="#facc15"/></View>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Sunlight</Text>
+                        <Text className="ml-2 text-slate-800">Good</Text>
+                    </View>
+
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
