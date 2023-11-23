@@ -3,6 +3,7 @@ import { Text, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-na
 import PlantJob from '../components/PlantJob';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
 
@@ -20,43 +21,16 @@ function AutomationPage(props) {
     return (
         <SafeAreaView>
           {/* Add automation button */}
-          <View className="w-full flex flex-row justify-end">
-            <TouchableOpacity className="h-12 w-12 rounded-full bg-sky-500">
-              <Ionicons className="h-full w-full mx-auto my-auto aspect-square text-white bg-orange-700" name="add-circle-outline" size={40}/>
+          <View className="w-full h-12 pr-3 flex flex-row justify-end">
+            <TouchableOpacity className="h-[48px] w-[48px] rounded-full bg-sky-500 shadow-md">
+              <MaterialIcons className="w-[40px] h-[40px] mx-auto my-auto text-center text-white text-[40px]" name="add"/>
             </TouchableOpacity>
           </View>
             <ScrollView>
 
                 {/* Header */}
                 <View>
-                    <Text className="text-3xl font-bold px-6 pt-6 pb-2" >Welcome back, John</Text>
-
-                    {/* Upcoming tasks */}
-
-                    <View className="flex flex-row items-center  w-max mx-5 my-3 rounded" >
-                        <Text className="text-2xl">Upcoming Tasks</Text>
-
-                        <View className="bg-orange-500 mx-2 rounded-full">
-                            <Text className="text-2xl mx-2 rounded-full text-white">5</Text>
-                        </View>
-                    </View>
-                </View>
-
-                {/* Garden tasks */}
-                <View className="h-27 mx-2 rounded-lg bg-slate-100 shadow-lg">
-                    {/* <Image className='h-5/6 w-28 bg-left float-left absolute left-2 top-2'resizeMode='cover' alignSelf='left' source={require('../app/assets/isometricgarden.png')}/> */}
-                    <Text className="text-2xl font-medium p-1 px-2">Garden</Text>
-                    {/* List of plants for tasks */}
-                    <ScrollView className="w-full flex pb-1" horizontal={true}>
-                        <PlantJob type="fertilise" />
-                        <PlantJob type="water" />
-                        <PlantJob type="fertilise" />
-                        <PlantJob type="water" />
-                        <PlantJob type="water" />
-                        <PlantJob type="water" />
-                        <PlantJob type="water" />
-
-                    </ScrollView>
+                    <Text className="text-3xl font-bold px-6 pt-6 pb-2" >Automations</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>
