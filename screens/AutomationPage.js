@@ -32,6 +32,13 @@ function AutomationPage(props) {
                 <View>
                     <Text className="text-3xl font-bold px-6 pt-6 pb-2" >Automations</Text>
                 </View>
+
+                {/* Created automations */}
+                <View>
+                    <View className="mx-auto w-[90%] h-20 bg-sky-500 rounded-lg">
+                        <Text className="pl-2 text-white font-semibold text-lg">00:00 ● Automation Name</Text>
+                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
