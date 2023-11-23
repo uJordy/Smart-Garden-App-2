@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PlantPage from './screens/PlantPage';
 import HomePage from './screens/HomePage';
+import AutomationPage from './screens/AutomationPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,8 +34,9 @@ function App() {
                 : 'home-outline';
             } else if (route.name === 'Plants') {
               iconName = focused ? 'leaf' : 'leaf-outline';
+            } else if (route.name === 'Automations') {
+              iconName = focused ? 'alarm' : 'alarm-outline';
             }
-
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -44,6 +46,7 @@ function App() {
       >
         <Tab.Screen name="Home" component={HomePage} />
         <Tab.Screen name="Plants" component={PlantPage} />
+        <Tab.Screen name="Automations" component={AutomationPage} />
       </Tab.Navigator>
     </NavigationContainer>
   );
