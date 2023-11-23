@@ -21,11 +21,12 @@ function AutomationPage(props) {
     return (
         <SafeAreaView>
           {/* Add automation button */}
-          <View className="w-full h-12 pr-3 flex flex-row justify-end">
+          <View className="w-full h-12 pr-6 flex flex-row justify-end">
             <TouchableOpacity className="h-[48px] w-[48px] rounded-full bg-sky-500 shadow-md">
               <MaterialIcons className="w-[40px] h-[40px] mx-auto my-auto text-center text-white text-[40px]" name="add"/>
             </TouchableOpacity>
           </View>
+
             <ScrollView>
 
                 {/* Header */}
@@ -36,7 +37,11 @@ function AutomationPage(props) {
                 {/* Created automations */}
                 <View>
                     <View className="mx-auto w-[90%] h-20 bg-sky-500 rounded-lg">
-                        <Text className="pl-2 text-white font-semibold text-lg">00:00 ● Automation Name</Text>
+                        <View className="pl-2 text-lg align-middle bg-orange-200 content-center">
+                            <Text className= "text-white font-semibold text-xl">00:00 ● Automation Name</Text>
+                            <Text className="text-white">Everyday</Text>
+                        </View>
+
                     </View>
                 </View>
             </ScrollView>
