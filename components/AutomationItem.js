@@ -1,0 +1,32 @@
+import { StyleSheet, Text, View , Switch} from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import React, {useState} from 'react'
+
+const AutomationItem = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <View className="mx-auto w-[90%] h-20 bg-sky-500 rounded-lg">
+    <View className="pl-4 text-lg align-middle  content-center my-auto">
+        <View className="flex flex-row content-center">
+            <Text className= "text-white font-semibold text-xl">00:00</Text>
+            <MaterialIcons className="mx-1 my-auto text-center text-white text-[10px] " name="circle"/>
+            <Text className="align-middle text-xl text-white font-semibold">Automation Name</Text>
+        </View>
+        <Text className="text-white">Everyday</Text>
+        
+        <View className="flex items-center justify-center">
+            <Switch
+                trackColor={{false: '#767577', true: '#81b0ff'}}
+                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                value={isEnabled}
+            />
+        </View>
+        
+    </View>
+</View>
+  )
+}
+ export default AutomationItem;
