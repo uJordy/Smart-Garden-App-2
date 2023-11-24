@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
+import Toggle from '../components/Toggle';
 
 
 function AutomationPage(props) {
@@ -49,6 +50,8 @@ function AutomationPage(props) {
 
                     </View>
                 </View>
+
+                <Toggle/>
             </ScrollView>
         </SafeAreaView>
     );
