@@ -18,10 +18,11 @@ const AutomationItem = () => {
     </View>
     <View className="flex items-center justify-center pr-4">
             <Switch
-                trackColor={{false: '#767577', true: '#81b0ff'}}
-                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                value={isEnabled}
+              trackColor={{false: '#075275', true: '#e9520e'}}
+              thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
+              ios_backgroundColor="#075275"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
             />
         </View>
 </View>
