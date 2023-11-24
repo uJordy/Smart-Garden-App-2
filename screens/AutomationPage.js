@@ -37,8 +37,13 @@ function AutomationPage(props) {
                 {/* Created automations */}
                 <View>
                     <View className="mx-auto w-[90%] h-20 bg-sky-500 rounded-lg">
-                        <View className="pl-2 text-lg align-middle bg-orange-200 content-center">
-                            <Text className= "text-white font-semibold text-xl">00:00 ● Automation Name</Text>
+                        <View className="pl-4 text-lg align-middle  content-center my-auto">
+                            <View className="flex flex-row content-center">
+                                <Text className= "text-white font-semibold text-xl">00:00</Text>
+                                <MaterialIcons className="mx-1 my-auto text-center text-white text-[10px] " name="circle"/>
+                                <Text className="align-middle text-xl text-white font-semibold">Automation Name</Text>
+                            </View>
+
                             <Text className="text-white">Everyday</Text>
                         </View>
 
