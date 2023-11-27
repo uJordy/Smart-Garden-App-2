@@ -29,7 +29,8 @@ function HomePage(props) {
                     <Text className="text-2xl rounded-full text-white mx-2">5 Tasks</Text>
                 </View>
 
-                <TouchableOpacity className="w-[90%] mx-auto mt-2 bg-slate-50 rounded-2xl">
+                {/* Tasks */}
+                {/* <TouchableOpacity className="w-[90%] mx-auto mt-2 bg-slate-50 rounded-2xl">
                     <Text className="text-xl mx-2 mt-2">Tasks</Text>
                     <ScrollView>
                         <HomePageTask />
@@ -37,11 +38,17 @@ function HomePage(props) {
                         <HomePageTask />
                         <HomePageTask />
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
-                    <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
+                <View className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square">
+                    <View className="m-3"><SunSVG fill="#facc15"/></View>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Temperature</Text>
+                        <Text className="ml-2 text-slate-800">10c</Text>
+                    </View>
+
+                    {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
                         <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
                         <Text className="ml-2 text-slate-800">Dry</Text>
@@ -57,7 +64,7 @@ function HomePage(props) {
                     <View className="m-3"><SunSVG fill="#facc15"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Sunlight</Text>
                         <Text className="ml-2 text-slate-800">Good</Text>
-                    </View>
+                    </View> */}
 
                 </View>
             </ScrollView>
