@@ -1,5 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 import HomePageTask from '../components/HomePageTask';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,7 +9,38 @@ import SunSVG from '../assets/svg/SunSVG';
 import HumiditySVG from '../assets/svg/HumiditySVG';
 
 
+ /*
+  * Applies the provided updates to an item. This does a 1-level shallow merge on
+  * an object, i.e. it replaces top level keys
+  */
+ async function update (id, updates) {
+    id = FileSystem.documentDirectory + 'test.json'
+    updates = "added new content!"
+    try {
+        console.log("checking if file exists")
 
+        FileSystem.getInfoAsync(id).then(tmp => {
+        // use tmp.exists
+            if(tmp.exists){
+                console.log("file exists")
+            }
+            else{
+                console.error("no FILE found, creating")
+                FileSystem.writeAsStringAsync(id, JSON.stringify(updates))
+            }
+        }).catch((error) => {
+            console.error(error);
+          });;
+
+        // console.log("reading file")
+        // const payloadJson = await FileSystem.readAsStringAsync(id)
+        // const payload = JSON.parse(payloadJson)
+        // const updatedPayload = { ...payload, ...updates }
+        // await FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload))
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
 function HomePage(props) {
 
@@ -42,11 +74,14 @@ function HomePage(props) {
 
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
-                <View className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square">
+                <TouchableOpacity 
+                className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"
+                onPress={() => update()}
+                >
                     <View className="m-3"><SunSVG fill="#facc15"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Temperature</Text>
                         <Text className="ml-2 text-slate-800">10c</Text>
-                    </View>
+                </TouchableOpacity>
 
                     {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
                         <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
