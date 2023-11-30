@@ -14,8 +14,8 @@ import HumiditySVG from '../assets/svg/HumiditySVG';
   * an object, i.e. it replaces top level keys
   */
  async function update (id, updates) {
-    id = FileSystem.documentDirectory + 'test.json'
-    updates = "added new content!"
+    id = FileSystem.documentDirectory + 'test1.json'
+    updates = {first: "added new content!"};
     try {
         console.log("checking if file exists")
 
@@ -23,6 +23,17 @@ import HumiditySVG from '../assets/svg/HumiditySVG';
         // use tmp.exists
             if(tmp.exists){
                 console.log("file exists")
+                // const payloadJson = await FileSystem.readAsStringAsync(id)
+
+                FileSystem.readAsStringAsync(id).then(payloadJson => {
+                    // console.log(tmp)
+                    const payload = JSON.parse(payloadJson)
+                    console.log(payload)
+                })
+
+                // console.log(payloadJson)
+                // const payload = JSON.parse(payloadJson)
+                // console.log(payload)
             }
             else{
                 console.error("no FILE found, creating")
