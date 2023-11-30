@@ -8,11 +8,10 @@ import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
 import SunSVG from '../assets/svg/SunSVG';
 import HumiditySVG from '../assets/svg/HumiditySVG';
 
+var GardenData = {};
+const fileName = "GardenDictionary.json" //.json essential
 
- /*
-  * Applies the provided updates to an item. This does a 1-level shallow merge on
-  * an object, i.e. it replaces top level keys
-  */
+
 
 var sgDictExample = {
     Temperature: 30, //Celcius 
@@ -20,9 +19,33 @@ var sgDictExample = {
     SoilMoisture: 50, //Percentage
     Humidity: 50 //Percentage
 }
+GardenData = sgDictExample;
+
+function saveData() {
+    let id = FileSystem.documentDirectory + fileName;
+
+    FileSystem.getInfoAsync(id).then(file => {
+        if (file.exists) {
+            if (GardenData.Temperature != null &&
+                GardenData.Light != null &&
+                GardenData.SoilMoisture != null &&
+                GardenData.Humidity != null
+            ){
+                const updatedPayload = GardenData;
+
+                FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload)).then(success => {
+                    console.log("Successfully saved!")
+                })
+            }
+
+        } else {
+            console.warn("File Not Found, creating new..")
+        }
+    })
+}
 
  async function update (id, updates) {
-    id = FileSystem.documentDirectory + 'test1.json'
+    id = FileSystem.documentDirectory + 'GardenDictionary.json'
     updates = {first: "added new content!"};
     try {
         console.log("checking if file exists")
@@ -31,17 +54,12 @@ var sgDictExample = {
         // use tmp.exists
             if(tmp.exists){
                 console.log("file exists")
-                // const payloadJson = await FileSystem.readAsStringAsync(id)
 
                 FileSystem.readAsStringAsync(id).then(payloadJson => {
                     // console.log(tmp)
                     const payload = JSON.parse(payloadJson)
                     console.log(payload)
                 })
-
-                // console.log(payloadJson)
-                // const payload = JSON.parse(payloadJson)
-                // console.log(payload)
             }
             else{
                 console.error("no FILE found, creating")
