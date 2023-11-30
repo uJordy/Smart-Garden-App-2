@@ -22,7 +22,7 @@ var sgDictExample = {
 GardenData = sgDictExample;
 
 function saveData() {
-    let id = FileSystem.documentDirectory + fileName;
+    const id = FileSystem.documentDirectory + fileName;
 
     FileSystem.getInfoAsync(id).then(file => {
         if (file.exists) {
@@ -40,9 +40,32 @@ function saveData() {
 
         } else {
             console.warn("File Not Found, creating new..")
+            createFile()
         }
     })
 }
+
+function loadData() {
+    const id = FileSystem.documentDirectory + fileName;
+
+    FileSystem.getInfoAsync(id).then(file => {
+        if (file.exists) {
+            FileSystem.readAsStringAsync(id).then(payloadJson => {
+                // console.log(tmp)
+                const payload = JSON.parse(payloadJson)
+                console.log(payload);
+                GardenData = payload;
+                console.log("Successfully loaded")
+            })
+        }else {
+            console.warn("File Not Found, creating new..")
+            createFile()
+        }
+    }).catch((error) => {
+        console.error(error);
+    })
+}
+
 
  async function update (id, updates) {
     id = FileSystem.documentDirectory + 'GardenDictionary.json'
