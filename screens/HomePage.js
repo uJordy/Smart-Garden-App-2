@@ -10,6 +10,7 @@ import HumiditySVG from '../assets/svg/HumiditySVG';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
+const id = FileSystem.documentDirectory + fileName;
 
 
 
@@ -22,7 +23,6 @@ var sgDictExample = {
 GardenData = sgDictExample;
 
 function saveData() {
-    const id = FileSystem.documentDirectory + fileName;
 
     FileSystem.getInfoAsync(id).then(file => {
         if (file.exists) {
@@ -46,7 +46,6 @@ function saveData() {
 }
 
 function loadData() {
-    const id = FileSystem.documentDirectory + fileName;
 
     FileSystem.getInfoAsync(id).then(file => {
         if (file.exists) {
@@ -66,6 +65,13 @@ function loadData() {
     })
 }
 
+function createFile() {
+    // FileSystem.writeAsStringAsync(id, JSON.stringify(updates))
+
+    FileSystem.writeAsStringAsync(id, JSON.stringify({})).then(success => {
+        console.log("File created!")
+    })
+}
 
  async function update (id, updates) {
     id = FileSystem.documentDirectory + 'GardenDictionary.json'
@@ -136,18 +142,20 @@ function HomePage(props) {
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
                 <TouchableOpacity 
                 className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"
-                onPress={() => update()}
+                onPress={() => loadData()}
                 >
                     <View className="m-3"><SunSVG fill="#facc15"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Temperature</Text>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Load Data</Text>
                         <Text className="ml-2 text-slate-800">10c</Text>
                 </TouchableOpacity>
 
-                    {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
+                <TouchableOpacity className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square"
+                onPress={() => saveData()}>
                         <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Save Data</Text>
                         <Text className="ml-2 text-slate-800">Dry</Text>
-                    </View>
+                </TouchableOpacity>
+                    {/*
 
                     <TouchableOpacity className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
                         <View className="m-3"><SoilMoistureSVG fill="#fb923c"/></View>
