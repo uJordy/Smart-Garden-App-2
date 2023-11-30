@@ -13,6 +13,14 @@ import HumiditySVG from '../assets/svg/HumiditySVG';
   * Applies the provided updates to an item. This does a 1-level shallow merge on
   * an object, i.e. it replaces top level keys
   */
+
+var sgDictExample = {
+    Temperature: 30, //Celcius 
+    Light: 50, //Percentage
+    SoilMoisture: 50, //Percentage
+    Humidity: 50 //Percentage
+}
+
  async function update (id, updates) {
     id = FileSystem.documentDirectory + 'test1.json'
     updates = {first: "added new content!"};
