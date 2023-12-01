@@ -147,8 +147,7 @@ function HomePage(props) {
                         <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
                         <Text className="ml-2 text-slate-800">Dry</Text>
-                </TouchableOpacity>
-                    {/*
+                    </View>
 
                     <TouchableOpacity className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
                         <View className="m-3"><SoilMoistureSVG fill="#fb923c"/></View>
