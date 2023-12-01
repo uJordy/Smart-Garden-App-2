@@ -155,6 +155,13 @@ function HomePage(props) {
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Save Data</Text>
                         <Text className="ml-2 text-slate-800">Dry</Text>
                 </TouchableOpacity>
+
+                {/* <TextInput
+                style={styles.input}
+
+                placeholder="useless placeholder"
+                keyboardType="numeric"
+                /> */}
                     {/*
 
                     <TouchableOpacity className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
@@ -175,5 +182,13 @@ function HomePage(props) {
     );
 }
 
+// const styles = StyleSheet.create({
+//     input: {
+//       height: 40,
+//       margin: 12,
+//       borderWidth: 1,
+//       padding: 10,
+//     },
+//   });
 
 export default HomePage;
