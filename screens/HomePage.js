@@ -3,6 +3,7 @@ import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, Toucha
 import * as FileSystem from 'expo-file-system';
 import HomePageTask from '../components/HomePageTask';
 import { useNavigation } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
 
 import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
 import SunSVG from '../assets/svg/SunSVG';
@@ -14,24 +15,26 @@ const fileName = "GardenDictionary.json" //.json essential
 
 
 var sgDictExample = {
-    Temperature: 30, //Celcius 
-    Light: 50, //Percentage
-    SoilMoisture: 50, //Percentage
-    Humidity: 50 //Percentage
+    Temperature: 50, //Celcius 
+    Light: 20, //Percentage
+    SoilMoisture: 5, //Percentage
+    Humidity: 80 //Percentage
 }
 GardenData = sgDictExample;
 
+// Must loadData() first!
 function saveData() {
     const id = FileSystem.documentDirectory + fileName;
 
     FileSystem.getInfoAsync(id).then(file => {
         if (file.exists) {
+            // Ensures garden data can't save null data
             if (GardenData.Temperature != null &&
                 GardenData.Light != null &&
                 GardenData.SoilMoisture != null &&
                 GardenData.Humidity != null
             ){
-                const updatedPayload = GardenData;
+                const updatedPayload = sgDictExample;
 
                 FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload)).then(success => {
                     console.log("Successfully saved!")
@@ -136,13 +139,30 @@ function HomePage(props) {
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
                 <TouchableOpacity 
                 className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"
-                onPress={() => update()}
+                onPress={() => saveData()}
                 >
                     <View className="m-3"><SunSVG fill="#facc15"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Temperature</Text>
+                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Save Data</Text>
                         <Text className="ml-2 text-slate-800">10c</Text>
                 </TouchableOpacity>
 
+
+                <TouchableOpacity className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square"
+                onPress={() => loadData()}
+                >
+                    <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
+                    <Text className="font-semibold ml-2 mt-2 text-gray-800">Load Data</Text>
+                    <Text className="ml-2 text-slate-800">Dry</Text>
+                </TouchableOpacity>
+
+
+                <Slider
+                style={{width: 200, height: 40}}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                />
                     {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
                         <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
