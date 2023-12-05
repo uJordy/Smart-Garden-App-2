@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PlantPage from './screens/PlantPage';
 import HomePage from './screens/HomePage';
 import AutomationPage from './screens/AutomationPage';
+import SliderComp from './components/slider';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,9 @@ function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
 
-<NavigationContainer>
+    <SliderComp></SliderComp>
+
+/* <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -48,7 +51,7 @@ function App() {
         <Tab.Screen name="Plants" component={PlantPage} />
         <Tab.Screen name="Automations" component={AutomationPage} />
       </Tab.Navigator>
-    </NavigationContainer>
+    </NavigationContainer> */
   );
 }
 

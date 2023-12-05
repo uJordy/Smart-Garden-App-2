@@ -1,7 +1,8 @@
-import React, { useLayoutEffect } from 'react';
-import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity } from 'react-native';
+import React, { useLayoutEffect, useState } from 'react';
+import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import HomePageTask from '../components/HomePageTask';
+import SliderComp from '../components/slider';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
@@ -12,6 +13,11 @@ import HumiditySVG from '../assets/svg/HumiditySVG';
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
+// const [sliderDimensions, setSliderDimensions] = useState({
+//     height: null,
+//     top: null,
+//     bottom: null,
+//   });
 
 
 var sgDictExample = {
@@ -156,13 +162,9 @@ function HomePage(props) {
                 </TouchableOpacity>
 
 
-                <Slider
-                style={{width: 200, height: 40}}
-                minimumValue={0}
-                maximumValue={1}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                />
+
+
+
                     {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
                         <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
@@ -182,10 +184,39 @@ function HomePage(props) {
                     </View> */}
 
                 </View>
+                <SliderComp/>
             </ScrollView>
         </SafeAreaView>
     );
 }
+
+// const styles = StyleSheet.create({
+//     title: {
+//       textAlign: 'center',
+//       fontSize: 20,
+//       marginVertical: 50,
+//     },
+//     slider: {
+//       width: 50,
+//       height: '80%',
+//       marginLeft: 'auto',
+//       marginRight: 'auto',
+//       position: 'relative',
+//       marginBottom: 50,
+//     },
+//     rail: {
+//       width: 20,
+//       height: '100%',
+//       marginLeft: 'auto',
+//       marginRight: 'auto',
+//       backgroundColor: 'orange',
+//     },
+//     stepper: {
+//       width: '100%',
+//       height: 5,
+//       backgroundColor: 'green',
+//     },
+//   });
 
 // const styles = StyleSheet.create({
 //     input: {
