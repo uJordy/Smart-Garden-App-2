@@ -10,9 +10,6 @@ const GardenPropItem = () => {
   // const [temperature, setTemperature] = useState(props.value ?? 0);
   const [temperature, setTemperature] = useState(0);
 
-  const [slideStartingValue, setSlideStartingValue] = useState(0);
-  const [slideStartingCount, setSlideStartingCount] = useState(0);
-
   function handleSlideChange(newTemp) {
     // console.log(newTemp)
     setTemperature(newTemp)
@@ -26,7 +23,7 @@ const GardenPropItem = () => {
           <View className="flex flex-row content-center">
 
               <View className=""><SunSVG fill="#facc15"/></View>
-              <Text className= "pl-2 text-white font-bold text-2xl my-auto">{temperature && +temperature.toFixed(3)}</Text>
+              <Text className= "pl-2 text-white font-bold text-2xl my-auto w-10">{temperature && +temperature.toFixed(0)}</Text>
               <MaterialIcons className="mx-1 my-auto text-center text-white text-[10px] " name="circle"/>
               <Text className="align-middle text-xl text-white font-semibold my-auto">Temperature </Text>
           </View>
@@ -44,7 +41,7 @@ const GardenPropItem = () => {
     </View>
   <View className="w-[90%] mx-auto">
     <Slider
-        step={0.5}
+        step={0.1}
         minimumValue={0}
         maximumValue={35}
         minimumTrackTintColor="#fff"
@@ -52,15 +49,6 @@ const GardenPropItem = () => {
         onValueChange={handleSlideChange}
         temperature = {temperature}
       />
-    {/* <Slider
-        onSlidingStart={value => {
-          setSlideStartingValue(value);
-          setSlideStartingCount(prev => prev + 1);
-        }}
-      /> */}
-            {/* <Text>
-        Starts: {slideStartingCount} Value: {slideStartingValue}
-      </Text> */}
   </View>
 </TouchableOpacity>
   )
