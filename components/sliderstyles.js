@@ -3,7 +3,7 @@ import {Text, View, StyleSheet} from 'react-native';
 import Slider, {SliderProps} from '@react-native-community/slider';
 
 
-const SliderExample = ({}) => {
+const SliderExample = () => {
   return (
     <View style={{alignItems: 'center'}}>
       <Slider/>

@@ -2,9 +2,17 @@ import { StyleSheet, Text, View , Switch, TouchableOpacity} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import React, {useState} from 'react'
 import SunSVG from '../assets/svg/SunSVG'
+// import GardenPropIcon from '../components/GardenPropIcon'
 import Slider from '@react-native-community/slider';
 
-const GardenPropItem = () => {
+function GardenPropIcon({type}) {
+  if (type === "temperature") {
+    return <SunSVG fill="#facc15"/>
+  }
+}
+
+
+const GardenPropItem = ({type}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const [temperature, setTemperature] = useState(props.value ?? 0);
@@ -16,14 +24,14 @@ const GardenPropItem = () => {
   }
 
   return (
-    <TouchableOpacity className="mx-auto w-[90%] h-28 bg-slate-500 rounded-2xl flex-1 flex-column drop-shadow-lg">
+    <TouchableOpacity className="mx-auto w-[90%] h-28 bg-slate-500 rounded-2xl flex-1 flex-column drop-shadow-lg my-2">
 
     <View className="h-[100%] w-full mx-auto flex-1 flex-row justify-between ">
       <View className="pl-4 text-lg align-middle  content-center my-auto ">
           <View className="flex flex-row content-center">
 
-              <View className=""><SunSVG fill="#facc15"/></View>
-              <Text className= "pl-2 text-white font-bold text-2xl my-auto w-10">{temperature && +temperature.toFixed(0)}</Text>
+              <View className=""><GardenPropIcon type={type}/></View>
+              <Text className= "pl-2 text-white font-bold text-2xl my-auto w-10 text-center">{temperature && +temperature.toFixed(0)}</Text>
               <MaterialIcons className="mx-1 my-auto text-center text-white text-[10px] " name="circle"/>
               <Text className="align-middle text-xl text-white font-semibold my-auto">Temperature </Text>
           </View>
@@ -47,7 +55,6 @@ const GardenPropItem = () => {
         minimumTrackTintColor="#fff"
         maximumTrackTintColor="#334155"
         onValueChange={handleSlideChange}
-        temperature = {temperature}
       />
   </View>
 </TouchableOpacity>

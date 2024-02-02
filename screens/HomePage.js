@@ -149,6 +149,9 @@ function HomePage(props) {
                     </TouchableOpacity>
                     </View> */}
 
+                <GardenPropItem type="temperature"/>
+                <GardenPropItem type="lightIntensity"/>
+                <GardenPropItem/>
                 <GardenPropItem/>
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
