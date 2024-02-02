@@ -2,13 +2,14 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import HomePageTask from '../components/HomePageTask';
-import SliderComp from '../components/slider';
+import GardenPropItem from '../components/GardenPropItem';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
 import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
 import SunSVG from '../assets/svg/SunSVG';
 import HumiditySVG from '../assets/svg/HumiditySVG';
+import SliderExample from '../components/sliderstyles';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -18,6 +19,8 @@ const fileName = "GardenDictionary.json" //.json essential
 //     top: null,
 //     bottom: null,
 //   });
+
+
 
 
 var sgDictExample = {
@@ -60,7 +63,6 @@ function loadData() {
     FileSystem.getInfoAsync(id).then(file => {
         if (file.exists) {
             FileSystem.readAsStringAsync(id).then(payloadJson => {
-                // console.log(tmp)
                 const payload = JSON.parse(payloadJson)
                 console.log(payload);
                 GardenData = payload;
@@ -82,9 +84,8 @@ function loadData() {
     try {
         console.log("checking if file exists")
 
-        FileSystem.getInfoAsync(id).then(tmp => {
-        // use tmp.exists
-            if(tmp.exists){
+        FileSystem.getInfoAsync(id).then(file => {
+            if(file.exists){
                 console.log("file exists")
 
                 FileSystem.readAsStringAsync(id).then(payloadJson => {
@@ -99,13 +100,7 @@ function loadData() {
             }
         }).catch((error) => {
             console.error(error);
-          });;
-
-        // console.log("reading file")
-        // const payloadJson = await FileSystem.readAsStringAsync(id)
-        // const payload = JSON.parse(payloadJson)
-        // const updatedPayload = { ...payload, ...updates }
-        // await FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload))
+          });
     } catch (e) {
       console.error(e)
     }
@@ -127,8 +122,12 @@ function HomePage(props) {
                 <Image className="w-16 h-16 mx-auto" source={require("../assets/img/leaf-logo.png")} />
 
                 <View className="bg-orange-500 mx-auto mt-2 rounded-full h-8">
-                    <Text className="text-2xl rounded-full text-white mx-2">5 Tasks</Text>
+                    <Text className="text-2xl rounded-full text-white mx-2">Home</Text>
                 </View>
+
+                {/* <View className="mx-auto">
+                    <Text className="text-2xl font-bold">Home</Text>
+                </View> */}
 
                 {/* Tasks */}
                 {/* <TouchableOpacity className="w-[90%] mx-auto mt-2 bg-slate-50 rounded-2xl">
@@ -141,8 +140,20 @@ function HomePage(props) {
                     </ScrollView>
                 </TouchableOpacity> */}
 
+                {/* <View className="mt-2">
+                    <TouchableOpacity className="mx-auto w-[95%] h-20 bg-blue-200 rounded-2xl">
+                        <View className="flex flex-row h-14">
+                            <View className="ml-2 mt-2"><SunSVG fill="#facc15"/></View>
+                            <Text className="bg-orange-500  align-baseline">Temperature</Text>
+                        </View>
+                    </TouchableOpacity>
+                    </View> */}
+
+                <GardenPropItem/>
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
+
+
                 <TouchableOpacity 
                 className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"
                 onPress={() => saveData()}
@@ -163,6 +174,13 @@ function HomePage(props) {
 
 
 
+                {/* <Slider
+                style={{width: 200, height: 40}}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                /> */}
 
 
                     {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
@@ -171,7 +189,7 @@ function HomePage(props) {
                         <Text className="ml-2 text-slate-800">Dry</Text>
                     </View>
 
-                    <TouchableOpacity className="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
+                    <TouchableOpacity class%Name="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
                         <View className="m-3"><SoilMoistureSVG fill="#fb923c"/></View>
                         <Text className="font-semibold ml-2 mt-2 text-gray-800">Soil moisture</Text>
                         <Text className="ml-2 text-slate-800">High</Text>
@@ -184,7 +202,6 @@ function HomePage(props) {
                     </View> */}
 
                 </View>
-                <SliderComp/>
             </ScrollView>
         </SafeAreaView>
     );

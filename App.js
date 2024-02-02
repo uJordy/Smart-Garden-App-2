@@ -23,9 +23,9 @@ function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
 
-    <SliderComp></SliderComp>
+    // <SliderComp></SliderComp>
 
-/* <NavigationContainer>
+    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -51,7 +51,7 @@ function App() {
         <Tab.Screen name="Plants" component={PlantPage} />
         <Tab.Screen name="Automations" component={AutomationPage} />
       </Tab.Navigator>
-    </NavigationContainer> */
+    </NavigationContainer> 
   );
 }
 
