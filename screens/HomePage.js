@@ -143,9 +143,9 @@ function HomePage({navigation}) {
                         </View>
                     </TouchableOpacity>
                     </View> */}
-                <Button onPress={pressHandler} title="Hellooo"/>
+                {/* <Button onPress={pressHandler} title="Hellooo"/> */}
 
-                <GardenPropItem type="Temperature" className="Temperature" />
+                <GardenPropItem type="Temperature" className="Temperature" onPress={pressHandler} />
                 <GardenPropItem type="Light Intensity"/>
                 <GardenPropItem type="Soil Moisture"/>
                 <GardenPropItem type="Humidity"/>

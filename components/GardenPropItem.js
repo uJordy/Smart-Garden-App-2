@@ -20,7 +20,7 @@ function GardenPropIcon({type}) {
 }
 
 
-const GardenPropItem = ({type}) => {
+const GardenPropItem = ({type, onPress}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const [temperature, setTemperature] = useState(props.value ?? 0);
@@ -65,7 +65,7 @@ const GardenPropItem = ({type}) => {
 }
 
   return (
-    <TouchableOpacity className={classStyling}>
+    <TouchableOpacity className={classStyling} onPress={onPress}>
 
     <View className="h-[100%] w-full mx-auto flex-1 flex-row justify-between ">
       <View className="pl-4 text-lg align-middle  content-center my-auto ">

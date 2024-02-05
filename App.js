@@ -19,9 +19,9 @@ const Tab = createBottomTabNavigator();
 
 function StackNavigator() {
   return (
-    <Stack.Navigator headerMode="screen">
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={Home}/>
-      <Stack.Screen name="EditGardenPropPage" component={EditGardenPropPage} />
+      <Stack.Screen name="EditGardenPropPage" component={EditGardenPropPage}  />
     </Stack.Navigator>
   )
 }
