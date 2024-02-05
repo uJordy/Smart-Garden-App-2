@@ -149,8 +149,8 @@ function HomePage(props) {
                     </TouchableOpacity>
                     </View> */}
 
-                <GardenPropItem type="temperature"/>
-                <GardenPropItem type="lightIntensity"/>
+                <GardenPropItem type="Temperature" className="Temperature"/>
+                <GardenPropItem type="Light Intensity"/>
                 <GardenPropItem/>
                 <GardenPropItem/>
               
