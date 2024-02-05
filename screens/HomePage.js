@@ -1,27 +1,14 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, SafeAreaView, View, ScrollView, Image, Platform, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import HomePageTask from '../components/HomePageTask';
 import GardenPropItem from '../components/GardenPropItem';
 import { useNavigation } from '@react-navigation/native';
 
-
-import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
-import SunSVG from '../assets/svg/SunSVG';
-import HumiditySVG from '../assets/svg/HumiditySVG';
 import Leaf from '../assets/svg/Leaf';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
-
-// const [sliderDimensions, setSliderDimensions] = useState({
-//     height: null,
-//     top: null,
-//     bottom: null,
-//   });
-
-
-
 
 var sgDictExample = {
     Temperature: 50, //Celcius 
@@ -106,9 +93,9 @@ function loadData() {
     }
   }
 
-function HomePage(props) {
+function HomePage({navigation}) {
 
-    const navigation = useNavigation();
+    // const tabNavigation = useNavigation();
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -116,12 +103,15 @@ function HomePage(props) {
         })
     }, []);
 
+    const pressHandler = () => {
+        console.log("print")
+        navigation.navigate('EditGardenPropPage')
+    }
+
     return (
         <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
             <ScrollView>
-                {/* <Image className="w-16 h-16 mx-auto" source={require("../assets/img/leaf-logo.png")} /> */}
-
-                <View className="w-16 h-16 mx-auto">
+                <View className="w-16 h-16 mx-auto mb-9">
                     <Leaf fill="#2db551"/>
                 </View>    
                 
@@ -153,103 +143,17 @@ function HomePage(props) {
                         </View>
                     </TouchableOpacity>
                     </View> */}
+                <Button onPress={pressHandler} title="Hellooo"/>
 
-                <GardenPropItem type="Temperature" className="Temperature"/>
+                <GardenPropItem type="Temperature" className="Temperature" />
                 <GardenPropItem type="Light Intensity"/>
                 <GardenPropItem type="Soil Moisture"/>
                 <GardenPropItem type="Humidity"/>
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
-
-
-                <TouchableOpacity 
-                className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square"
-                onPress={() => saveData()}
-                >
-                    <View className="m-3"><SunSVG fill="#facc15"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Save Data</Text>
-                        <Text className="ml-2 text-slate-800">10c</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square"
-                onPress={() => loadData()}
-                >
-                    <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
-                    <Text className="font-semibold ml-2 mt-2 text-gray-800">Load Data</Text>
-                    <Text className="ml-2 text-slate-800">Dry</Text>
-                </TouchableOpacity>
-
-
-
-                {/* <Slider
-                style={{width: 200, height: 40}}
-                minimumValue={0}
-                maximumValue={1}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                /> */}
-
-
-                    {/* <View className="w-[32%] h-24 bg-blue-200 rounded-3xl aspect-square">
-                        <View className="m-3"><HumiditySVG fill="#60a5fa"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Humidity</Text>
-                        <Text className="ml-2 text-slate-800">Dry</Text>
-                    </View>
-
-                    <TouchableOpacity class%Name="w-[32%] h-24 bg-orange-200 rounded-3xl aspect-square">
-                        <View className="m-3"><SoilMoistureSVG fill="#fb923c"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Soil moisture</Text>
-                        <Text className="ml-2 text-slate-800">High</Text>
-                    </TouchableOpacity>
-
-                    <View className="w-[32%] h-24 bg-yellow-200 rounded-3xl aspect-square">
-                    <View className="m-3"><SunSVG fill="#facc15"/></View>
-                        <Text className="font-semibold ml-2 mt-2 text-gray-800">Sunlight</Text>
-                        <Text className="ml-2 text-slate-800">Good</Text>
-                    </View> */}
-
                 </View>
             </ScrollView>
         </SafeAreaView>
     );
 }
-
-// const styles = StyleSheet.create({
-//     title: {
-//       textAlign: 'center',
-//       fontSize: 20,
-//       marginVertical: 50,
-//     },
-//     slider: {
-//       width: 50,
-//       height: '80%',
-//       marginLeft: 'auto',
-//       marginRight: 'auto',
-//       position: 'relative',
-//       marginBottom: 50,
-//     },
-//     rail: {
-//       width: 20,
-//       height: '100%',
-//       marginLeft: 'auto',
-//       marginRight: 'auto',
-//       backgroundColor: 'orange',
-//     },
-//     stepper: {
-//       width: '100%',
-//       height: 5,
-//       backgroundColor: 'green',
-//     },
-//   });
-
-// const styles = StyleSheet.create({
-//     input: {
-//       height: 40,
-//       margin: 12,
-//       borderWidth: 1,
-//       padding: 10,
-//     },
-//   });
-
 export default HomePage;

@@ -1,15 +1,21 @@
-import { StyleSheet, Text, View , Switch, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View , Switch, TouchableOpacity, Pressable} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import React, {useState} from 'react'
 import SunSVG from '../assets/svg/SunSVG'
 import TemperatureSVG from '../assets/svg/TemperatureSVG'
+import SoilMoisture from '../assets/svg/SoilMoisture'
+import Humidity from '../assets/svg/Humidity'
 import Slider from '@react-native-community/slider';
 
 function GardenPropIcon({type}) {
   if (type === "Temperature") {
-    return <TemperatureSVG fill="#fff"/> //15abeb
+    return <TemperatureSVG fill="#57534e"/> //15abeb
   } else if (type === "Light Intensity") {
-    return <SunSVG fill="#fff"/> //facc15
+    return <SunSVG fill="#57534e"/> //facc15
+  } else if (type === "Soil Moisture") {
+    return <SoilMoisture fill="#57534e"/> 
+  } else if (type === "Humidity") {
+    return <Humidity fill="#57534e"/> 
   }
 }
 
@@ -28,20 +34,35 @@ const GardenPropItem = ({type}) => {
   }
   classStyling = "mx-auto w-[90%] h-28  rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
 
+  // if (type === "Temperature") {
+  //   classStyling += " bg-sky-500"
+  // } else if (type === "Light Intensity") {
+  //   classStyling += " bg-yellow-500"
+  // } else if (type === "Soil Moisture") {
+  //   classStyling += " bg-stone-500"
+  // } else if (type === "Humidity") {
+  //   classStyling += " bg-red-500"
+  // }
+
   if (type === "Temperature") {
-    classStyling += " bg-sky-500"
+    classStyling += " bg-blue-200"
   } else if (type === "Light Intensity") {
-    classStyling += " bg-yellow-500"
+    classStyling += " bg-yellow-200"
   } else if (type === "Soil Moisture") {
-    classStyling += " bg-stone-500"
+    classStyling += " bg-stone-200"
   } else if (type === "Humidity") {
-    classStyling += " bg-red-500"
+    classStyling += " bg-red-200"
   }
 
   function handleSlideChange(newTemp) {
     // console.log(newTemp)
     setTemperature(newTemp)
   }
+
+  const pressHandler = () => {
+    console.log("print")
+    navigationstack.navigate('EditGardenPropPage')
+}
 
   return (
     <TouchableOpacity className={classStyling}>
@@ -51,17 +72,17 @@ const GardenPropItem = ({type}) => {
           <View className="flex flex-row content-center">
 
               <View className=""><GardenPropIcon type={type}/></View>
-              <Text className= "pl-2 text-white font-bold text-2xl my-auto w-20 text-center">{temperature + "°C" && +temperature.toFixed(0) + sensorsuffix()}</Text>
-              <MaterialIcons className="mx-1 my-auto text-center text-white text-[10px] " name="circle"/>
-              <Text className="align-middle text-xl text-white font-semibold my-auto">{type} </Text>
+              <Text className= "pl-2 text-stone-600 font-bold text-2xl my-auto w-20 text-center">{temperature + "°C" && +temperature.toFixed(0) + sensorsuffix()}</Text>
+              <MaterialIcons className="mx-1 my-auto text-center text-stone-600 text-[10px] " name="circle"/>
+              <Text className="align-middle text-xl text-stone-600 font-semibold my-auto">{type} </Text>
           </View>
           {/* <Text className="text-white">Everyday</Text>  */}
       </View>
       <View className="flex items-center justify-center pr-4 ">
         <Switch
-          trackColor={{false: '#075275', true: 'rgba(255,255,255,0.6)'}}
+          trackColor={{false: 'rgb(120,120,120,1)', true: 'rgba(255,255,255, 0.5)'}}
           thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
-          ios_backgroundColor="rgba(52, 52, 52, 0.3)"
+          ios_backgroundColor= "rgba(120, 120, 120, 1)"
           onValueChange={toggleSwitch}
           value={isEnabled}
         />
