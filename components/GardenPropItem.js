@@ -72,7 +72,7 @@ const GardenPropItem = ({type, onPress}) => {
           <View className="flex flex-row content-center">
 
               <View className=""><GardenPropIcon type={type}/></View>
-              <Text className= "pl-2 text-stone-600 font-bold text-2xl my-auto w-20 text-center">{temperature + "°C" && +temperature.toFixed(0) + sensorsuffix()}</Text>
+              <Text className= "px-2 text-stone-600 font-bold text-2xl my-auto min-w-[20%] text-center">{temperature + "°C" && +temperature.toFixed(0) + sensorsuffix()}</Text>
               <MaterialIcons className="mx-1 my-auto text-center text-stone-600 text-[10px] " name="circle"/>
               <Text className="align-middle text-xl text-stone-600 font-semibold my-auto">{type} </Text>
           </View>
