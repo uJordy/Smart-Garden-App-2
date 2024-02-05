@@ -4,12 +4,12 @@ import * as FileSystem from 'expo-file-system';
 import HomePageTask from '../components/HomePageTask';
 import GardenPropItem from '../components/GardenPropItem';
 import { useNavigation } from '@react-navigation/native';
-import Slider from '@react-native-community/slider';
+
 
 import SoilMoistureSVG from '../assets/svg/SoilMoistureSVG';
 import SunSVG from '../assets/svg/SunSVG';
 import HumiditySVG from '../assets/svg/HumiditySVG';
-import SliderExample from '../components/sliderstyles';
+import Leaf from '../assets/svg/Leaf';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -119,11 +119,16 @@ function HomePage(props) {
     return (
         <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
             <ScrollView>
-                <Image className="w-16 h-16 mx-auto" source={require("../assets/img/leaf-logo.png")} />
+                {/* <Image className="w-16 h-16 mx-auto" source={require("../assets/img/leaf-logo.png")} /> */}
 
-                <View className="bg-orange-500 mx-auto mt-2 rounded-full h-8">
+                <View className="w-16 h-16 mx-auto">
+                    <Leaf fill="#2db551"/>
+                </View>    
+                
+
+                {/* <View className="bg-orange-500 mx-auto mt-2 rounded-full h-8">
                     <Text className="text-2xl rounded-full text-white mx-2">Home</Text>
-                </View>
+                </View> */}
 
                 {/* <View className="mx-auto">
                     <Text className="text-2xl font-bold">Home</Text>
@@ -151,8 +156,8 @@ function HomePage(props) {
 
                 <GardenPropItem type="Temperature" className="Temperature"/>
                 <GardenPropItem type="Light Intensity"/>
-                <GardenPropItem/>
-                <GardenPropItem/>
+                <GardenPropItem type="Soil Moisture"/>
+                <GardenPropItem type="Humidity"/>
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
 

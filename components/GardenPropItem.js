@@ -19,12 +19,23 @@ const GardenPropItem = ({type}) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const [temperature, setTemperature] = useState(props.value ?? 0);
   const [temperature, setTemperature] = useState(0);
+  sensorsuffix = () => {
+    if (type === "Temperature") {
+      return '°C'
+    } else {
+      return "%"
+    }
+  }
   classStyling = "mx-auto w-[90%] h-28  rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
 
   if (type === "Temperature") {
     classStyling += " bg-sky-500"
   } else if (type === "Light Intensity") {
     classStyling += " bg-yellow-500"
+  } else if (type === "Soil Moisture") {
+    classStyling += " bg-stone-500"
+  } else if (type === "Humidity") {
+    classStyling += " bg-red-500"
   }
 
   function handleSlideChange(newTemp) {
@@ -40,7 +51,7 @@ const GardenPropItem = ({type}) => {
           <View className="flex flex-row content-center">
 
               <View className=""><GardenPropIcon type={type}/></View>
-              <Text className= "pl-2 text-white font-bold text-2xl my-auto w-20 text-center">{temperature + "°C" && +temperature.toFixed(0) + "°C"}</Text>
+              <Text className= "pl-2 text-white font-bold text-2xl my-auto w-20 text-center">{temperature + "°C" && +temperature.toFixed(0) + sensorsuffix()}</Text>
               <MaterialIcons className="mx-1 my-auto text-center text-white text-[10px] " name="circle"/>
               <Text className="align-middle text-xl text-white font-semibold my-auto">{type} </Text>
           </View>
