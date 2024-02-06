@@ -16,7 +16,7 @@ export default function EditGardenPropPage({ route, navigation }) {
 
   return (
     <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
-      <ScrollView>
+      <ScrollView bounces={false}>
         <View className="flex flex-row  h-16">
           <View className="basis-1/4 ">
             <BackButton buttonClassName="mr-auto my-auto pl-4 h-10" onPress={handleGoBack} />
@@ -41,7 +41,9 @@ export default function EditGardenPropPage({ route, navigation }) {
           // onValueChange={handleSlideChange}
           />
         </View>
-
+        <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
+          <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

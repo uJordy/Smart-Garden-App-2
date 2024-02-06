@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View , Switch, TouchableOpacity, Pressable} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import React, {useState} from 'react'
+
+import Slider from '@react-native-community/slider';
+
+import GardenPropDict from '../static/GardenPropDict';
+
 import SunSVG from '../assets/svg/SunSVG'
 import TemperatureSVG from '../assets/svg/TemperatureSVG'
 import SoilMoisture from '../assets/svg/SoilMoisture'
 import Humidity from '../assets/svg/Humidity'
-import Slider from '@react-native-community/slider';
-
 
 
 
@@ -28,14 +31,8 @@ const GardenPropItem = ({type, onPress}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const [temperature, setTemperature] = useState(0);
-  sensorsuffix = () => {
-    if (type === "Temperature") {
-      return '°C'
-    } else {
-      return "%"
-    }
-  }
+  const [value, setValue] = useState(0);
+  sensorsuffix = () => GardenPropDict[type].PropSuffix
   classStyling = "mx-auto w-[90%] h-28  rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
 
   if (type === "Temperature") {
@@ -49,7 +46,7 @@ const GardenPropItem = ({type, onPress}) => {
   }
 
   function handleSlideChange(newTemp) {
-    setTemperature(newTemp)
+    setValue(newTemp)
   }
 
   return (
@@ -60,7 +57,7 @@ const GardenPropItem = ({type, onPress}) => {
           <View className="flex flex-row content-center">
 
               <View className=""><GardenPropIcon type={type}/></View>
-              <Text className= "px-2 text-stone-600 font-bold text-2xl my-auto min-w-[20%] text-center">{temperature + "°C" && +temperature.toFixed(0) + sensorsuffix()}</Text>
+              <Text className= "px-2 text-stone-600 font-bold text-2xl my-auto min-w-[20%] text-center">{"N/A" && +value.toFixed(0) + sensorsuffix()}</Text>
               <MaterialIcons className="mx-1 my-auto text-center text-stone-600 text-[10px] " name="circle"/>
               <Text className="align-middle text-xl text-stone-600 font-semibold my-auto">{type} </Text>
           </View>
