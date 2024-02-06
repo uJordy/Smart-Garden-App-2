@@ -1,17 +1,25 @@
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 
 import Leaf from '../assets/svg/Leaf'
-import Back from '../assets/svg/Back'
 import BackButton from '../components/BackButton';
 import Slider from '@react-native-community/slider';
+
+import GardenPropDict from '../static/GardenPropDict';
 
 export default function EditGardenPropPage({ route, navigation }) {
 
   const { gardenprop } = route.params;
+  const type = gardenprop
+
+  const [value, setValue] = useState(0);
 
   function handleGoBack() {
     navigation.goBack()
+  }
+
+  function handleSlideChange(newTemp) {
+    setValue(newTemp)
   }
 
   return (
@@ -26,20 +34,20 @@ export default function EditGardenPropPage({ route, navigation }) {
           </View>
           <View className="basis-1/4 " />
         </View>
-        <Text className="text-3xl font-bold mx-auto pt-4">{gardenprop}</Text>
+        <Text className="text-3xl font-bold mx-auto pt-4">{type}</Text>
         <View className="bg-green-500 rounded-full aspect-square w-48 mx-auto mt-10 py-10shadow-lg">
           <Text className="mx-auto my-auto text-5xl font-bold text-white">20%</Text>
         </View>
         <View className="w-[70%] mx-auto pt-8">
-          <Text className="mx-auto text-2xl font-semibold">30%</Text>
+          <Text className="mx-auto text-2xl font-semibold">{"N/A" && +value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
           <Slider
-            step={0.1}
-            minimumValue={0}
-            maximumValue={35}
-            minimumTrackTintColor="rgba(255, 255, 2555, 1)'"
-            maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
-          // onValueChange={handleSlideChange}
-          />
+        step={GardenPropDict[type].Step}
+        minimumValue={GardenPropDict[type].MinVal}
+        maximumValue={GardenPropDict[type].MaxVal}
+        minimumTrackTintColor="rgba(255, 255, 2555, 1)'"
+        maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
+        onValueChange={handleSlideChange}
+      />
         </View>
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
           <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
