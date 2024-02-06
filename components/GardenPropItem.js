@@ -7,7 +7,12 @@ import SoilMoisture from '../assets/svg/SoilMoisture'
 import Humidity from '../assets/svg/Humidity'
 import Slider from '@react-native-community/slider';
 
+
+
+
 function GardenPropIcon({type}) {
+
+
   if (type === "Temperature") {
     return <TemperatureSVG fill="#57534e"/> //15abeb
   } else if (type === "Light Intensity") {
@@ -19,11 +24,10 @@ function GardenPropIcon({type}) {
   }
 }
 
-
 const GardenPropItem = ({type, onPress}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  // const [temperature, setTemperature] = useState(props.value ?? 0);
+
   const [temperature, setTemperature] = useState(0);
   sensorsuffix = () => {
     if (type === "Temperature") {
@@ -33,16 +37,6 @@ const GardenPropItem = ({type, onPress}) => {
     }
   }
   classStyling = "mx-auto w-[90%] h-28  rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
-
-  // if (type === "Temperature") {
-  //   classStyling += " bg-sky-500"
-  // } else if (type === "Light Intensity") {
-  //   classStyling += " bg-yellow-500"
-  // } else if (type === "Soil Moisture") {
-  //   classStyling += " bg-stone-500"
-  // } else if (type === "Humidity") {
-  //   classStyling += " bg-red-500"
-  // }
 
   if (type === "Temperature") {
     classStyling += " bg-blue-200"
@@ -55,17 +49,11 @@ const GardenPropItem = ({type, onPress}) => {
   }
 
   function handleSlideChange(newTemp) {
-    // console.log(newTemp)
     setTemperature(newTemp)
   }
 
-  const pressHandler = () => {
-    console.log("print")
-    navigationstack.navigate('EditGardenPropPage')
-}
-
   return (
-    <TouchableOpacity className={classStyling} onPress={onPress}>
+    <TouchableOpacity className={classStyling} onPress={() => onPress(type)}>
 
     <View className="h-[100%] w-full mx-auto flex-1 flex-row justify-between ">
       <View className="pl-4 text-lg align-middle  content-center my-auto ">
@@ -76,7 +64,6 @@ const GardenPropItem = ({type, onPress}) => {
               <MaterialIcons className="mx-1 my-auto text-center text-stone-600 text-[10px] " name="circle"/>
               <Text className="align-middle text-xl text-stone-600 font-semibold my-auto">{type} </Text>
           </View>
-          {/* <Text className="text-white">Everyday</Text>  */}
       </View>
       <View className="flex items-center justify-center pr-4 ">
         <Switch

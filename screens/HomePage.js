@@ -103,9 +103,10 @@ function HomePage({navigation}) {
         })
     }, []);
 
-    const pressHandler = () => {
-        console.log("print")
-        navigation.navigate('EditGardenPropPage')
+    const pressHandler = (gardenprop) => {
+        navigation.navigate('EditGardenPropPage', {
+            gardenprop: gardenprop
+        })
     }
 
     return (
@@ -114,41 +115,10 @@ function HomePage({navigation}) {
                 <View className="w-16 h-16 mx-auto mb-9">
                     <Leaf fill="#2db551"/>
                 </View>    
-                
-
-                {/* <View className="bg-orange-500 mx-auto mt-2 rounded-full h-8">
-                    <Text className="text-2xl rounded-full text-white mx-2">Home</Text>
-                </View> */}
-
-                {/* <View className="mx-auto">
-                    <Text className="text-2xl font-bold">Home</Text>
-                </View> */}
-
-                {/* Tasks */}
-                {/* <TouchableOpacity className="w-[90%] mx-auto mt-2 bg-slate-50 rounded-2xl">
-                    <Text className="text-xl mx-2 mt-2">Tasks</Text>
-                    <ScrollView>
-                        <HomePageTask />
-                        <HomePageTask />
-                        <HomePageTask />
-                        <HomePageTask />
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <View className="mt-2">
-                    <TouchableOpacity className="mx-auto w-[95%] h-20 bg-blue-200 rounded-2xl">
-                        <View className="flex flex-row h-14">
-                            <View className="ml-2 mt-2"><SunSVG fill="#facc15"/></View>
-                            <Text className="bg-orange-500  align-baseline">Temperature</Text>
-                        </View>
-                    </TouchableOpacity>
-                    </View> */}
-                {/* <Button onPress={pressHandler} title="Hellooo"/> */}
-
                 <GardenPropItem type="Temperature"  onPress={pressHandler} />
-                <GardenPropItem type="Light Intensity"/>
-                <GardenPropItem type="Soil Moisture"/>
-                <GardenPropItem type="Humidity"/>
+                <GardenPropItem type="Light Intensity" onPress={pressHandler}/>
+                <GardenPropItem type="Soil Moisture" onPress={pressHandler}/>
+                <GardenPropItem type="Humidity" onPress={pressHandler}/>
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
                 </View>
