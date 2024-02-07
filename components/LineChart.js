@@ -5,18 +5,18 @@ import { LineChart } from "react-native-chart-kit";
 
 import {Dimensions} from 'react-native';
 
-const Chart = ({chartClassName}) => {
-// export class Chart extends Component {
-  // render() {
+const Chart = ({type, chartClassName}) => {
+
     return (
       <View className={chartClassName}>
-        {/* <Text>Bezier Line Chart</Text> */}
+
         <LineChart
           data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
+            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
             datasets: [
               {
                 data: [
+                  Math.random() * 100,
                   Math.random() * 100,
                   Math.random() * 100,
                   Math.random() * 100,
@@ -28,9 +28,9 @@ const Chart = ({chartClassName}) => {
             ]
           }}
           width={Dimensions.get("window").width} // from react-native
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="k"
+          height={"220"}
+          // yAxisLabel="$"
+          yAxisSuffix="%"
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
             backgroundColor: "#e26a00",

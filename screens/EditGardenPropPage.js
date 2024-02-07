@@ -67,7 +67,7 @@ export default function EditGardenPropPage({ route, navigation }) {
         </View>
 
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
-          <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>s
+          <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
           <View className="bg-slate-50 mt-5">
             <Text className="mx-auto">Dropdown menu</Text>
           </View>
