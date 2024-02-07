@@ -3,9 +3,12 @@ import React, { useState } from 'react'
 
 import Leaf from '../assets/svg/Leaf'
 import BackButton from '../components/BackButton';
+import LineChart from '../components/LineChart';
 import Slider from '@react-native-community/slider';
 
+
 import GardenPropDict from '../static/GardenPropDict';
+
 
 export default function EditGardenPropPage({ route, navigation }) {
 
@@ -52,7 +55,7 @@ export default function EditGardenPropPage({ route, navigation }) {
           <Text className="mx-auto my-auto text-5xl font-bold text-white">20%</Text>
         </View>
         <View className="w-[70%] mx-auto pt-8">
-          <Text className="mx-auto text-2xl font-semibold">{"N/A" && +value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
+          <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " +value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
           <Slider
             step={GardenPropDict[type].Step}
             minimumValue={GardenPropDict[type].MinVal}
@@ -62,8 +65,14 @@ export default function EditGardenPropPage({ route, navigation }) {
             onValueChange={handleSlideChange}
           />
         </View>
+
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
-          <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
+          <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>s
+          <View className="bg-slate-50 mt-5">
+            <Text className="mx-auto">Dropdown menu</Text>
+          </View>
+          <LineChart chartClassName="pt-6"/>
+
         </View>
       </ScrollView>
     </SafeAreaView>
