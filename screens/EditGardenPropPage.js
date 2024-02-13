@@ -15,7 +15,7 @@ export default function EditGardenPropPage({ route, navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const { gardenprop } = route.params;
+  const { gardenprop, handlePastData2 } = route.params;
   const type = gardenprop
 
   const [value, setValue] = useState(0); //Garden prop value
@@ -25,7 +25,14 @@ export default function EditGardenPropPage({ route, navigation }) {
   }
 
   function handleSlideChange(newTemp) {
-    setValue(newTemp)
+    setValue(newTemp) 
+  }
+
+  function handleSlideComplete(newTemp) {
+    //Save data to database
+    // console.log(Date.now())
+
+    handlePastData("hello!!!")
   }
 
   return (
@@ -63,6 +70,7 @@ export default function EditGardenPropPage({ route, navigation }) {
             minimumTrackTintColor="rgba(255, 255, 2555, 1)'"
             maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
             onValueChange={handleSlideChange}
+            onSlidingComplete={handleSlideComplete}
           />
         </View>
 
@@ -71,7 +79,7 @@ export default function EditGardenPropPage({ route, navigation }) {
           <View className="bg-slate-50 mt-5">
             <Text className="mx-auto">Dropdown menu</Text>
           </View>
-          <LineChart chartClassName="pt-6"/>
+          <LineChart type={type} chartClassName="pt-6"/>
 
         </View>
       </ScrollView>
