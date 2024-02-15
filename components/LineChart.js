@@ -41,24 +41,19 @@ export default class App extends React.Component {
           scale={{ x: "date", x: "linear" }}
         >
           <VictoryAxis dependentAxis />
-          {/* <VictoryAxis style={{ tickLabels: { angle: 0 } }} fixLabelOverlap={true}  /> */}
-          {/* <VictoryAxis
-            scale="time"
-            standalone={false}
-            // style={styles.axisYears}
-            // tickValues={tickValues}
-            tickFormat={date => date.toLocaleString('en-us', { month:'short' })}
-        /> */}
+          <VictoryAxis
+            tickFormat={(x) => new Date(x).getFullYear()}
+          />
           <VictoryLine
             style={{
               data: { stroke: "#c43a31" },
               parent: { border: "1px solid #ccc" }
             }}
-            scale={{ x: "time", y: "linear" }}
+            scale={{ x: "time"}}
             interpolation="monotoneX"
-            domain={{ //Use this to get a week's worth of data shown
-              x: [new Date(2001, 1, 1), new Date(2015, 12, 30)],
-            }}
+            // domain={{ //Use this to get a week's worth of data shown
+            //   x: [new Date(2001, 1, 1), new Date(2015, 12, 30)],
+            // }}
             data={[
               { date: new Date(1982, 1, 1), value: 125 },
               { date: new Date(1987, 1, 1), value: 257 },
@@ -71,9 +66,6 @@ export default class App extends React.Component {
             ]}
             x="date"
             y="value"
-          />
-          <VictoryAxis
-            tickFormat={(x) => new Date(x).getFullYear()}
           />
         </VictoryChart>
       </View>
