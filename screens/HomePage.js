@@ -4,12 +4,6 @@ import GardenPropItem from '../components/GardenPropItem';
 
 import Leaf from '../assets/svg/Leaf';
 
-
-
-
-
-
-
 function HomePage({navigation}) {
 
     // loadData()
@@ -27,7 +21,6 @@ function HomePage({navigation}) {
     const pressHandler = (gardenprop) => {
         navigation.navigate('EditGardenPropPage', {
             gardenprop: gardenprop,
-            handlePastData2: handlePastData
         })
     }
 

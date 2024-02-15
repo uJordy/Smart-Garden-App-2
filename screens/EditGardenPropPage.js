@@ -15,7 +15,7 @@ export default function EditGardenPropPage({ route, navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const { gardenprop, handlePastData2 } = route.params;
+  const { gardenprop} = route.params;
   const type = gardenprop
 
   const [value, setValue] = useState(0); //Garden prop value
@@ -24,6 +24,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     navigation.goBack()
   }
 
+  console.log(new Date(1982, 1, 1))
   function handleSlideChange(newTemp) {
     setValue(newTemp) 
   }
@@ -32,7 +33,6 @@ export default function EditGardenPropPage({ route, navigation }) {
     //Save data to database
     // console.log(Date.now())
 
-    handlePastData("hello!!!")
   }
 
   return (
