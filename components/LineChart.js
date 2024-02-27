@@ -2,35 +2,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 
-const data = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 }
-];
-
-const data2 = [
-  {
-    key: new Date('December 17, 1995'),
-    value: 10
-  },
-  {
-    key: new Date('December 16, 1997'),
-    value: 10
-  },
-  {
-    key: new Date('December 25, 2000'),
-    value: 50
-  },
-  {
-    key: new Date('December 29, 2002'),
-    value: 20
-  },
-  {
-    key: new Date('December 31, 2001'),
-    value: 80
-  }
-]
 
 export default class App extends React.Component {
   render() {
@@ -52,7 +23,7 @@ export default class App extends React.Component {
             scale={{ x: "time"}}
             interpolation="monotoneX"
             // domain={{ //Use this to get a week's worth of data shown
-            //   x: [new Date(2001, 1, 1), new Date(2015, 12, 30)],
+            //   x: [new Date(2001, 1, 1), new Date.now],
             // }}
             data={[
               { date: new Date(1982, 1, 1), value: 125 },
@@ -83,14 +54,3 @@ const styles = StyleSheet.create({
 });
 
 
-
-// const getSingleStockChart = (state, stockId) => {
-//   return state.transactions.allIds.reduce((result, transId) => {
-//     if (state.transactions.byId[transId].stockId == stockId)
-//       result.push({
-//         x: new Date(state.transactions.byId[transId].seedDate),
-//         y: state.transactions.byId[transId].price
-//       })
-//     return result
-//   }, [])
-// }

@@ -1,27 +1,52 @@
 import * as FileSystem from 'expo-file-system';
 
-var GardenData = {};
+// var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
-var sgDictExample = {
-  Temperature: 50, //Celcius 
-  Light: 20, //Percentage
-  SoilMoisture: 5, //Percentage
-  Humidity: 80 //Percentage
-}
-GardenData = sgDictExample;
+// var sgDictExample = {
+//   Temperature: 50, //Celcius 
+//   Light: 20, //Percentage
+//   SoilMoisture: 5, //Percentage
+//   Humidity: 80 //Percentage
+// }
 
-var sgPastDataDict = {
-  Temperature:
-  {
-    Date: 0, //date.now() 
-    Data: 0
-  }
+var sgDictExample = {
+  Temperature: { //Celcius 
+    Value: 0, //Current
+    History: []
+  }, 
+  Light: { //Percentage
+    Value: 0, 
+    History: []
+  }, 
+  SoilMoisture: { //Percentage
+    Value: 0, 
+    History: []
+  }, 
+  Humidity: { //Percentage
+    Value: 0, 
+    History: []
+  }, 
 }
+
+// GardenData = sgDictExample;
 
 
 class DataHandler {
+
+  GardenData = {};
+  GardenData = sgDictExample; // Overwrite saved data
+
+  get GardenData() {
+    return this.GardenData;
+  }
+
   // Must loadData() first!
+
+  createFile() {
+    GardenData = sgDictExample;
+  }
+
   saveData() {
     const id = FileSystem.documentDirectory + fileName;
 
@@ -93,6 +118,15 @@ class DataHandler {
       });
     } catch (e) {
       console.error(e)
+    }
+  }
+
+  addHistoryData(sensor, data) {
+    if (typeof(data) === "string"){
+      GardenData[sensor].History.append(data)
+      console.log("Successfully appended historical data for " + sensor)
+    } else {
+      console.error("History Data: Invalid data type")
     }
   }
 }

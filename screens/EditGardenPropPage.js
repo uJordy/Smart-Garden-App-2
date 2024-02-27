@@ -24,7 +24,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     navigation.goBack()
   }
 
-  console.log(new Date(1982, 1, 1))
+  
   function handleSlideChange(newTemp) {
     setValue(newTemp) 
   }
