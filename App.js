@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -9,9 +9,11 @@ import Home from './screens/HomePage';
 import EditGardenPropPage from './screens/EditGardenPropPage';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import * as FileSystem from 'expo-file-/system';
+import * as FileSystem from 'expo-file-system';
 
-// var GardenData = {};
+import useStore from './stores/garden' 
+
+var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
 const Stack = createNativeStackNavigator();
@@ -174,6 +176,9 @@ function TabNavigator() {
 
 
 function App() {
+  console.log("hello")
+  const addHistory = useStore((state) => state.addHistory)
+  addHistory()
   return (
     <NavigationContainer>
       <TabNavigator />

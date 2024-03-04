@@ -3,6 +3,7 @@ import { Text, SafeAreaView, View, ScrollView, Image } from 'react-native';
 import PlantJob from '../components/PlantJob';
 import { useNavigation } from '@react-navigation/native';
 
+
 import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
 
 
@@ -19,6 +20,7 @@ function HomePage(props) {
     return (
         <SafeAreaView>
             <ScrollView>
+            
 
                 {/* Header */}
                 <View>

@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, ScrollView, Switch } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import Leaf from '../assets/svg/Leaf'
 import BackButton from '../components/BackButton';
@@ -15,18 +15,21 @@ export default function EditGardenPropPage({ route, navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const { gardenprop} = route.params;
+  const { gardenprop } = route.params;
   const type = gardenprop
 
   const [value, setValue] = useState(0); //Garden prop value
+
+  propHistory = useContext(DataContext);
+  console.log(propHistory)
 
   function handleGoBack() {
     navigation.goBack()
   }
 
-  
+
   function handleSlideChange(newTemp) {
-    setValue(newTemp) 
+    setValue(newTemp)
   }
 
   function handleSlideComplete(newTemp) {
@@ -62,7 +65,7 @@ export default function EditGardenPropPage({ route, navigation }) {
           <Text className="mx-auto my-auto text-5xl font-bold text-white">20%</Text>
         </View>
         <View className="w-[70%] mx-auto pt-8">
-          <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " +value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
+          <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " + value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
           <Slider
             step={GardenPropDict[type].Step}
             minimumValue={GardenPropDict[type].MinVal}
@@ -79,7 +82,7 @@ export default function EditGardenPropPage({ route, navigation }) {
           <View className="bg-slate-50 mt-5">
             <Text className="mx-auto">Dropdown menu</Text>
           </View>
-          <LineChart type={type} chartClassName="pt-6"/>
+          <LineChart type={type} chartClassName="pt-6" />
 
         </View>
       </ScrollView>

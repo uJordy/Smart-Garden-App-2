@@ -1,9 +1,9 @@
-import React from "react";
+import React, {Component} from "react";
 import { StyleSheet, View } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 
-
-export default class App extends React.Component {
+//send historical data into here and convert json time into data object
+export default class LineChart extends Component {
   render() {
     return (
       <View style={styles.container}>
