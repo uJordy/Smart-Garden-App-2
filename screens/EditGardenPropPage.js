@@ -9,6 +9,9 @@ import Slider from '@react-native-community/slider';
 
 import GardenPropDict from '../static/GardenPropDict';
 
+import useStore from '../stores/garden'
+
+
 
 export default function EditGardenPropPage({ route, navigation }) {
 
@@ -16,23 +19,52 @@ export default function EditGardenPropPage({ route, navigation }) {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const { gardenprop } = route.params;
-  const type = gardenprop
+  const [type] = useState(gardenprop)
 
   const [value, setValue] = useState(0); //Garden prop value
 
-  propHistory = useContext(DataContext);
-  console.log(propHistory)
+  const addTemperatureHistory = useStore((state) => state.addTemperatureHistory)
+  const addLightHistory = useStore((state) => state.addLightHistory)
+  const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
+  const addHumidityHistory = useStore((state) => state.addHumidityHistory)
+
+  const gardata = useStore((state) => state.data)
+
+  // let slide_debounce = false
+  const [slide_debounce, setDebounce] = useState(false);
 
   function handleGoBack() {
     navigation.goBack()
   }
 
-
-  function handleSlideChange(newTemp) {
-    setValue(newTemp)
+  function handleSlideChange(newVal) {
+    setValue(newVal)
   }
 
-  function handleSlideComplete(newTemp) {
+  function handleSlideComplete(newVal) {
+
+    if (slide_debounce) return
+
+    setDebounce(true)
+    setTimeout(()=>{
+      setDebounce(false)
+    }, 500)
+
+    newVal = newVal.toFixed(1)
+    // console.log(newTemp.toFixed(1))
+    console.log("[ADD HISTORY] Adding history " + type)
+    if (type === "Temperature") {
+      addTemperatureHistory(newVal)
+    } else if (type === "Light") {
+      addLightHistory(newVal)
+    } else if (type === "Soil Moisture") {
+      addSoilMoistureHistory(newVal)
+    } else if (type === "Humidity") {
+      addHumidityHistory(newVal)
+    }
+
+    console.log(gardata.Temperature.History)
+    // addHistory(newTemp.toFixed(1))
     //Save data to database
     // console.log(Date.now())
 

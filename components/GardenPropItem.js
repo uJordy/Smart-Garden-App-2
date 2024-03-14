@@ -11,10 +11,10 @@ import TemperatureSVG from '../assets/svg/TemperatureSVG'
 import SoilMoisture from '../assets/svg/SoilMoisture'
 import Humidity from '../assets/svg/Humidity'
 
+import useStore from '../stores/garden'
 
 
 function GardenPropIcon({type}) {
-
 
   if (type === "Temperature") {
     return <TemperatureSVG fill="#57534e"/> //15abeb
@@ -32,6 +32,7 @@ const GardenPropItem = ({type, onPress}) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const [value, setValue] = useState(0);
+  const gardata = useStore((state) => state.data)
 
   classStyling = "mx-auto w-[90%] h-28  rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
 
@@ -80,6 +81,7 @@ const GardenPropItem = ({type, onPress}) => {
         minimumTrackTintColor="rgba(255, 255, 2555, 1)'"
         maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
         onValueChange={handleSlideChange}
+        // value={gValue}
       />
   </View>
 </TouchableOpacity>

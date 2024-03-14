@@ -11,7 +11,7 @@ import EditGardenPropPage from './screens/EditGardenPropPage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as FileSystem from 'expo-file-system';
 
-import useStore from './stores/garden' 
+// import useStore from './stores/garden' 
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -176,9 +176,9 @@ function TabNavigator() {
 
 
 function App() {
-  console.log("hello")
-  const addHistory = useStore((state) => state.addHistory)
-  addHistory()
+  // console.log("hello")
+  // const addHistory = useStore((state) => state.addHistory)
+  // addHistory()
   return (
     <NavigationContainer>
       <TabNavigator />

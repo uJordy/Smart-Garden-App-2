@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system';
 
+
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
@@ -10,19 +11,19 @@ var sgDictExample = {
   Temperature: { //Celcius 
     Value: 0, //Current
     History: []
-  }, 
+  },
   Light: { //Percentage
-    Value: 0, 
+    Value: 0,
     History: []
-  }, 
+  },
   SoilMoisture: { //Percentage
-    Value: 0, 
+    Value: 0,
     History: []
-  }, 
+  },
   Humidity: { //Percentage
-    Value: 0, 
+    Value: 0,
     History: []
-  }, 
+  },
 }
 
 function createFile() {
@@ -75,7 +76,7 @@ function loadData() {
 }
 
 function addHistoryData(sensor, data) {
-  if (typeof(data) === "string"){
+  if (typeof (data) === "string") {
     GardenData[sensor].History.append(data)
     console.log("Successfully appended historical data for " + sensor)
   } else {
@@ -83,23 +84,90 @@ function addHistoryData(sensor, data) {
   }
 }
 
-const useStore = create((set) => ({
+const useStore = create((set, get) => ({
   data: sgDictExample,
-  addHistory: () => {
-    console.log("hi!!!")
-    // set((state) => ({ data: state.data.Temperature.History.push("history one") }))
 
-    set((oldState) => {
-      console.log("Func 1")
-      console.log(oldState.data);
+  // Temperature: () => data.Temperature.Value,
+
+  setTemperature: (newVal) => {
+    set((state) => ({
+      // newState = oldState.data;
+      // newState.Temperature.Value = newVal
+      // return { data: newState }
+      data: { ...state.data, Temperature: { ...state.data.Temperature, Value: newVal } },
+    }))
+  },
+
+  setLight: (newVal) => {
+    set(() => {
       newState = oldState.data;
-      newState.Temperature.History.push("history one")
-      return {  data: newState }
+      newState.Light.Value = newVal
+      return { data: newState }
     })
   },
 
-  // removeAllBears: () => set({ bears: 0 }),
-  // updateBears: (newBears) => set({ bears: newBears }),
+  setSoilMoisture: (newVal) => {
+    set(() => {
+      newState = oldState.data;
+      newState.SoilMoisture.Value = newVal
+      return { data: newState }
+    })
+  },
+
+  setHumidity: (newVal) => {
+    set(() => {
+      newState = oldState.data;
+      newState.Humidity.Value = newVal
+      return { data: newState }
+    })
+  },
+
+  addTemperatureHistory: (newVal) => {
+    // console.log("hi!!!")
+    // set((state) => ({ data: state.data.Temperature.History.push("history one") }))
+    // set((oldState) => {
+    //   newState = oldState.data;
+    //   newState.Temperature.History.push(newVal)
+    //   return { data: newState }
+    // })
+    date = new Date()
+    dateJSON = date.toJSON()
+    const histData = [dateJSON, newVal]
+    // console.log(histData)
+    set((state) => ({
+      data: {
+        ...state.data,
+        Temperature: {
+          ...state.data.Temperature,
+          History: state.data.Temperature.History.concat([histData])
+        }
+      },
+    }))
+  },
+
+  addLightHistory: (newVal) => {
+    set((oldState) => {
+      newState = oldState.data;
+      newState.Light.History.push(newVal)
+      return { data: newState }
+    })
+  },
+
+  addSoilMoistureHistory: (newVal) => {
+    set((oldState) => {
+      newState = oldState.data;
+      newState.SoilMoisture.History.push(newVal)
+      return { data: newState }
+    })
+  },
+
+  addLightHistory: (newVal) => {
+    set((oldState) => {
+      newState = oldState.data;
+      newState.Light.Light.push(newVal)
+      return { data: newState }
+    })
+  },
 }))
 
 // const userStore = create<Store>((set, get) => ({
@@ -115,7 +183,6 @@ const useStore = create((set) => ({
 //  }));
 
 // const addHistory = useStore((state) => state.addHistory)
-console.log("history work?")
 // return <button onClick={increasePopulation}>one up</button>
 
-export default useStore
+export default useStore;
