@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView, Switch } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Switch, Platform } from 'react-native'
 import React, { useContext, useState } from 'react'
 
 import Leaf from '../assets/svg/Leaf'
