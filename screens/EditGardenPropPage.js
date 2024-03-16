@@ -23,6 +23,7 @@ export default function EditGardenPropPage({ route, navigation }) {
 
   const [value, setValue] = useState(0); //Garden prop value
 
+  const setTemperature = useStore((state) => state.setTemperature)
   const addTemperatureHistory = useStore((state) => state.addTemperatureHistory)
   const addLightHistory = useStore((state) => state.addLightHistory)
   const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
@@ -54,6 +55,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     // console.log(newTemp.toFixed(1))
     console.log("[ADD HISTORY] Adding history " + type)
     if (type === "Temperature") {
+      setTemperature(newVal)
       addTemperatureHistory(newVal)
     } else if (type === "Light") {
       addLightHistory(newVal)
@@ -63,7 +65,7 @@ export default function EditGardenPropPage({ route, navigation }) {
       addHumidityHistory(newVal)
     }
 
-    console.log(gardata.Temperature.History)
+    // console.log(gardata.Temperature.History)
     // addHistory(newTemp.toFixed(1))
     //Save data to database
     // console.log(Date.now())
@@ -107,6 +109,7 @@ export default function EditGardenPropPage({ route, navigation }) {
             onValueChange={handleSlideChange}
             onSlidingComplete={handleSlideComplete}
           />
+          <Text>{gardata.Temperature.Value}</Text>
         </View>
 
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
