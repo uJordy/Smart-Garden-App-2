@@ -23,13 +23,13 @@ export default function EditGardenPropPage({ route, navigation }) {
 
   const [value, setValue] = useState(0); //Garden prop value
 
+  const gardata = useStore((state) => state.data)
+
   const setTemperature = useStore((state) => state.setTemperature)
   const addTemperatureHistory = useStore((state) => state.addTemperatureHistory)
   const addLightHistory = useStore((state) => state.addLightHistory)
   const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
   const addHumidityHistory = useStore((state) => state.addHumidityHistory)
-
-  const gardata = useStore((state) => state.data)
 
   // let slide_debounce = false
   const [slide_debounce, setDebounce] = useState(false);
@@ -52,8 +52,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     }, 500)
 
     newVal = newVal.toFixed(1)
-    // console.log(newTemp.toFixed(1))
-    console.log("[ADD HISTORY] Adding history " + type)
+    console.log("[ADD HISTORY] Adding history for: " + type)
     if (type === "Temperature") {
       setTemperature(newVal)
       addTemperatureHistory(newVal)
@@ -65,13 +64,18 @@ export default function EditGardenPropPage({ route, navigation }) {
       addHumidityHistory(newVal)
     }
 
-    // console.log(gardata.Temperature.History)
-    // addHistory(newTemp.toFixed(1))
-    //Save data to database
-    // console.log(Date.now())
-
   }
 
+  function getValue() { //To compensate for dictionary name "Light" / "Light Intensity"
+    if (type === "Light Intensity") {
+      return gardata["Light"].Value
+    } else if (type === "Soil Moisture") {
+      return gardata["SoilMoisture"].Value
+    } else {
+      return gardata[type].Value
+    }
+  }
+  
   return (
     <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
       <ScrollView bounces={false}>
@@ -108,16 +112,17 @@ export default function EditGardenPropPage({ route, navigation }) {
             maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
             onValueChange={handleSlideChange}
             onSlidingComplete={handleSlideComplete}
+            value={getValue()}
           />
-          <Text>{gardata.Temperature.Value}</Text>
+          <Text>{getValue()}</Text>
         </View>
 
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
           <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
           <View className="bg-slate-50 mt-5">
-            <Text className="mx-auto">Dropdown menu</Text>
+            <Text className="mx-auto">Week</Text>
           </View>
-          <LineChart type={type} chartClassName="pt-6" />
+          <LineChart type={type} />
 
         </View>
       </ScrollView>

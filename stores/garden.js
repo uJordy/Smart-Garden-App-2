@@ -6,6 +6,7 @@ var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
 GardenData = sgDictExample; // Overwrite saved data
+const generateSampleData = true;
 
 var sgDictExample = {
   Temperature: { //Celcius 
@@ -24,6 +25,67 @@ var sgDictExample = {
     Value: 0,
     History: []
   },
+}
+
+function generateRandom(min, max) {
+  let difference = max - min;
+
+  let rand = Math.random();
+  rand = Math.floor( rand * difference);
+  rand = rand + min;
+
+  return rand;
+}
+
+//Returns last week data for each sensor within min and max ranges
+function generateWeekData(min, max) { 
+  returnval = []
+  dayIterator = new Date()
+  indexstart = (dayIterator.getDate() -7 )
+  indexend = dayIterator.getDate()
+
+  for (let i = indexstart; i < indexend; i++) {
+    dayit = new Date()
+    dayit.setDate(i);
+
+    returnval.push([dayit.toJSON(), generateRandom(min, max)])
+  }
+  return returnval;
+}
+
+function SampleData() {
+  if (generateSampleData === true) {
+
+    //Temperature
+    const maxTemp = 35;
+    const minTemp = 0;
+
+    sgDictExample.Temperature.Value = generateRandom(minTemp, maxTemp)
+    sgDictExample.Temperature.History = generateWeekData(minTemp, maxTemp)
+
+    //Light Intensity
+    const maxLight = 100;
+    const minLight = 0;
+
+    sgDictExample.Light.Value = generateRandom(minLight, maxLight)
+    sgDictExample.Light.History = generateWeekData(minLight, maxLight)
+
+    //Soil Moisture
+    const maxSoilMoisture = 100;
+    const minSoilMoisture = 0;
+
+    sgDictExample.SoilMoisture.Value = generateRandom(minSoilMoisture, maxSoilMoisture)
+    sgDictExample.SoilMoisture.History = generateWeekData(minSoilMoisture, maxSoilMoisture)
+
+    //Humidity
+    const maxHumidity = 35;
+    const minHumidity = 0;
+
+    sgDictExample.Humidity.Value = generateRandom(minHumidity, maxHumidity)
+    sgDictExample.Humidity.History = generateWeekData(minHumidity, maxHumidity)
+
+
+  }
 }
 
 function createFile() {
@@ -84,6 +146,9 @@ function addHistoryData(sensor, data) {
   }
 }
 
+//generateSampleData must be true!
+SampleData()
+
 const useStore = create((set, get) => ({
   data: sgDictExample,
 
@@ -123,17 +188,11 @@ const useStore = create((set, get) => ({
   },
 
   addTemperatureHistory: (newVal) => {
-    // console.log("hi!!!")
-    // set((state) => ({ data: state.data.Temperature.History.push("history one") }))
-    // set((oldState) => {
-    //   newState = oldState.data;
-    //   newState.Temperature.History.push(newVal)
-    //   return { data: newState }
-    // })
+    newVal = parseInt(newVal)
     date = new Date()
     dateJSON = date.toJSON()
     const histData = [dateJSON, newVal]
-    // console.log(histData)
+
     set((state) => ({
       data: {
         ...state.data,
@@ -169,6 +228,8 @@ const useStore = create((set, get) => ({
     })
   },
 }))
+
+
 
 // const userStore = create<Store>((set, get) => ({
 //   ...
