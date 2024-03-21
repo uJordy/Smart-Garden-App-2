@@ -119,8 +119,8 @@ export default function EditGardenPropPage({ route, navigation }) {
 
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
           <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
-          <View className="bg-slate-50 mt-5">
-            <Text className="mx-auto">Week</Text>
+          <View className="bg-slate-800">
+            <Text className="mx-auto bg-slate-800 text-xl text-white font-semibold">Last week</Text>
           </View>
           <LineChart type={type} />
 

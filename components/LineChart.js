@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 
 import useStore from '../stores/garden'
+const Rect = (props) => <rect vectorEffect="non-scaling-stroke" {...props} />;
+// import Background from "./Background";
 
 // const options = { weekday: "long" };
 
@@ -53,35 +55,42 @@ export default function LineChart({ type }) {
   return (
     <View style={styles.container}>
       <VictoryChart
-        theme={VictoryTheme.material}
         scale={{ x: "date", y: "linear" }}
         domainPadding={{ y: 10 }}
+        // fill="#0f172a"
+
+        style={{
+          background: { fill: "#1e293b" },
+        }}
+
+        theme={{
+          axis: {
+            style: {
+              tickLabels: {
+                fill: 'white',
+              },
+            },
+          },
+        }}
       >
-        <VictoryAxis dependentAxis />
+        <VictoryAxis dependentAxis
+          style={{
+            grid: lineStyle,
+          }}
+        />
         <VictoryAxis
-          // tickFormat={(x) => new Date(x).getFullYear()}
-          // tickValues={[0,1,2,3,4,5,6]}
           tickValues={lastWeekdaysIndex()}
-          // tickValues={[
-          //   new Date(2024, 2, 10),
-          //   new Date(2024, 2, 11),
-          //   new Date(2024, 2, 12),
-          //   new Date(2024, 2, 13),
-          //   new Date(2024, 2, 14),
-          //   new Date(2024, 2, 15),
-          //   new Date(2024, 2, 16),
-
-          // ]}
-          // tickFormat={(x) => new Intl.DateTimeFormat("en-US", options).format(x)}
-          // tickFormat={(x) => new Date(x).getDay()}
-
           tickFormat={(x) => x.toLocaleString("en-EN", { weekday: "short" })}
-
+          style={{
+            grid: lineStyle,
+            axis: lineStyle,
+          }}
         />
         <VictoryLine
           style={{
-            data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc" }
+            data: { stroke: "#fbbf24", strokeWidth: "4px" },
+            parent: { border: "1px solid #ccc", fill: "green" },
+            
           }}
           scale={{ x: "time" }}
           interpolation="monotoneX"
@@ -89,15 +98,6 @@ export default function LineChart({ type }) {
             x: [lastWeekdaysIndex()[0], lastWeekdaysIndex()[6]],
           }}
           data={parsedHistory}
-          // data={[
-          //   { date: new Date(2024, 2, 16), value: 250 },
-          //   { date: new Date(2024, 2, 15), value: 200 },
-          //   { date: new Date(2024, 2, 14), value: 130 },
-          //   { date: new Date(2024, 2, 13), value: 100 },
-          //   { date: new Date(2024, 2, 12), value: 90 },
-          //   { date: new Date(2024, 2, 11), value: 80 },
-          //   { date: new Date(2024, 2, 10), value: 100 }
-          // ]}
           x="date"
           y="value"
         />
@@ -112,8 +112,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5fcff"
   }
 });
+
+const lineStyle = {stroke: '#64748b', strokeWidth: 1 }
+
 
 
