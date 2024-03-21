@@ -68,11 +68,11 @@ export default function EditGardenPropPage({ route, navigation }) {
 
   function getValue() { //To compensate for dictionary name "Light" / "Light Intensity"
     if (type === "Light Intensity") {
-      return gardata["Light"].Value
+      return parseInt(gardata["Light"].Value)
     } else if (type === "Soil Moisture") {
-      return gardata["SoilMoisture"].Value
+      return parseInt(gardata["SoilMoisture"].Value)
     } else {
-      return gardata[type].Value
+      return parseInt(gardata[type].Value)
     }
   }
   
@@ -100,7 +100,7 @@ export default function EditGardenPropPage({ route, navigation }) {
         </View>
         <Text className="text-3xl font-bold mx-auto pt-4">{type}</Text>
         <View className="bg-green-500 rounded-full aspect-square w-48 mx-auto mt-10 py-10shadow-lg">
-          <Text className="mx-auto my-auto text-5xl font-bold text-white">20%</Text>
+          <Text className="mx-auto my-auto text-5xl font-bold text-white">20{GardenPropDict[type].Suffix}</Text>
         </View>
         <View className="w-[70%] mx-auto pt-8">
           <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " + value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
@@ -114,9 +114,7 @@ export default function EditGardenPropPage({ route, navigation }) {
             onSlidingComplete={handleSlideComplete}
             value={getValue()}
           />
-          <Text>{getValue()}</Text>
         </View>
-
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
           <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
           <View className="bg-slate-800">

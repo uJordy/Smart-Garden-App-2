@@ -50,7 +50,6 @@ export default function LineChart({ type }) {
     }
     return returnval;
   }
-  console.log(parsedHistory)
 
   return (
     <View style={styles.container}>
