@@ -8,21 +8,28 @@ const fileName = "GardenDictionary.json" //.json essential
 GardenData = sgDictExample; // Overwrite saved data
 const generateSampleData = true;
 
+//LastChanged var is for "simulating" garden sensor changing to its target value
+
 var sgDictExample = {
   Temperature: { //Celcius 
     Value: 0, //Current
+    ActualValue: 5, //This for simulation only. This acts like the sensor
+    LastChanged: null, //Last time when end user changes garden prop value
     History: []
   },
   Light: { //Percentage
     Value: 0,
+    LastChanged: null,
     History: []
   },
   SoilMoisture: { //Percentage
     Value: 0,
+    LastChanged: null,
     History: []
   },
   Humidity: { //Percentage
     Value: 0,
+    LastChanged: null,
     History: []
   },
 }
@@ -31,17 +38,17 @@ function generateRandom(min, max) {
   let difference = max - min;
 
   let rand = Math.random();
-  rand = Math.floor( rand * difference);
+  rand = Math.floor(rand * difference);
   rand = rand + min;
 
   return rand;
 }
 
 //Returns last week data for each sensor within min and max ranges
-function generateWeekData(min, max) { 
+function generateWeekData(min, max) {
   returnval = []
   dayIterator = new Date()
-  indexstart = (dayIterator.getDate() -7 )
+  indexstart = (dayIterator.getDate() - 7)
   indexend = dayIterator.getDate()
 
   for (let i = indexstart; i < indexend; i++) {
@@ -146,21 +153,73 @@ function addHistoryData(sensor, data) {
   }
 }
 
+function lerp(a, b, alpha) {
+  return a + alpha * (b - a)
+}
+
 //generateSampleData must be true!
 SampleData()
 
 const useStore = create((set, get) => ({
   data: sgDictExample,
 
-  // Temperature: () => data.Temperature.Value,
+  CurrentTempValue: () => { //This is for simulation purposes
+
+    const transTime = 5; //mins
+    const transTimeMs = transTime * 60 * 1000;
+    const lastChangedDate = get().data.Temperature.LastChanged; //date object
+
+    if (lastChangedDate !== null) {
+      nowDate = new Date ();
+      endDate = new Date(lastChangedDate.getTime() + transTimeMs)
+
+      elapsedTime = (new Date() - lastChangedDate)
+      const percentage = ( elapsedTime / transTimeMs )
+      console.log("Percentage")
+      console.log(percentage)
+
+      ActualValue = lerp(get().data.Temperature.ActualValue, get().data.Temperature.Value, percentage)
+      
+      // console.log(ActualValue)
+
+      // set((state) => {
+      //   return {
+      //     data:
+      //     {
+      //       ...state.data,
+      //       Temperature: {
+      //         ...state.data.Temperature,
+      //         ActualValue: ActualValue
+      //       }
+      //     }
+      //   }
+      // })
+
+      return ActualValue;
+    } else {
+      console.warn("Last Changed Date is NULL")
+      return 0;
+    }
+  },
 
   setTemperature: (newVal) => {
-    set((state) => ({
+    set((state) => {
       // newState = oldState.data;
       // newState.Temperature.Value = newVal
       // return { data: newState }
-      data: { ...state.data, Temperature: { ...state.data.Temperature, Value: newVal } },
-    }))
+
+      return {
+        data:
+        {
+          ...state.data,
+          Temperature: {
+            ...state.data.Temperature,
+            Value: newVal,
+            LastChanged: new Date()
+          }
+        }
+      }
+    })
   },
 
   setLight: (newVal) => {
