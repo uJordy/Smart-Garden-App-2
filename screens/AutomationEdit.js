@@ -1,4 +1,4 @@
-import { View, SafeAreaView, ScrollView, Platform, Text, TouchableOpacity, TextInput, Button } from 'react-native'
+import { View, SafeAreaView, ScrollView, Platform, Text, TouchableOpacity, TextInput, Button, Touchable } from 'react-native'
 import React, { useState } from 'react'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import BackButton from '../components/BackButton';
 import Leaf from '../assets/svg/Leaf';
 import DayButton from '../components/DayButton';
+import AutomationTypeItem from '../components/AutomationTypeItem';
 
 export default function AutomationEdit({ route, navigation }) {
 
@@ -26,7 +27,7 @@ export default function AutomationEdit({ route, navigation }) {
 
 
   return (
-    <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
+    <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''} `}>
       <ScrollView>
         {/* Top Bar */}
         <View className="flex flex-row  h-16">
@@ -46,6 +47,7 @@ export default function AutomationEdit({ route, navigation }) {
         </View>
         {/* Main Content */}
         <View className="mx-4">
+          
           <View>
             <TextInput
               className="m-2 rounded-lg bg-slate-300 text-white p-2 border-slate-500 border-2 focus:border-amber-400"
@@ -55,6 +57,24 @@ export default function AutomationEdit({ route, navigation }) {
             // keyboardType="numeric"
             />
           </View>
+
+          <View className="flex flex-row flex-wrap justify-around mt-4">
+            <AutomationTypeItem type="Temperature"/>
+            <AutomationTypeItem type="Light Intensity"/>
+            <AutomationTypeItem type="Soil Moisture"/>
+            <AutomationTypeItem type="Humidity"/>
+          </View>
+
+          <View className="mx-auto">
+            <TextInput
+              className="m-2 rounded-lg bg-slate-300 text-white p-2 border-slate-500 border-2 focus:border-amber-400 aspect-square h-20 text-2xl"
+              // onChangeText={}
+              // value={number}
+              placeholder="Num"
+            keyboardType="numeric"
+            />
+          </View>
+
           <View className="mx-auto mt-4">
             <DateTimePicker
               value={date}
@@ -64,6 +84,7 @@ export default function AutomationEdit({ route, navigation }) {
             />
           </View>
 
+          {/* Select day indicator needed here */}
           <View className="flex flex-row justify-around mt-4">
             <DayButton day="Monday"/>
             <DayButton day="Tuesday"/>
@@ -72,6 +93,12 @@ export default function AutomationEdit({ route, navigation }) {
             <DayButton day="Friday"/>
             <DayButton day="Saturday"/>
             <DayButton day="Sunday"/>
+          </View>
+
+          <View className="mt-5">
+            <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto ">
+              <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
