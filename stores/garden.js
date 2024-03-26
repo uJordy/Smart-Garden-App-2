@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system';
-
+import { useShallow } from 'zustand/react/shallow';
+import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -12,9 +13,9 @@ const generateSampleData = true;
 
 var sgDictExample = {
   Temperature: { //Celcius 
-    Value: 0, //Current
-    ActualValue: 5, //This for simulation only. This acts like the sensor
-    LastChanged: null, //Last time when end user changes garden prop value
+    Value: 0, //Current (Target value)
+    PrevValue: 0, //This for simulation only. This acts like the sensor
+    LastChanged: new Date(), //Last time when end user changes garden prop value
     History: []
   },
   Light: { //Percentage
@@ -157,15 +158,18 @@ function lerp(a, b, alpha) {
   return a + alpha * (b - a)
 }
 
+const clamp = (num, a, b) =>
+  Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
+
 //generateSampleData must be true!
 SampleData()
 
-const useStore = create((set, get) => ({
+useStore = create((set, get) => ({
   data: sgDictExample,
 
   CurrentTempValue: () => { //This is for simulation purposes
-
-    const transTime = 5; //mins
+    
+    const transTime = 1; //mins
     const transTimeMs = transTime * 60 * 1000;
     const lastChangedDate = get().data.Temperature.LastChanged; //date object
 
@@ -175,30 +179,27 @@ const useStore = create((set, get) => ({
 
       elapsedTime = (new Date() - lastChangedDate)
       const percentage = ( elapsedTime / transTimeMs )
-      console.log("Percentage")
-      console.log(percentage)
 
-      ActualValue = lerp(get().data.Temperature.ActualValue, get().data.Temperature.Value, percentage)
-      
-      // console.log(ActualValue)
+      ActualValue = lerp(get().data.Temperature.PrevValue, get().data.Temperature.Value, clamp(percentage,0,1))
 
-      // set((state) => {
+      ActualValue = parseInt(ActualValue.toFixed(0))
+
+      // useShallow(set((state) => {
       //   return {
       //     data:
       //     {
       //       ...state.data,
       //       Temperature: {
       //         ...state.data.Temperature,
-      //         ActualValue: ActualValue
+      //         PrevValue: PrevValue
       //       }
       //     }
       //   }
-      // })
+      // }))
 
       return ActualValue;
     } else {
-      console.warn("Last Changed Date is NULL")
-      return 0;
+      return get().data.Temperature.PrevValue;
     }
   },
 
@@ -207,7 +208,6 @@ const useStore = create((set, get) => ({
       // newState = oldState.data;
       // newState.Temperature.Value = newVal
       // return { data: newState }
-
       return {
         data:
         {
@@ -215,6 +215,7 @@ const useStore = create((set, get) => ({
           Temperature: {
             ...state.data.Temperature,
             Value: newVal,
+            PrevValue: get().data.Temperature.Value,
             LastChanged: new Date()
           }
         }
@@ -286,7 +287,19 @@ const useStore = create((set, get) => ({
       return { data: newState }
     })
   },
+
 }))
+
+export default useStore;
+
+// console.log("STARTING INITIATIONALISE")
+
+// const CurrentTempValue = useStore((state) => state.CurrentTempValue)
+// while (true) {
+//   console.log("iteration")
+//   CurrentTempValue()
+//   setTimeout(1000)
+// }
 
 
 
@@ -305,4 +318,3 @@ const useStore = create((set, get) => ({
 // const addHistory = useStore((state) => state.addHistory)
 // return <button onClick={increasePopulation}>one up</button>
 
-export default useStore;

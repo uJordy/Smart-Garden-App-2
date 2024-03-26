@@ -52,7 +52,6 @@ function HomePage({navigation}) {
               
                 <View className="mx-auto w-[90%] mt-2 flex flex-row justify-evenly flex-wrap">
                 </View>
-                <AnimatedView></AnimatedView>
             </ScrollView>
         </SafeAreaView>
     );
