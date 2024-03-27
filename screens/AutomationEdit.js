@@ -1,14 +1,26 @@
 import { View, SafeAreaView, ScrollView, Platform, Text, TouchableOpacity, TextInput, Button, Touchable } from 'react-native'
 import React, { useState } from 'react'
+import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing } from 'react-native-reanimated';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Slider from '@react-native-community/slider';
 
 import BackButton from '../components/BackButton';
 import Leaf from '../assets/svg/Leaf';
 import DayButton from '../components/DayButton';
 import AutomationTypeItem from '../components/AutomationTypeItem';
 
+import GardenPropDict from '../static/GardenPropDict';
+
 export default function AutomationEdit({ route, navigation }) {
+
+  const [value, setValue] = useState(0); //Slider value
+  const type = "Humidity";
+
+  function handleSlideChange(newVal) {
+    newVal = newVal.toFixed(0);
+    setValue(newVal)
+  }
 
   function handleGoBack() {
     navigation.goBack()
@@ -47,7 +59,7 @@ export default function AutomationEdit({ route, navigation }) {
         </View>
         {/* Main Content */}
         <View className="mx-4">
-          
+
           <View>
             <TextInput
               className="m-2 rounded-lg bg-slate-300 text-white p-2 border-slate-500 border-2 focus:border-amber-400"
@@ -59,23 +71,33 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
 
           <View className="flex flex-row flex-wrap justify-around mt-4">
-            <AutomationTypeItem type="Temperature"/>
-            <AutomationTypeItem type="Light Intensity"/>
-            <AutomationTypeItem type="Soil Moisture"/>
-            <AutomationTypeItem type="Humidity"/>
+            <AutomationTypeItem type="Temperature" />
+            <AutomationTypeItem type="Light Intensity" />
+            <AutomationTypeItem type="Soil Moisture" />
+            <AutomationTypeItem type="Humidity" />
           </View>
 
-          <View className="mx-auto">
-            <TextInput
-              className="m-2 rounded-lg bg-slate-300 text-white p-2 border-slate-500 border-2 focus:border-amber-400 aspect-square h-20 text-2xl"
-              // onChangeText={}
-              // value={number}
-              placeholder="Num"
-            keyboardType="numeric"
-            />
+          <View className="flex-row bg-slate-300 rounded-full p-2 m-2 justify-between mt-4">
+            <Animated.Text
+              className="my-auto text-xl font-bold text-white w-18"
+              entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}>
+              {value + GardenPropDict[type].Suffix}
+            </Animated.Text>
+            <View className="basis-4/5">
+              <Slider
+                step={GardenPropDict[type].Step}
+                minimumValue={GardenPropDict[type].MinVal}
+                maximumValue={GardenPropDict[type].MaxVal}
+                minimumTrackTintColor="rgba(255, 255, 2555, 1)'"
+                maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
+                onValueChange={handleSlideChange}
+                value={value}
+              />
+            </View>
           </View>
 
-          <View className="mx-auto mt-4">
+          <View className="mx-auto mt-20 flex-row justify-around">
+            <Text className="my-auto font-semibold text-lg">Time</Text>
             <DateTimePicker
               value={date}
               mode={"time"}
@@ -85,17 +107,21 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
 
           {/* Select day indicator needed here */}
-          <View className="flex flex-row justify-around mt-4">
-            <DayButton day="Monday"/>
-            <DayButton day="Tuesday"/>
-            <DayButton day="Wednesday"/>
-            <DayButton day="Thursday"/>
-            <DayButton day="Friday"/>
-            <DayButton day="Saturday"/>
-            <DayButton day="Sunday"/>
+          <View className="mt-4 mx-2 bg-slate-300 rounded-2xl">
+            <Text className="ml-2 mt-2 text-lg font-semibold">Repeat</Text>
+
+            <View className="flex flex-row justify-around mx-2 my-4">
+              <DayButton day="Monday" />
+              <DayButton day="Tuesday" />
+              <DayButton day="Wednesday" />
+              <DayButton day="Thursday" />
+              <DayButton day="Friday" />
+              <DayButton day="Saturday" />
+              <DayButton day="Sunday" />
+            </View>
           </View>
 
-          <View className="mt-5">
+          <View className="mt-20">
             <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto ">
               <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
             </TouchableOpacity>
