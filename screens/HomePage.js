@@ -4,6 +4,7 @@ import GardenPropItem from '../components/GardenPropItem';
 import useStore from '../stores/garden'
 
 import Leaf from '../assets/svg/Leaf';
+import AnimatedView from '../components/AnimatedView';
 
 
 function HomePage({navigation}) {
@@ -16,7 +17,6 @@ function HomePage({navigation}) {
     const addHumidityHistory = useStore((state) => state.addHumidityHistory)
 
     const Data = useStore.getState().data
-    console.log(Data) 
     const TempVal = Data.Temperature.Value
     const LightVal = Data.Light.Value
     const SoilVal = Data.SoilMoisture.Value

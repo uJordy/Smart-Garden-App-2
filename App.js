@@ -11,7 +11,8 @@ import EditGardenPropPage from './screens/EditGardenPropPage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as FileSystem from 'expo-file-system';
 
-// import useStore from './stores/garden' 
+import useStore from './stores/garden'
+import AutomationEdit from './screens/AutomationEdit';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -26,19 +27,19 @@ var sgDictExample = {
   Temperature: { //Celcius 
     Value: 0, //Current
     History: []
-  }, 
+  },
   Light: { //Percentage
-    Value: 0, 
+    Value: 0,
     History: []
-  }, 
+  },
   SoilMoisture: { //Percentage
-    Value: 0, 
+    Value: 0,
     History: []
-  }, 
+  },
   Humidity: { //Percentage
-    Value: 0, 
+    Value: 0,
     History: []
-  }, 
+  },
 }
 
 // get GardenData() {
@@ -126,7 +127,7 @@ function loadData() {
 // }
 
 function addHistoryData(sensor, data) {
-  if (typeof(data) === "string"){
+  if (typeof (data) === "string") {
     GardenData[sensor].History.append(data)
     console.log("Successfully appended historical data for " + sensor)
   } else {
@@ -134,11 +135,20 @@ function addHistoryData(sensor, data) {
   }
 }
 
-function StackNavigator() {
+function HomeStackNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="HomeScreen" component={Home}/>
-      <Stack.Screen name="EditGardenPropPage" component={EditGardenPropPage}  />
+      <Stack.Screen name="HomeScreen" component={Home} />
+      <Stack.Screen name="EditGardenPropPage" component={EditGardenPropPage} />
+    </Stack.Navigator>
+  )
+}
+
+function AutomationStackNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="AutomationPage" component={AutomationPage} />
+      <Stack.Screen name="AutomationEdit" component={AutomationEdit} />
     </Stack.Navigator>
   )
 }
@@ -147,42 +157,40 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-        if (route.name === 'Home') {
-          iconName = focused
-            ? 'home'
-            : 'home-outline';
-        } else if (route.name === 'Plants') {
-          iconName = focused ? 'leaf' : 'leaf-outline';
-        } else if (route.name === 'Automations') {
-          iconName = focused ? 'alarm' : 'alarm-outline';
-        }
-        // You can return any component that you like here!
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-      tabBarActiveTintColor: '#2db551', // same as orange-500
-      tabBarInactiveTintColor: 'gray',
-      headerShown: false
-    })}
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home'
+              : 'home-outline';
+          } else if (route.name === 'Plants') {
+            iconName = focused ? 'leaf' : 'leaf-outline';
+          } else if (route.name === 'Automations') {
+            iconName = focused ? 'alarm' : 'alarm-outline';
+          }
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#2db551', // same as orange-500
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false
+      })}
     >
-    <Tab.Screen name="Home" component={StackNavigator}/>
-    <Tab.Screen name="Plants" component={PlantPage} />
-    <Tab.Screen name="Automations" component={AutomationPage} />
-  </Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
+      <Tab.Screen name="Plants" component={PlantPage} />
+      <Tab.Screen name="Automations" component={AutomationStackNavigator} />
+    </Tab.Navigator>
   )
 }
 
 
 function App() {
-  // console.log("hello")
-  // const addHistory = useStore((state) => state.addHistory)
-  // addHistory()
+
   return (
     <NavigationContainer>
       <TabNavigator />
-  </NavigationContainer>
+    </NavigationContainer>
   );
 }
 

@@ -26,7 +26,6 @@ export default function AutomationTypeItem({ type }) {
         <View className="ml-2 "><GardenPropIcon type={type} /></View>
         <Text className="pl-2 m-auto text-lg text-slate-300 grow ">{type}</Text>
       </View>
-      {/* <Text className="m-auto text-lg text-white">{type.charAt(0)}</Text> */}
     </TouchableOpacity>
   )
 }

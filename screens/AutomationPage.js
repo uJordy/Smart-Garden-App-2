@@ -6,21 +6,27 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
-import AutomationItem from '../components/AutomationItem';
-// import Toggle from '../components/Toggle';
+import AutomationListItem from '../components/AutomationListItem';
 
 
-
-
-function AutomationPage(props) {
+function AutomationPage() { //{navigation}
 
     const navigation = useNavigation();
+    const gardenprop = "hello"
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false
         })
     }, []);
+
+    const pressHandler = (gardenprop) => {
+        navigation.navigate('AutomationEdit', {
+            gardenprop: gardenprop,
+        })
+    }
+
+    
 
     return (
         <SafeAreaView>
@@ -40,7 +46,7 @@ function AutomationPage(props) {
 
                 {/* Created automations */}
                 <View>
-                    <AutomationItem/>
+                    <AutomationListItem onPress={pressHandler}/>
                 </View>
 
                 {/* <Toggle/> */}

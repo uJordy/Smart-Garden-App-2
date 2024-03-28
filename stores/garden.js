@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system';
-
+import { useShallow } from 'zustand/react/shallow';
+import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -8,21 +9,28 @@ const fileName = "GardenDictionary.json" //.json essential
 GardenData = sgDictExample; // Overwrite saved data
 const generateSampleData = true;
 
+//LastChanged var is for "simulating" garden sensor changing to its target value
+
 var sgDictExample = {
   Temperature: { //Celcius 
-    Value: 0, //Current
+    Value: 0, //Current (Target value)
+    PrevValue: 0, //This for simulation only. This acts like the sensor
+    LastChanged: new Date(), //Last time when end user changes garden prop value
     History: []
   },
   Light: { //Percentage
     Value: 0,
+    LastChanged: null,
     History: []
   },
   SoilMoisture: { //Percentage
     Value: 0,
+    LastChanged: null,
     History: []
   },
   Humidity: { //Percentage
     Value: 0,
+    LastChanged: null,
     History: []
   },
 }
@@ -31,17 +39,17 @@ function generateRandom(min, max) {
   let difference = max - min;
 
   let rand = Math.random();
-  rand = Math.floor( rand * difference);
+  rand = Math.floor(rand * difference);
   rand = rand + min;
 
   return rand;
 }
 
 //Returns last week data for each sensor within min and max ranges
-function generateWeekData(min, max) { 
+function generateWeekData(min, max) {
   returnval = []
   dayIterator = new Date()
-  indexstart = (dayIterator.getDate() -7 )
+  indexstart = (dayIterator.getDate() - 7)
   indexend = dayIterator.getDate()
 
   for (let i = indexstart; i < indexend; i++) {
@@ -146,21 +154,73 @@ function addHistoryData(sensor, data) {
   }
 }
 
+function lerp(a, b, alpha) {
+  return a + alpha * (b - a)
+}
+
+const clamp = (num, a, b) =>
+  Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
+
 //generateSampleData must be true!
 SampleData()
 
-const useStore = create((set, get) => ({
+useStore = create((set, get) => ({
   data: sgDictExample,
 
-  // Temperature: () => data.Temperature.Value,
+  CurrentTempValue: () => { //This is for simulation purposes
+    
+    const transTime = 1; //mins
+    const transTimeMs = transTime * 60 * 1000;
+    const lastChangedDate = get().data.Temperature.LastChanged; //date object
+
+    if (lastChangedDate !== null) {
+      nowDate = new Date ();
+      endDate = new Date(lastChangedDate.getTime() + transTimeMs)
+
+      elapsedTime = (new Date() - lastChangedDate)
+      const percentage = ( elapsedTime / transTimeMs )
+
+      ActualValue = lerp(get().data.Temperature.PrevValue, get().data.Temperature.Value, clamp(percentage,0,1))
+
+      ActualValue = parseInt(ActualValue.toFixed(0))
+
+      // useShallow(set((state) => {
+      //   return {
+      //     data:
+      //     {
+      //       ...state.data,
+      //       Temperature: {
+      //         ...state.data.Temperature,
+      //         PrevValue: PrevValue
+      //       }
+      //     }
+      //   }
+      // }))
+
+      return ActualValue;
+    } else {
+      return get().data.Temperature.PrevValue;
+    }
+  },
 
   setTemperature: (newVal) => {
-    set((state) => ({
+    set((state) => {
       // newState = oldState.data;
       // newState.Temperature.Value = newVal
       // return { data: newState }
-      data: { ...state.data, Temperature: { ...state.data.Temperature, Value: newVal } },
-    }))
+      return {
+        data:
+        {
+          ...state.data,
+          Temperature: {
+            ...state.data.Temperature,
+            Value: newVal,
+            PrevValue: get().data.Temperature.Value,
+            LastChanged: new Date()
+          }
+        }
+      }
+    })
   },
 
   setLight: (newVal) => {
@@ -227,7 +287,19 @@ const useStore = create((set, get) => ({
       return { data: newState }
     })
   },
+
 }))
+
+export default useStore;
+
+// console.log("STARTING INITIATIONALISE")
+
+// const CurrentTempValue = useStore((state) => state.CurrentTempValue)
+// while (true) {
+//   console.log("iteration")
+//   CurrentTempValue()
+//   setTimeout(1000)
+// }
 
 
 
@@ -246,4 +318,3 @@ const useStore = create((set, get) => ({
 // const addHistory = useStore((state) => state.addHistory)
 // return <button onClick={increasePopulation}>one up</button>
 
-export default useStore;

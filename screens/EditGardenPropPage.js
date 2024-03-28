@@ -1,5 +1,6 @@
-import { View, Text, SafeAreaView, ScrollView, Switch, Platform } from 'react-native'
-import React, { useContext, useState } from 'react'
+import { View, Text, SafeAreaView, ScrollView, Switch, Platform, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing  } from 'react-native-reanimated';
 
 import Leaf from '../assets/svg/Leaf'
 import BackButton from '../components/BackButton';
@@ -21,7 +22,9 @@ export default function EditGardenPropPage({ route, navigation }) {
   const { gardenprop } = route.params;
   const [type] = useState(gardenprop)
 
-  const [value, setValue] = useState(0); //Garden prop value
+  const [value, setValue] = useState(0); //Slider value
+
+  // Zustand stores
 
   const gardata = useStore((state) => state.data)
 
@@ -30,10 +33,24 @@ export default function EditGardenPropPage({ route, navigation }) {
   const addLightHistory = useStore((state) => state.addLightHistory)
   const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
   const addHumidityHistory = useStore((state) => state.addHumidityHistory)
+  const CurrentTempValue = useStore((state) => state.CurrentTempValue)
 
-  // let slide_debounce = false
+  const translateY = useSharedValue(-50);
+
   const [slide_debounce, setDebounce] = useState(false);
 
+  // Refresh "actual value"
+  const [fakeCurrentDate, setFakeCurrentDate] = useState(new Date())
+
+  useEffect(() => {
+    setTimeout(() => {
+      // console.log("refresh");
+      setFakeCurrentDate(new Date())
+    }
+      , 1000)
+  }, [fakeCurrentDate])
+
+  CurrentTempValue()
   function handleGoBack() {
     navigation.goBack()
   }
@@ -47,7 +64,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     if (slide_debounce) return
 
     setDebounce(true)
-    setTimeout(()=>{
+    setTimeout(() => {
       setDebounce(false)
     }, 500)
 
@@ -63,19 +80,22 @@ export default function EditGardenPropPage({ route, navigation }) {
     } else if (type === "Humidity") {
       addHumidityHistory(newVal)
     }
-
   }
 
   function getValue() { //To compensate for dictionary name "Light" / "Light Intensity"
     if (type === "Light Intensity") {
-      return gardata["Light"].Value
+      return parseInt(gardata["Light"].Value)
     } else if (type === "Soil Moisture") {
-      return gardata["SoilMoisture"].Value
+      return parseInt(gardata["SoilMoisture"].Value)
     } else {
-      return gardata[type].Value
+      return parseInt(gardata[type].Value)
     }
   }
-  
+
+  const handlePress = () => {
+    translateY.value = withSpring(translateY.value + 50);
+  };
+  // handlePress()
   return (
     <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
       <ScrollView bounces={false}>
@@ -100,10 +120,14 @@ export default function EditGardenPropPage({ route, navigation }) {
         </View>
         <Text className="text-3xl font-bold mx-auto pt-4">{type}</Text>
         <View className="bg-green-500 rounded-full aspect-square w-48 mx-auto mt-10 py-10shadow-lg">
-          <Text className="mx-auto my-auto text-5xl font-bold text-white">20%</Text>
+          <Animated.Text
+            className="mx-auto my-auto text-5xl font-bold text-white"
+            entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}>
+            {CurrentTempValue() + GardenPropDict[type].Suffix}
+          </Animated.Text>
         </View>
         <View className="w-[70%] mx-auto pt-8">
-          <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " + value.toFixed(0) + GardenPropDict[type].Suffix}</Text>
+          <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " + getValue().toFixed(0) + GardenPropDict[type].Suffix}</Text>
           <Slider
             step={GardenPropDict[type].Step}
             minimumValue={GardenPropDict[type].MinVal}
@@ -114,13 +138,12 @@ export default function EditGardenPropPage({ route, navigation }) {
             onSlidingComplete={handleSlideComplete}
             value={getValue()}
           />
-          <Text>{getValue()}</Text>
         </View>
-
+        {/* <Button onPress={handlePress} title="Click me" /> */}
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
           <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
-          <View className="bg-slate-500 mt-5">
-            <Text className="mx-auto bg-slate-800">Week</Text>
+          <View className="bg-slate-800">
+            <Text className="mx-auto bg-slate-800 text-xl text-white font-semibold">Last week</Text>
           </View>
           <LineChart type={type} />
 

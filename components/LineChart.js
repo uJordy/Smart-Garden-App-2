@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 
 import useStore from '../stores/garden'
+const Rect = (props) => <rect vectorEffect="non-scaling-stroke" {...props} />;
+// import Background from "./Background";
 
 // const options = { weekday: "long" };
 
@@ -48,12 +50,10 @@ export default function LineChart({ type }) {
     }
     return returnval;
   }
-  console.log(parsedHistory)
 
   return (
     <View style={styles.container} className="bg-slate-800">
       <VictoryChart
-      className="bg-slate-800"
         theme={VictoryTheme.material}
         scale={{ x: "date", y: "linear" }}
         domainPadding={{ y: 10 }}
@@ -65,16 +65,40 @@ export default function LineChart({ type }) {
           // parent: { border: "1px solid #ccc" }
         }}
         
+        // fill="#0f172a"
+
+        style={{
+          background: { fill: "#1e293b" },
+        }}
+
+        theme={{
+          axis: {
+            style: {
+              tickLabels: {
+                fill: 'white',
+              },
+            },
+          },
+        }}
       >
-        <VictoryAxis dependentAxis />
+        <VictoryAxis dependentAxis
+          style={{
+            grid: lineStyle,
+          }}
+        />
         <VictoryAxis
           tickValues={lastWeekdaysIndex()}
           tickFormat={(x) => x.toLocaleString("en-EN", { weekday: "short" })}
+          style={{
+            grid: lineStyle,
+            axis: lineStyle,
+          }}
         />
         <VictoryLine
           style={{
-            data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc", fill:"green" }
+            data: { stroke: "#fbbf24", strokeWidth: "4px" },
+            parent: { border: "1px solid #ccc", fill: "green" },
+            
           }}
           scale={{ x: "time" }}
           interpolation="monotoneX"
@@ -97,8 +121,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5fcff"
   }
 });
+
+const lineStyle = {stroke: '#64748b', strokeWidth: 1 }
+
 
 
