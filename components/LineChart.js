@@ -52,19 +52,10 @@ export default function LineChart({ type }) {
   }
 
   return (
-    <View style={styles.container} className="bg-slate-800">
+    <View style={styles.container}>
       <VictoryChart
-        theme={VictoryTheme.material}
         scale={{ x: "date", y: "linear" }}
         domainPadding={{ y: 10 }}
-        // fill="#0f172a"
-
-        style={{
-          data: { fill: "tomato"}
-          // labels: { fontSize: 30 },
-          // parent: { border: "1px solid #ccc" }
-        }}
-        
         // fill="#0f172a"
 
         style={{
@@ -117,7 +108,6 @@ export default function LineChart({ type }) {
 
 const styles = StyleSheet.create({
   container: {
-    fill:"#1e293b",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
