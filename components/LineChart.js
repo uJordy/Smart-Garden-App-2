@@ -51,37 +51,30 @@ export default function LineChart({ type }) {
   console.log(parsedHistory)
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} className="bg-slate-800">
       <VictoryChart
+      className="bg-slate-800"
         theme={VictoryTheme.material}
         scale={{ x: "date", y: "linear" }}
         domainPadding={{ y: 10 }}
+        // fill="#0f172a"
+
+        style={{
+          data: { fill: "tomato"}
+          // labels: { fontSize: 30 },
+          // parent: { border: "1px solid #ccc" }
+        }}
+        
       >
         <VictoryAxis dependentAxis />
         <VictoryAxis
-          // tickFormat={(x) => new Date(x).getFullYear()}
-          // tickValues={[0,1,2,3,4,5,6]}
           tickValues={lastWeekdaysIndex()}
-          // tickValues={[
-          //   new Date(2024, 2, 10),
-          //   new Date(2024, 2, 11),
-          //   new Date(2024, 2, 12),
-          //   new Date(2024, 2, 13),
-          //   new Date(2024, 2, 14),
-          //   new Date(2024, 2, 15),
-          //   new Date(2024, 2, 16),
-
-          // ]}
-          // tickFormat={(x) => new Intl.DateTimeFormat("en-US", options).format(x)}
-          // tickFormat={(x) => new Date(x).getDay()}
-
           tickFormat={(x) => x.toLocaleString("en-EN", { weekday: "short" })}
-
         />
         <VictoryLine
           style={{
             data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc" }
+            parent: { border: "1px solid #ccc", fill:"green" }
           }}
           scale={{ x: "time" }}
           interpolation="monotoneX"
@@ -89,15 +82,6 @@ export default function LineChart({ type }) {
             x: [lastWeekdaysIndex()[0], lastWeekdaysIndex()[6]],
           }}
           data={parsedHistory}
-          // data={[
-          //   { date: new Date(2024, 2, 16), value: 250 },
-          //   { date: new Date(2024, 2, 15), value: 200 },
-          //   { date: new Date(2024, 2, 14), value: 130 },
-          //   { date: new Date(2024, 2, 13), value: 100 },
-          //   { date: new Date(2024, 2, 12), value: 90 },
-          //   { date: new Date(2024, 2, 11), value: 80 },
-          //   { date: new Date(2024, 2, 10), value: 100 }
-          // ]}
           x="date"
           y="value"
         />
@@ -109,6 +93,7 @@ export default function LineChart({ type }) {
 
 const styles = StyleSheet.create({
   container: {
+    fill:"#1e293b",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
