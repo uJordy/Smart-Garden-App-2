@@ -51,7 +51,7 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
           <View className="basis-1/4 ">
             <View className="ml-auto pr-4 my-auto ">
-              <TouchableOpacity className="rounded-full bg-slate-800 px-5 py-2">
+              <TouchableOpacity className="rounded-full bg-gray-800 px-5 py-2">
                 <Text className="text-white font-semibold text-base">Save</Text>
               </TouchableOpacity>
             </View>
@@ -62,7 +62,7 @@ export default function AutomationEdit({ route, navigation }) {
 
           <View>
             <TextInput
-              className="m-2 rounded-lg bg-slate-300 text-white p-2 border-slate-500 border-2 focus:border-amber-400"
+              className="m-2 rounded-lg bg-gray-300 text-white p-2 border-gray-500 border-2 focus:border-amber-400"
               // onChangeText={}
               // value={number}
               placeholder="Automation Name"
@@ -77,7 +77,7 @@ export default function AutomationEdit({ route, navigation }) {
             <AutomationTypeItem type="Humidity" />
           </View>
 
-          <View className="flex-row bg-slate-300 rounded-full p-2 m-2 justify-between mt-4">
+          <View className="flex-row bg-gray-300 rounded-full p-2 m-2 justify-between mt-4">
             <Animated.Text
               className="my-auto text-xl font-bold text-white w-18"
               entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}>
@@ -107,7 +107,7 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
 
           {/* Select day indicator needed here */}
-          <View className="mt-4 mx-2 bg-slate-300 rounded-2xl">
+          <View className="mt-4 mx-2 bg-gray-300 rounded-2xl">
             <Text className="ml-2 mt-2 text-lg font-semibold">Repeat</Text>
 
             <View className="flex flex-row justify-around mx-2 my-4">
