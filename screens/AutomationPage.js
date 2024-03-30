@@ -32,7 +32,10 @@ function AutomationPage() { //{navigation}
         <SafeAreaView>
           {/* Add automation button */}
           <View className="w-full h-12 pr-6 flex flex-row justify-end">
-            <TouchableOpacity className="h-[48px] w-[48px] rounded-full bg-sky-500 shadow-md">
+            <TouchableOpacity 
+            className="h-[48px] w-[48px] rounded-full bg-sky-500 shadow-md"
+            onPress={() => pressHandler(gardenprop)}
+            >
               <MaterialIcons className="w-[40px] h-[40px] mx-auto my-auto text-center text-white text-[40px]" name="add"/>
             </TouchableOpacity>
           </View>

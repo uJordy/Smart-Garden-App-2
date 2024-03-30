@@ -4,6 +4,11 @@ import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing } from 'r
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+
+import BouncyCheckboxGroup, {
+  ICheckboxButton,
+} from "react-native-bouncy-checkbox-group";
 
 import BackButton from '../components/BackButton';
 import Leaf from '../assets/svg/Leaf';
@@ -26,9 +31,61 @@ export default function AutomationEdit({ route, navigation }) {
     navigation.goBack()
   }
 
+  const _iconStyle = (borderColor) => ({
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    borderColor: borderColor,
+  });
+  const styles = {
+    container: { marginTop: 24 },
+    verticalStyle: { marginTop: 16 },
+    textStyle: { textDecorationLine: "none" },
+    iconImageStyle: { height: 20, width: 20 },
+  };
+  const staticData = [
+    {
+      id: 0,
+      fillColor: "#ff7473",
+      unfillColor: "#fbbfbb",
+      iconStyle: _iconStyle("#fbbfbb"),
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 1,
+      fillColor: "#5567e9",
+      unfillColor: "#afb5f5",
+      iconStyle: _iconStyle("#afb5f5"),
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 2,
+      fillColor: "#a98ae7",
+      unfillColor: "#cab6f4",
+      iconStyle: _iconStyle("#cab6f4"),
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 3,
+      fillColor: "#fcb779",
+      unfillColor: "#ffd1a7",
+      iconStyle: _iconStyle("#ffd1a7"),
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 4,
+      fillColor: "#2be055",
+      unfillColor: "#cbf2d5",
+      iconStyle: _iconStyle("#cbf2d5"),
+      iconImageStyle: styles.iconImageStyle,
+    },
+  ];
+
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+
+  const [checkboxState, setCheckboxState] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -95,6 +152,26 @@ export default function AutomationEdit({ route, navigation }) {
               />
             </View>
           </View>
+          <BouncyCheckbox
+            // size={25}
+            fillColor="red"
+            unfillColor="#FFFFFF"
+            // text="Custom Checkbox"
+            iconStyle={{ borderColor: "red" }}
+            // innerIconStyle={{ borderWidth: 2 }}
+            isChecked={checkboxState}
+            onPress={() => setCheckboxState(!checkboxState)}
+            disableBuiltInState
+          />
+
+          <TouchableOpacity onPress={() => setCheckboxState(!checkboxState)}><Text>Hellooo!</Text></TouchableOpacity>
+
+          {/* <BouncyCheckboxGroup
+            data={staticData}
+            onChange={(selectedItem) => {
+              console.log("SelectedItem: ", JSON.stringify(selectedItem));
+            }}
+          /> */}
 
           <View className="mx-auto mt-20 flex-row justify-around">
             <Text className="my-auto font-semibold text-lg">Time</Text>

@@ -68,7 +68,7 @@ const GardenPropItem = ({ type, onPress }) => {
         <View className="pl-4 text-lg align-middle  content-center my-auto ">
           <View className="flex flex-row content-center">
 
-            <View className=""><GardenPropIcon type={type} /></View>
+            <View className="w-10"><GardenPropIcon type={type} /></View>
             <Text className="px-2 text-stone-600 font-bold text-2xl my-auto min-w-[20%] text-center">{"N/A" && +(getValue()).toFixed(0) + GardenPropDict[type].Suffix}</Text>
             <MaterialIcons className="mx-1 my-auto text-center text-stone-600 text-[10px] " name="circle" />
             <Text className="align-middle text-xl text-stone-600 font-semibold my-auto">{type} </Text>

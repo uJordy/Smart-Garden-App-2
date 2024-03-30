@@ -1,5 +1,7 @@
-import { TouchableOpacity, Text, View } from 'react-native'
-import React from 'react'
+import { TouchableOpacity, Text, View, Pressable } from 'react-native'
+import React, { useState } from 'react'
+
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import SunSVG from '../assets/svg/SunSVG'
 import TemperatureSVG from '../assets/svg/TemperatureSVG'
@@ -38,6 +40,7 @@ function GardenPropIcon({ type }) {
 export default function AutomationTypeItem({ type }) {
 
   var classStyling = ""
+  const [checkboxState, setCheckboxState] = useState(false);
 
   if (type === "Temperature") {
     classStyling += " bg-blue-200"
@@ -50,10 +53,25 @@ export default function AutomationTypeItem({ type }) {
   }
 
   return (
-    <TouchableOpacity className= {"m-1 bg-gray-800 w-[45%] h-14 rounded-full" + classStyling}>
+    <TouchableOpacity
+      className={"m-1 w-[47%] h-14 rounded-full active:border-violet-700 border-gray-500 border-2" + classStyling}>
       <View className="flex flex-row my-auto justify-around w-full">
-        <View className="ml-2 "><GardenPropIcon type={type} /></View>
-        <Text className="pl-2 m-auto text-lg text-gray-600 grow  ">{type}</Text>
+        <View className="ml-2 w-8 "><GardenPropIcon type={type} /></View>
+        <Text className="pl-2 m-auto text-gray-600 grow font-semibold">{type}</Text>
+        <View className="">
+          <BouncyCheckbox
+            className="m-auto mx-auto ml-2"
+            // size={25}
+            fillColor="#6b7280"
+            unfillColor="#f3f4f6"
+            // text="Custom Checkbox"
+            iconStyle={{ borderColor: "red" }}
+            innerIconStyle={{ borderWidth: 2 }}
+            isChecked={checkboxState}
+            onPress={() => setCheckboxState(!checkboxState)}
+            disableBuiltInState
+          />
+        </View>
       </View>
     </TouchableOpacity>
   )
