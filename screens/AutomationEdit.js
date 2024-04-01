@@ -17,7 +17,7 @@ import AutomationTypeItem from '../components/AutomationTypeItem';
 
 import GardenPropDict from '../static/GardenPropDict';
 
-export default function AutomationEdit({ route, navigation }) {
+export default function AutomationEdit({ navigation }) {
 
   const [value, setValue] = useState(0); //Slider value
   const type = "Humidity";
@@ -31,61 +31,18 @@ export default function AutomationEdit({ route, navigation }) {
     navigation.goBack()
   }
 
-  const _iconStyle = (borderColor) => ({
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    borderColor: borderColor,
-  });
-  const styles = {
-    container: { marginTop: 24 },
-    verticalStyle: { marginTop: 16 },
-    textStyle: { textDecorationLine: "none" },
-    iconImageStyle: { height: 20, width: 20 },
-  };
-  const staticData = [
-    {
-      id: 0,
-      fillColor: "#ff7473",
-      unfillColor: "#fbbfbb",
-      iconStyle: _iconStyle("#fbbfbb"),
-      iconImageStyle: styles.iconImageStyle,
-    },
-    {
-      id: 1,
-      fillColor: "#5567e9",
-      unfillColor: "#afb5f5",
-      iconStyle: _iconStyle("#afb5f5"),
-      iconImageStyle: styles.iconImageStyle,
-    },
-    {
-      id: 2,
-      fillColor: "#a98ae7",
-      unfillColor: "#cab6f4",
-      iconStyle: _iconStyle("#cab6f4"),
-      iconImageStyle: styles.iconImageStyle,
-    },
-    {
-      id: 3,
-      fillColor: "#fcb779",
-      unfillColor: "#ffd1a7",
-      iconStyle: _iconStyle("#ffd1a7"),
-      iconImageStyle: styles.iconImageStyle,
-    },
-    {
-      id: 4,
-      fillColor: "#2be055",
-      unfillColor: "#cbf2d5",
-      iconStyle: _iconStyle("#cbf2d5"),
-      iconImageStyle: styles.iconImageStyle,
-    },
-  ];
-
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const [checkboxState, setCheckboxState] = useState(false);
+
+  const [selectedAutoType, setSelectedAutoType] = useState("Temperature");
+
+  const [checkboxTState, setCheckboxTState] = useState(true);
+  const [checkboxLIState, setCheckboxLIState] = useState(false);
+  const [checkboxSMState, setCheckboxSMState] = useState(false);
+  const [checkboxHState, setCheckboxHState] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -93,7 +50,31 @@ export default function AutomationEdit({ route, navigation }) {
     setDate(currentDate);
   };
 
+  function handleAutomationTypeToggle(type) {
+    //Make all other checkboxes false
+    //selectedAutoType is treated as previous value
+    if (selectedAutoType == "Temperature") {
+      setCheckboxTState(false)
+    } else if (selectedAutoType == "Light Intensity") {
+      setCheckboxLIState(false)
+    } else if (selectedAutoType == "Soil Moisture") {
+      setCheckboxSMState(false)
+    } else if (selectedAutoType == "Humidity") {
+      setCheckboxHState(false)
+    }
 
+    setSelectedAutoType(type)
+
+    if (type == "Temperature") {
+      setCheckboxTState(true)
+    } else if (type == "Light Intensity") {
+      setCheckboxLIState(true)
+    } else if (type == "Soil Moisture") {
+      setCheckboxSMState(true)
+    } else if (type == "Humidity") {
+      setCheckboxHState(true)
+    }
+  }
 
   return (
     <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''} `}>
@@ -128,10 +109,18 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
 
           <View className="flex flex-row flex-wrap justify-around mt-4">
-            <AutomationTypeItem type="Temperature" />
-            <AutomationTypeItem type="Light Intensity" />
-            <AutomationTypeItem type="Soil Moisture" />
-            <AutomationTypeItem type="Humidity" />
+            <AutomationTypeItem type="Temperature" 
+            checkboxState={checkboxTState}
+            onPress={handleAutomationTypeToggle}/>
+            <AutomationTypeItem type="Light Intensity" 
+            checkboxState={checkboxLIState}
+            onPress={handleAutomationTypeToggle}/>
+            <AutomationTypeItem type="Soil Moisture"
+            checkboxState={checkboxSMState} 
+            onPress={handleAutomationTypeToggle}/>
+            <AutomationTypeItem type="Humidity" 
+            checkboxState={checkboxHState}
+            onPress={handleAutomationTypeToggle}/>
           </View>
 
           <View className="flex-row bg-gray-300 rounded-full p-2 m-2 justify-between mt-4">
@@ -152,26 +141,6 @@ export default function AutomationEdit({ route, navigation }) {
               />
             </View>
           </View>
-          <BouncyCheckbox
-            // size={25}
-            fillColor="red"
-            unfillColor="#FFFFFF"
-            // text="Custom Checkbox"
-            iconStyle={{ borderColor: "red" }}
-            // innerIconStyle={{ borderWidth: 2 }}
-            isChecked={checkboxState}
-            onPress={() => setCheckboxState(!checkboxState)}
-            disableBuiltInState
-          />
-
-          <TouchableOpacity onPress={() => setCheckboxState(!checkboxState)}><Text>Hellooo!</Text></TouchableOpacity>
-
-          {/* <BouncyCheckboxGroup
-            data={staticData}
-            onChange={(selectedItem) => {
-              console.log("SelectedItem: ", JSON.stringify(selectedItem));
-            }}
-          /> */}
 
           <View className="mx-auto mt-20 flex-row justify-around">
             <Text className="my-auto font-semibold text-lg">Time</Text>
