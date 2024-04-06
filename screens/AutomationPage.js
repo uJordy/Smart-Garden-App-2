@@ -12,7 +12,6 @@ import AutomationListItem from '../components/AutomationListItem';
 function AutomationPage() { //{navigation}
 
     const navigation = useNavigation();
-    const gardenprop = "hello"
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -20,9 +19,9 @@ function AutomationPage() { //{navigation}
         })
     }, []);
 
-    const pressHandler = (gardenprop) => {
+    const pressHandler = (action) => {
         navigation.navigate('AutomationEdit', {
-            gardenprop: gardenprop,
+            action: action
         })
     }
 
@@ -34,7 +33,7 @@ function AutomationPage() { //{navigation}
           <View className="w-full h-12 pr-6 flex flex-row justify-end">
             <TouchableOpacity 
             className="h-[48px] w-[48px] rounded-full bg-sky-500 shadow-md"
-            onPress={() => pressHandler(gardenprop)}
+            onPress={() => pressHandler("create")}
             >
               <MaterialIcons className="w-[40px] h-[40px] mx-auto my-auto text-center text-white text-[40px]" name="add"/>
             </TouchableOpacity>

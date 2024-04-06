@@ -17,10 +17,25 @@ import AutomationTypeItem from '../components/AutomationTypeItem';
 
 import GardenPropDict from '../static/GardenPropDict';
 
-export default function AutomationEdit({ navigation }) {
+// function DeleteButton({action}) {
+//   if (action === "create") {
+//     return null
+//   } else {
+//   return (
+//     <View className="mt-20">
+//       <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto ">
+//         <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
+//       </TouchableOpacity>
+//     </View>)
+//   }
+// }
 
+export default function AutomationEdit({ route, navigation }) {
+
+  const defaultType = "Temperature";
+  const { action } = route.params;
   const [value, setValue] = useState(0); //Slider value
-  const type = "Humidity";
+  const [type, setType] = useState(defaultType); //Slider value
 
   function handleSlideChange(newVal) {
     newVal = newVal.toFixed(0);
@@ -31,26 +46,52 @@ export default function AutomationEdit({ navigation }) {
     navigation.goBack()
   }
 
+  function DeleteButton({action, onPress}) {
+    if (action === "create") {
+      return null
+    } else {
+    return (
+      <View className="mt-20">
+        <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={onPress}>
+          <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
+        </TouchableOpacity>
+      </View>)
+    }
+  }
+
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const [checkboxState, setCheckboxState] = useState(false);
 
-  const [selectedAutoType, setSelectedAutoType] = useState("Temperature");
+  const [selectedAutoType, setSelectedAutoType] = useState(defaultType);
 
   const [checkboxTState, setCheckboxTState] = useState(true);
   const [checkboxLIState, setCheckboxLIState] = useState(false);
   const [checkboxSMState, setCheckboxSMState] = useState(false);
   const [checkboxHState, setCheckboxHState] = useState(false);
 
+  const [selectedDay, setSelectedDay] = useState( //Used dictionary to prevent duplicates
+    {
+      ["Monday"]: false,
+      ["Tuesday"]: false,
+      ["Wednesday"]: false,
+      ["Thursday"]: false,
+      ["Friday"]: false,
+      ["Saturday"]: false,
+      ["Sunday"]: false,
+    });
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    setShow(false);
+    console.log(currentDate)
+    // setShow(false);
     setDate(currentDate);
   };
 
   function handleAutomationTypeToggle(type) {
+
     //Make all other checkboxes false
     //selectedAutoType is treated as previous value
     if (selectedAutoType == "Temperature") {
@@ -64,7 +105,9 @@ export default function AutomationEdit({ navigation }) {
     }
 
     setSelectedAutoType(type)
+    setType(type)
 
+    //Toggle the clicked type true
     if (type == "Temperature") {
       setCheckboxTState(true)
     } else if (type == "Light Intensity") {
@@ -74,6 +117,17 @@ export default function AutomationEdit({ navigation }) {
     } else if (type == "Humidity") {
       setCheckboxHState(true)
     }
+  }
+
+  function handleDaySelect(day, enabled) {
+    setSelectedDay({
+      ...selectedDay,
+      [day]: enabled
+    })
+  }
+
+  function handleAutomation() {
+    //send data to stores which can be saved to expo file system
   }
 
   return (
@@ -90,7 +144,7 @@ export default function AutomationEdit({ navigation }) {
           <View className="basis-1/4 ">
             <View className="ml-auto pr-4 my-auto ">
               <TouchableOpacity className="rounded-full bg-gray-800 px-5 py-2">
-                <Text className="text-white font-semibold text-base">Save</Text>
+                <Text className="text-white font-semibold text-base">{`${action === "create" ? "Create" : "Save"}`}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -109,18 +163,18 @@ export default function AutomationEdit({ navigation }) {
           </View>
 
           <View className="flex flex-row flex-wrap justify-around mt-4">
-            <AutomationTypeItem type="Temperature" 
-            checkboxState={checkboxTState}
-            onPress={handleAutomationTypeToggle}/>
-            <AutomationTypeItem type="Light Intensity" 
-            checkboxState={checkboxLIState}
-            onPress={handleAutomationTypeToggle}/>
+            <AutomationTypeItem type="Temperature"
+              checkboxState={checkboxTState}
+              onPress={handleAutomationTypeToggle} />
+            <AutomationTypeItem type="Light Intensity"
+              checkboxState={checkboxLIState}
+              onPress={handleAutomationTypeToggle} />
             <AutomationTypeItem type="Soil Moisture"
-            checkboxState={checkboxSMState} 
-            onPress={handleAutomationTypeToggle}/>
-            <AutomationTypeItem type="Humidity" 
-            checkboxState={checkboxHState}
-            onPress={handleAutomationTypeToggle}/>
+              checkboxState={checkboxSMState}
+              onPress={handleAutomationTypeToggle} />
+            <AutomationTypeItem type="Humidity"
+              checkboxState={checkboxHState}
+              onPress={handleAutomationTypeToggle} />
           </View>
 
           <View className="flex-row bg-gray-300 rounded-full p-2 m-2 justify-between mt-4">
@@ -142,9 +196,10 @@ export default function AutomationEdit({ navigation }) {
             </View>
           </View>
 
-          <View className="mx-auto mt-20 flex-row justify-around">
+          <View className="mx-auto flex-row justify-around">
             <Text className="my-auto font-semibold text-lg">Time</Text>
             <DateTimePicker
+            display="spinner"
               value={date}
               mode={"time"}
               is24Hour={true}
@@ -157,21 +212,18 @@ export default function AutomationEdit({ navigation }) {
             <Text className="ml-2 mt-2 text-lg font-semibold">Repeat</Text>
 
             <View className="flex flex-row justify-around mx-2 my-4">
-              <DayButton day="Monday" />
-              <DayButton day="Tuesday" />
-              <DayButton day="Wednesday" />
-              <DayButton day="Thursday" />
-              <DayButton day="Friday" />
-              <DayButton day="Saturday" />
-              <DayButton day="Sunday" />
+              <DayButton day="Monday" selected={selectedDay["Monday"]} onPress={handleDaySelect} />
+              <DayButton day="Tuesday" selected={selectedDay["Tuesday"]} onPress={handleDaySelect} />
+              <DayButton day="Wednesday" selected={selectedDay["Wednesday"]} onPress={handleDaySelect} />
+              <DayButton day="Thursday" selected={selectedDay["Thursday"]} onPress={handleDaySelect} />
+              <DayButton day="Friday" selected={selectedDay["Friday"]} onPress={handleDaySelect} />
+              <DayButton day="Saturday" selected={selectedDay["Saturday"]} onPress={handleDaySelect} />
+              <DayButton day="Sunday" selected={selectedDay["Sunday"]} onPress={handleDaySelect} />
             </View>
           </View>
 
-          <View className="mt-20">
-            <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto ">
-              <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
-            </TouchableOpacity>
-          </View>
+          <DeleteButton action={action} onPress={handleAutomation}></DeleteButton>
+
         </View>
       </ScrollView>
     </SafeAreaView>

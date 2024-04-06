@@ -33,6 +33,13 @@ var sgDictExample = {
     LastChanged: null,
     History: []
   },
+  Automations: {
+    "Automation Example":{
+    Type: "Humidity",
+    Value: 30,
+    Time: "2020-08-22T01:15:30.000Z"
+    }
+  }
 }
 
 function generateRandom(min, max) {
