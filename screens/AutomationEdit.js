@@ -1,6 +1,7 @@
 import { View, SafeAreaView, ScrollView, Platform, Text, TouchableOpacity, TextInput, Button, Touchable } from 'react-native'
 import React, { useState } from 'react'
 import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing } from 'react-native-reanimated';
+import hash from 'hash-it';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
@@ -13,30 +14,35 @@ import AutomationTypeItem from '../components/AutomationTypeItem';
 import GardenPropDict from '../static/GardenPropDict';
 
 
+
+
+
+
 export default function AutomationEdit({ route, navigation }) {
 
   const defaultType = "Temperature";
+  const defaultTime = 1598051730000
+
   const { action, data } = route.params; //create or edit
-  console.log(action)
-  console.log(data)
+
   const [value, setValue] = useState(data.Value ?? 0); //Slider value
   const [type, setType] = useState(defaultType); //Slider value
 
   const [automationName, setAutomationName] = useState(data.Name ?? "");
 
-  
+  const submitAutomation = useStore((state) => state.submitAutomation)
+
+
+  //Nav
+  function handleGoBack() {
+    navigation.goBack()
+  }
 
   function handleSlideChange(newVal) {
     newVal = newVal.toFixed(0);
     setValue(newVal)
   }
 
-  function handleGoBack() {
-    navigation.goBack()
-  }
-
-
-  const defaultTime = 1598051730000
   const [date, setDate] = useState(new Date(data.Time ?? defaultTime));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -67,7 +73,7 @@ export default function AutomationEdit({ route, navigation }) {
       ["Friday"]: false,
       ["Saturday"]: false,
       ["Sunday"]: false,
-    }); 
+    });
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -114,8 +120,8 @@ export default function AutomationEdit({ route, navigation }) {
 
   function handleAutomation() {
     //send data to stores which can be saved to expo file system
-
-    if (typeof(automationName) !== "string") {
+    console.log("handle automation!!")
+    if (typeof (automationName) !== "string") {
       warn("Automation name is not a string")
       return "auto string"
     }
@@ -130,7 +136,7 @@ export default function AutomationEdit({ route, navigation }) {
     for (let type in GardenPropDict) {
       if (selectedAutoType === type) {
         found = true;
-        return 
+        break
       }
     }
     if (!found) {
@@ -138,11 +144,11 @@ export default function AutomationEdit({ route, navigation }) {
       return "auto type"
     }
 
-    if (value < GardenPropDict[selectedAutoType].MinVal){
+    if (value < GardenPropDict[selectedAutoType].MinVal) {
       warn("Automation value smaller than min")
       return "slider min"
     }
-    if (value > GardenPropDict[selectedAutoType].MaxVal){
+    if (value > GardenPropDict[selectedAutoType].MaxVal) {
       warn("Automation value bigger than max")
       return "slider max"
     }
@@ -152,8 +158,9 @@ export default function AutomationEdit({ route, navigation }) {
       return "date invalid"
     }
 
+    const hashValue = hash(automationName)
     let data = {
-      [hash(automationName)] : {
+      [hashValue]: {
         Name: automationName,
         Enabled: true,
         Type: type,
@@ -162,18 +169,21 @@ export default function AutomationEdit({ route, navigation }) {
         DaySelected: selectedDay
       }
     }
+    console.log(selectedDay)
+    console.log("submit automation....")
+    submitAutomation(hashValue, data);
   }
 
-  function DeleteButton({action, onPress}) {
+  function DeleteButton({ action, onPress }) {
     if (action === "create") {
       return null
     } else {
-    return (
-      <View className="mt-6">
-        <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={onPress}>
-          <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
-        </TouchableOpacity>
-      </View>)
+      return (
+        <View className="mt-6">
+          <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={onPress}>
+            <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
+          </TouchableOpacity>
+        </View>)
     }
   }
 
@@ -246,7 +256,7 @@ export default function AutomationEdit({ route, navigation }) {
           <View className="mx-auto flex-row justify-around">
             <Text className="my-auto font-semibold text-lg">Time</Text>
             <DateTimePicker
-            display="spinner"
+              display="spinner"
               value={date}
               mode={"time"}
               is24Hour={true}

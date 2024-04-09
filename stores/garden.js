@@ -367,22 +367,24 @@ useStore = create((set, get) => ({
     return get().data.Automations
   },
 
-  submitAutomation: (data) => {
+  submitAutomation: (name, autoData) => {
+
+    autoData = autoData[name]
     set((state) => {
 
       return {
         data:
         {
           ...state.data,
-          Temperature: {
-            ...state.data.Temperature,
-            Value: newVal,
-            PrevValue: get().data.Temperature.Value,
-            LastChanged: new Date()
+          Automations: {
+            ...state.data.Automations,
+            autoData
           }
         }
       }
     })
+    console.log("Submitted Automation!")
+    console.log(get().data.Automations)
   }
 }))
 

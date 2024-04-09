@@ -56,6 +56,7 @@ export default function AutomationTypeItem({ type, checkboxState, onPress }) {
             // text="Custom Checkbox"
             iconStyle={{ borderColor: "red" }}
             innerIconStyle={{ borderWidth: 2 }}
+            onPress={()=> onPress(type)}
             isChecked={checkboxState}
             disableBuiltInState
           />
