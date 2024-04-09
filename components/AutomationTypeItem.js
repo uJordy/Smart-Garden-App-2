@@ -37,12 +37,12 @@ export default function AutomationTypeItem({ type, checkboxState, onPress }) {
   }
   
   if (checkboxState === true) {
-    classStyling += " border-fuchsia-500"
+    classStyling += " border-orange-500"
   } 
 
   return (
     <TouchableOpacity
-      className={"m-1 w-[47%] h-14 rounded-full  border-gray-500 border-2" + classStyling}
+      className={"m-1 w-[47%] h-14 rounded-full  border-gray-200 border-2" + classStyling}
       onPress={()=> onPress(type)}>
       <View className="flex flex-row my-auto justify-around w-full">
         <View className="ml-2 w-8 "><GardenPropIcon type={type} /></View>

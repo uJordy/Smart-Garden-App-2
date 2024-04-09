@@ -4,11 +4,6 @@ import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing } from 'r
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-
-import BouncyCheckboxGroup, {
-  ICheckboxButton,
-} from "react-native-bouncy-checkbox-group";
 
 import BackButton from '../components/BackButton';
 import Leaf from '../assets/svg/Leaf';
@@ -17,18 +12,6 @@ import AutomationTypeItem from '../components/AutomationTypeItem';
 
 import GardenPropDict from '../static/GardenPropDict';
 
-// function DeleteButton({action}) {
-//   if (action === "create") {
-//     return null
-//   } else {
-//   return (
-//     <View className="mt-20">
-//       <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto ">
-//         <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
-//       </TouchableOpacity>
-//     </View>)
-//   }
-// }
 
 export default function AutomationEdit({ route, navigation }) {
 
@@ -143,7 +126,7 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
           <View className="basis-1/4 ">
             <View className="ml-auto pr-4 my-auto ">
-              <TouchableOpacity className="rounded-full bg-gray-800 px-5 py-2">
+              <TouchableOpacity className="rounded-full bg-gray-800 px-5 py-2" onPress={submitAutomation}>
                 <Text className="text-white font-semibold text-base">{`${action === "create" ? "Create" : "Save"}`}</Text>
               </TouchableOpacity>
             </View>

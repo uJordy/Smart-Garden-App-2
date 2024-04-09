@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system';
 import { useShallow } from 'zustand/react/shallow';
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
+import hash from 'hash-it';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -34,11 +34,12 @@ var sgDictExample = {
     History: []
   },
   Automations: {
-    "Automation Example":{
-    Type: "Humidity",
-    Value: 30,
-    Time: "2020-08-22T01:15:30.000Z"
-    }
+
+    // "Automation Example": {
+    //   Type: "Humidity",
+    //   Value: 30,
+    //   Time: "2020-08-22T01:15:30.000Z"
+    // }
   }
 }
 
@@ -100,6 +101,73 @@ function SampleData() {
     sgDictExample.Humidity.History = generateWeekData(minHumidity, maxHumidity)
 
 
+    //Automations
+
+    sgDictExample.Automations[hash("Automation Example")] = {
+      Name: "Automation Example",
+      Enabled: true,
+      Type: "Humidity",
+      Value: 30,
+      Time: "2020-08-22T15:15:30.000Z",
+      DaySelected: {
+        ["Monday"]: true,
+        ["Tuesday"]: false,
+        ["Wednesday"]: false,
+        ["Thursday"]: true,
+        ["Friday"]: false,
+        ["Saturday"]: false,
+        ["Sunday"]: false,
+      }
+    }
+
+    sgDictExample.Automations[hash("Automation Example 2")] = {
+      Name: "Automation Example 2",
+      Enabled: false,
+      Type: "Humidity",
+      Value: 30,
+      Time: "2020-08-22T01:15:30.000Z",
+      DaySelected: {
+        ["Monday"]: false,
+        ["Tuesday"]: false,
+        ["Wednesday"]: false,
+        ["Thursday"]: false,
+        ["Friday"]: false,
+        ["Saturday"]: true,
+        ["Sunday"]: true,
+      }
+    }
+    sgDictExample.Automations[hash("Automation Example 3")] = {
+      Name: "Automation Example 3",
+      Enabled: false,
+      Type: "Humidity",
+      Value: 30,
+      Time: "2020-08-22T01:15:30.000Z",
+      DaySelected: {
+        ["Monday"]: true,
+        ["Tuesday"]: true,
+        ["Wednesday"]: true,
+        ["Thursday"]: true,
+        ["Friday"]: true,
+        ["Saturday"]: false,
+        ["Sunday"]: false,
+      }
+    }
+    sgDictExample.Automations[hash("Automation Example 4")] = {
+      Name: "Automation Example 4",
+      Enabled: true,
+      Type: "Humidity",
+      Value: 30,
+      Time: "2020-08-22T05:19:30.000Z",
+      DaySelected: {
+        ["Monday"]: false,
+        ["Tuesday"]: false,
+        ["Wednesday"]: false,
+        ["Thursday"]: false,
+        ["Friday"]: false,
+        ["Saturday"]: true,
+        ["Sunday"]: true,
+      }
+    }
   }
 }
 
@@ -175,19 +243,19 @@ useStore = create((set, get) => ({
   data: sgDictExample,
 
   CurrentTempValue: () => { //This is for simulation purposes
-    
+
     const transTime = 1; //mins
     const transTimeMs = transTime * 60 * 1000;
     const lastChangedDate = get().data.Temperature.LastChanged; //date object
 
     if (lastChangedDate !== null) {
-      nowDate = new Date ();
+      nowDate = new Date();
       endDate = new Date(lastChangedDate.getTime() + transTimeMs)
 
       elapsedTime = (new Date() - lastChangedDate)
-      const percentage = ( elapsedTime / transTimeMs )
+      const percentage = (elapsedTime / transTimeMs)
 
-      ActualValue = lerp(get().data.Temperature.PrevValue, get().data.Temperature.Value, clamp(percentage,0,1))
+      ActualValue = lerp(get().data.Temperature.PrevValue, get().data.Temperature.Value, clamp(percentage, 0, 1))
 
       ActualValue = parseInt(ActualValue.toFixed(0))
 
@@ -295,6 +363,9 @@ useStore = create((set, get) => ({
     })
   },
 
+  getAutomationList: () => {
+    return get().data.Automations
+  }
 }))
 
 export default useStore;

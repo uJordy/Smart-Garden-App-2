@@ -1,17 +1,19 @@
 import React, { useLayoutEffect } from 'react';
-import { Text, SafeAreaView, View, ScrollView, TouchableOpacity, Switch} from 'react-native';
-import PlantJob from '../components/PlantJob';
+import { Text, SafeAreaView, View, TouchableOpacity, FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import WhiteToTransparent from '../assets/svg/WhiteToTransparent';
+import useStore from '../stores/garden';
+
 import AutomationListItem from '../components/AutomationListItem';
 
 
-function AutomationPage() { //{navigation}
+function AutomationPage() {
 
     const navigation = useNavigation();
+      // Zustand stores
+
+  const automationList = useStore((state) => state.getAutomationList)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -39,7 +41,7 @@ function AutomationPage() { //{navigation}
             </TouchableOpacity>
           </View>
 
-            <ScrollView>
+            {/* <ScrollView> */}
 
                 {/* Header */}
                 <View>
@@ -47,12 +49,14 @@ function AutomationPage() { //{navigation}
                 </View>
 
                 {/* Created automations */}
-                <View>
-                    <AutomationListItem onPress={pressHandler}/>
-                </View>
+                <FlatList
+                    data={Object.values(automationList())}
+                    renderItem={({item}) => <AutomationListItem data={item} onPress={pressHandler}/>}
+                />
+
 
                 {/* <Toggle/> */}
-            </ScrollView>
+            {/* </ScrollView> */}
         </SafeAreaView>
     );
 }
