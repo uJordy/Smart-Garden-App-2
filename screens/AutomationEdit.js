@@ -16,9 +16,15 @@ import GardenPropDict from '../static/GardenPropDict';
 export default function AutomationEdit({ route, navigation }) {
 
   const defaultType = "Temperature";
-  const { action } = route.params;
-  const [value, setValue] = useState(0); //Slider value
+  const { action, data } = route.params; //create or edit
+  console.log(action)
+  console.log(data)
+  const [value, setValue] = useState(data.Value ?? 0); //Slider value
   const [type, setType] = useState(defaultType); //Slider value
+
+  const [automationName, setAutomationName] = useState(data.Name ?? "");
+
+  
 
   function handleSlideChange(newVal) {
     newVal = newVal.toFixed(0);
@@ -29,34 +35,31 @@ export default function AutomationEdit({ route, navigation }) {
     navigation.goBack()
   }
 
-  function DeleteButton({action, onPress}) {
-    if (action === "create") {
-      return null
-    } else {
-    return (
-      <View className="mt-20">
-        <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={onPress}>
-          <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
-        </TouchableOpacity>
-      </View>)
-    }
-  }
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const defaultTime = 1598051730000
+  const [date, setDate] = useState(new Date(data.Time ?? defaultTime));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
-  const [checkboxState, setCheckboxState] = useState(false);
+  const [selectedAutoType, setSelectedAutoType] = useState(data.Type ?? defaultType);
 
-  const [selectedAutoType, setSelectedAutoType] = useState(defaultType);
+  initTState = false
+  initLIState = false
+  initSMState = false
+  initHState = false
 
-  const [checkboxTState, setCheckboxTState] = useState(true);
-  const [checkboxLIState, setCheckboxLIState] = useState(false);
-  const [checkboxSMState, setCheckboxSMState] = useState(false);
-  const [checkboxHState, setCheckboxHState] = useState(false);
+  if (data.Type === "Temperature") initTState = true;
+  if (data.Type === "Light Intensity") initLIState = true;
+  if (data.Type === "Soil Moisture") initSMState = true;
+  if (data.Type === "Humidity") initHState = true;
+
+  const [checkboxTState, setCheckboxTState] = useState(initTState); //Temperature
+  const [checkboxLIState, setCheckboxLIState] = useState(initLIState); //Light Intensity
+  const [checkboxSMState, setCheckboxSMState] = useState(initSMState); //Soil Moisture
+  const [checkboxHState, setCheckboxHState] = useState(initHState); //Humidity
 
   const [selectedDay, setSelectedDay] = useState( //Used dictionary to prevent duplicates
-    {
+    data.DaySelected ?? {
       ["Monday"]: false,
       ["Tuesday"]: false,
       ["Wednesday"]: false,
@@ -64,7 +67,7 @@ export default function AutomationEdit({ route, navigation }) {
       ["Friday"]: false,
       ["Saturday"]: false,
       ["Sunday"]: false,
-    });
+    }); 
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -111,6 +114,67 @@ export default function AutomationEdit({ route, navigation }) {
 
   function handleAutomation() {
     //send data to stores which can be saved to expo file system
+
+    if (typeof(automationName) !== "string") {
+      warn("Automation name is not a string")
+      return "auto string"
+    }
+
+    if (automationName.length > 20) {
+      warn("Automation name is too long")
+      return "auto length"
+    }
+
+    //Check if automation type is valid
+    found = false;
+    for (let type in GardenPropDict) {
+      if (selectedAutoType === type) {
+        found = true;
+        return 
+      }
+    }
+    if (!found) {
+      warn("Automation type invalid")
+      return "auto type"
+    }
+
+    if (value < GardenPropDict[selectedAutoType].MinVal){
+      warn("Automation value smaller than min")
+      return "slider min"
+    }
+    if (value > GardenPropDict[selectedAutoType].MaxVal){
+      warn("Automation value bigger than max")
+      return "slider max"
+    }
+
+    if (date.constructor !== Date) {
+      warn("Date object actually not date")
+      return "date invalid"
+    }
+
+    let data = {
+      [hash(automationName)] : {
+        Name: automationName,
+        Enabled: true,
+        Type: type,
+        Value: value,
+        Time: date.toJSON(),
+        DaySelected: selectedDay
+      }
+    }
+  }
+
+  function DeleteButton({action, onPress}) {
+    if (action === "create") {
+      return null
+    } else {
+    return (
+      <View className="mt-6">
+        <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={onPress}>
+          <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
+        </TouchableOpacity>
+      </View>)
+    }
   }
 
   return (
@@ -126,7 +190,7 @@ export default function AutomationEdit({ route, navigation }) {
           </View>
           <View className="basis-1/4 ">
             <View className="ml-auto pr-4 my-auto ">
-              <TouchableOpacity className="rounded-full bg-gray-800 px-5 py-2" onPress={submitAutomation}>
+              <TouchableOpacity className="rounded-full bg-gray-800 px-5 py-2" onPress={handleAutomation}>
                 <Text className="text-white font-semibold text-base">{`${action === "create" ? "Create" : "Save"}`}</Text>
               </TouchableOpacity>
             </View>
@@ -137,11 +201,11 @@ export default function AutomationEdit({ route, navigation }) {
 
           <View>
             <TextInput
-              className="m-2 rounded-lg bg-gray-300 text-white p-2 border-gray-500 border-2 focus:border-amber-400"
-              // onChangeText={}
-              // value={number}
+              className="m-2 rounded-lg bg-gray-300 text-black p-2 border-gray-500 border-2 focus:border-amber-400"
+              onChangeText={setAutomationName}
+              value={automationName}
+              maxLength={20}
               placeholder="Automation Name"
-            // keyboardType="numeric"
             />
           </View>
 

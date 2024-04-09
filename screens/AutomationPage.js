@@ -21,9 +21,11 @@ function AutomationPage() {
         })
     }, []);
 
-    const pressHandler = (action) => {
+    const pressHandler = (action, data) => {
+        data ??= {} //if data is null, assign empty object
         navigation.navigate('AutomationEdit', {
-            action: action
+            action: action,
+            data: data
         })
     }
 
@@ -51,7 +53,7 @@ function AutomationPage() {
                 {/* Created automations */}
                 <FlatList
                     data={Object.values(automationList())}
-                    renderItem={({item}) => <AutomationListItem data={item} onPress={pressHandler}/>}
+                    renderItem={({item}) => <AutomationListItem data={item} onPress={() => pressHandler("edit", item)}/>}
                 />
 
 

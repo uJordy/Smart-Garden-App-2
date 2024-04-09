@@ -123,7 +123,7 @@ function SampleData() {
     sgDictExample.Automations[hash("Automation Example 2")] = {
       Name: "Automation Example 2",
       Enabled: false,
-      Type: "Humidity",
+      Type: "Temperature",
       Value: 30,
       Time: "2020-08-22T01:15:30.000Z",
       DaySelected: {
@@ -139,7 +139,7 @@ function SampleData() {
     sgDictExample.Automations[hash("Automation Example 3")] = {
       Name: "Automation Example 3",
       Enabled: false,
-      Type: "Humidity",
+      Type: "Soil Moisture",
       Value: 30,
       Time: "2020-08-22T01:15:30.000Z",
       DaySelected: {
@@ -365,6 +365,24 @@ useStore = create((set, get) => ({
 
   getAutomationList: () => {
     return get().data.Automations
+  },
+
+  submitAutomation: (data) => {
+    set((state) => {
+
+      return {
+        data:
+        {
+          ...state.data,
+          Temperature: {
+            ...state.data.Temperature,
+            Value: newVal,
+            PrevValue: get().data.Temperature.Value,
+            LastChanged: new Date()
+          }
+        }
+      }
+    })
   }
 }))
 
