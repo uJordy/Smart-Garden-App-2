@@ -172,6 +172,7 @@ export default function AutomationEdit({ route, navigation }) {
     console.log(selectedDay)
     console.log("submit automation....")
     submitAutomation(hashValue, data);
+    navigation.goBack()
   }
 
   function DeleteButton({ action, onPress }) {
@@ -186,6 +187,8 @@ export default function AutomationEdit({ route, navigation }) {
         </View>)
     }
   }
+
+
 
   return (
     <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''} `}>
@@ -210,13 +213,15 @@ export default function AutomationEdit({ route, navigation }) {
         <View className="mx-4">
 
           <View>
-            <TextInput
-              className="m-2 rounded-lg bg-gray-300 text-black p-2 border-gray-500 border-2 focus:border-amber-400"
-              onChangeText={setAutomationName}
-              value={automationName}
-              maxLength={20}
-              placeholder="Automation Name"
-            />
+            {action === "create" ? (
+              <TextInput
+                className="m-2 rounded-lg bg-gray-300 text-black p-2 border-gray-500 border-2 focus:border-amber-400"
+                onChangeText={setAutomationName}
+                value={automationName}
+                maxLength={20}
+                placeholder="Automation Name"
+              />) :
+              (<Text className="m-2 font-semibold text-2xl">{automationName}</Text>)}
           </View>
 
           <View className="flex flex-row flex-wrap justify-around mt-4">
@@ -279,7 +284,12 @@ export default function AutomationEdit({ route, navigation }) {
             </View>
           </View>
 
-          <DeleteButton action={action} onPress={handleAutomation}></DeleteButton>
+          {action === "edit" ? (
+            <View className="mt-6">
+              <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={handleAutomation}>
+                <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
+              </TouchableOpacity>
+            </View>) : ""}
 
         </View>
       </ScrollView>

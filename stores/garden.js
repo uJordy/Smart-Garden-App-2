@@ -20,17 +20,20 @@ var sgDictExample = {
   },
   Light: { //Percentage
     Value: 0,
-    LastChanged: null,
+    PrevValue: 0,
+    LastChanged: new Date(), 
     History: []
   },
   SoilMoisture: { //Percentage
     Value: 0,
-    LastChanged: null,
+    PrevValue: 0,
+    LastChanged: new Date(), 
     History: []
   },
   Humidity: { //Percentage
     Value: 0,
-    LastChanged: null,
+    PrevValue: 0,
+    LastChanged: new Date(), 
     History: []
   },
   Automations: {
@@ -242,11 +245,16 @@ SampleData()
 useStore = create((set, get) => ({
   data: sgDictExample,
 
-  CurrentTempValue: () => { //This is for simulation purposes
+  CurrentSensorValue: (sensor) => { //This is for simulation purposes
 
+    if (sensor === "Light Intensity") {  //convert into dictionary compatible sensor names
+      sensor = "Light";
+    } else if (sensor === "Soil Moisture") {
+      sensor = "SoilMoisture";
+    }
     const transTime = 1; //mins
     const transTimeMs = transTime * 60 * 1000;
-    const lastChangedDate = get().data.Temperature.LastChanged; //date object
+    const lastChangedDate = get().data[sensor].LastChanged; //date object
 
     if (lastChangedDate !== null) {
       nowDate = new Date();
@@ -255,26 +263,15 @@ useStore = create((set, get) => ({
       elapsedTime = (new Date() - lastChangedDate)
       const percentage = (elapsedTime / transTimeMs)
 
-      ActualValue = lerp(get().data.Temperature.PrevValue, get().data.Temperature.Value, clamp(percentage, 0, 1))
+      ActualValue = lerp(get().data[sensor].PrevValue, get().data[sensor].Value, clamp(percentage, 0, 1))
 
       ActualValue = parseInt(ActualValue.toFixed(0))
 
-      // useShallow(set((state) => {
-      //   return {
-      //     data:
-      //     {
-      //       ...state.data,
-      //       Temperature: {
-      //         ...state.data.Temperature,
-      //         PrevValue: PrevValue
-      //       }
-      //     }
-      //   }
-      // }))
+
 
       return ActualValue;
     } else {
-      return get().data.Temperature.PrevValue;
+      return get().data[sensor].PrevValue;
     }
   },
 

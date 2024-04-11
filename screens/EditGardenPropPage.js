@@ -33,7 +33,7 @@ export default function EditGardenPropPage({ route, navigation }) {
   const addLightHistory = useStore((state) => state.addLightHistory)
   const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
   const addHumidityHistory = useStore((state) => state.addHumidityHistory)
-  const CurrentTempValue = useStore((state) => state.CurrentTempValue)
+  const CurrentSensorValue = useStore((state) => state.CurrentSensorValue)
 
   const translateY = useSharedValue(-50);
 
@@ -50,7 +50,7 @@ export default function EditGardenPropPage({ route, navigation }) {
       , 1000)
   }, [fakeCurrentDate])
 
-  CurrentTempValue()
+  CurrentSensorValue(type)
   function handleGoBack() {
     navigation.goBack()
   }
@@ -123,7 +123,7 @@ export default function EditGardenPropPage({ route, navigation }) {
           <Animated.Text
             className="mx-auto my-auto text-5xl font-bold text-white"
             entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}>
-            {CurrentTempValue() + GardenPropDict[type].Suffix}
+            {CurrentSensorValue(type) + GardenPropDict[type].Suffix}
           </Animated.Text>
         </View>
         <View className="w-[70%] mx-auto pt-8">
