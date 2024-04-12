@@ -15,8 +15,6 @@ const AutomationItem = ({ data, onPress }) => {
   time = new Date(data["Time"]);
   type = data.Type;
 
-  console.log("---------------------")
-  console.log(data)
   const daysSelectedParsed = () => {
     if (
       daySelected["Monday"] === true &&

@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, ScrollView, Switch, Platform, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing  } from 'react-native-reanimated';
+import Animated, { useSharedValue, withSpring, withRepeat, FadeIn, FadeOut, Easing, useAnimatedStyle, interpolateColor, withTiming, withSequence, cancelAnimation  } from 'react-native-reanimated';
 
 import Leaf from '../assets/svg/Leaf'
 import BackButton from '../components/BackButton';
@@ -11,10 +11,17 @@ import Slider from '@react-native-community/slider';
 import GardenPropDict from '../static/GardenPropDict';
 
 import useStore from '../stores/garden'
+import EditGardenPropText from '../components/EditGardenPropText';
 
 
 
 export default function EditGardenPropPage({ route, navigation }) {
+
+
+
+  // useEffect(() => {
+  //   progress.value = withRepeat(withTiming(1 - progress.value, { duration: 1000 }), 2);
+  // }, []);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -39,18 +46,38 @@ export default function EditGardenPropPage({ route, navigation }) {
 
   const [slide_debounce, setDebounce] = useState(false);
 
-  // Refresh "actual value"
-  const [fakeCurrentDate, setFakeCurrentDate] = useState(new Date())
 
-  useEffect(() => {
-    setTimeout(() => {
-      // console.log("refresh");
-      setFakeCurrentDate(new Date())
-    }
-      , 1000)
-  }, [fakeCurrentDate])
 
-  CurrentSensorValue(type)
+  
+  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))){
+    initValue = 0
+  } else {
+    initValue = 2
+  }
+  const progress = useSharedValue(initValue);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        progress.value,
+        [0, 1, 2],
+        ['red', 'orange', 'green']
+      ),
+    };
+  });
+
+  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) { 
+    // if the current value is equal to target
+    progress.value = withRepeat(
+      withTiming(1, { duration: 1000 }),
+      withTiming(0, { duration: 1000 })
+      , -1);
+  }
+
+  function cancelColorAnim() {
+    cancelAnimation(progress)
+    progress.value = withSequence(withTiming(2))
+  }
   function handleGoBack() {
     navigation.goBack()
   }
@@ -60,7 +87,7 @@ export default function EditGardenPropPage({ route, navigation }) {
   }
 
   function handleSlideComplete(newVal) {
-
+//add other sensors
     if (slide_debounce) return
 
     setDebounce(true)
@@ -68,7 +95,7 @@ export default function EditGardenPropPage({ route, navigation }) {
       setDebounce(false)
     }, 500)
 
-    newVal = newVal.toFixed(1)
+    newVal = newVal.toFixed(0)
     console.log("[ADD HISTORY] Adding history for: " + type)
     if (type === "Temperature") {
       setTemperature(newVal)
@@ -117,15 +144,16 @@ export default function EditGardenPropPage({ route, navigation }) {
               />
             </View>
           </View>
-        </View>
+        </View> 
         <Text className="text-3xl font-bold mx-auto pt-4">{type}</Text>
-        <View className="bg-green-500 rounded-full aspect-square w-48 mx-auto mt-10 py-10shadow-lg">
-          <Animated.Text
+        <Animated.View className="rounded-full aspect-square w-48 mx-auto mt-10 py-10shadow-lg" style={[animatedStyle]}>
+          <EditGardenPropText type={type} cancelColorAnim={cancelColorAnim}/>
+          {/* <Animated.Text
             className="mx-auto my-auto text-5xl font-bold text-white"
             entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}>
             {CurrentSensorValue(type) + GardenPropDict[type].Suffix}
-          </Animated.Text>
-        </View>
+          </Animated.Text> */}
+        </Animated.View>
         <View className="w-[70%] mx-auto pt-8">
           <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " + getValue().toFixed(0) + GardenPropDict[type].Suffix}</Text>
           <Slider

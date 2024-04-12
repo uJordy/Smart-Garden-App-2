@@ -252,7 +252,7 @@ useStore = create((set, get) => ({
     } else if (sensor === "Soil Moisture") {
       sensor = "SoilMoisture";
     }
-    const transTime = 1; //mins
+    const transTime = 0.1; //mins
     const transTimeMs = transTime * 60 * 1000;
     const lastChangedDate = get().data[sensor].LastChanged; //date object
 
@@ -265,9 +265,8 @@ useStore = create((set, get) => ({
 
       ActualValue = lerp(get().data[sensor].PrevValue, get().data[sensor].Value, clamp(percentage, 0, 1))
 
+
       ActualValue = parseInt(ActualValue.toFixed(0))
-
-
 
       return ActualValue;
     } else {
@@ -287,7 +286,7 @@ useStore = create((set, get) => ({
           Temperature: {
             ...state.data.Temperature,
             Value: newVal,
-            PrevValue: get().data.Temperature.Value,
+            PrevValue: parseInt(get().data.Temperature.Value),
             LastChanged: new Date()
           }
         }
@@ -296,26 +295,53 @@ useStore = create((set, get) => ({
   },
 
   setLight: (newVal) => {
-    set(() => {
-      newState = oldState.data;
-      newState.Light.Value = newVal
-      return { data: newState }
+    set((state) => {
+      return {
+        data:
+        {
+          ...state.data,
+          Light: {
+            ...state.data.Light,
+            Value: newVal,
+            PrevValue: parseInt(get().data.Light.Value),
+            LastChanged: new Date()
+          }
+        }
+      }
     })
   },
 
   setSoilMoisture: (newVal) => {
-    set(() => {
-      newState = oldState.data;
-      newState.SoilMoisture.Value = newVal
-      return { data: newState }
+    set((state) => {
+      return {
+        data:
+        {
+          ...state.data,
+          SoilMoisture: {
+            ...state.data.SoilMoisture,
+            Value: newVal,
+            PrevValue: parseInt(get().data.SoilMoisture.Value),
+            LastChanged: new Date()
+          }
+        }
+      }
     })
   },
 
   setHumidity: (newVal) => {
-    set(() => {
-      newState = oldState.data;
-      newState.Humidity.Value = newVal
-      return { data: newState }
+    set((state) => {
+      return {
+        data:
+        {
+          ...state.data,
+          Humidity: {
+            ...state.data.Humidity,
+            Value: newVal,
+            PrevValue: parseInt(get().data.Humidity.Value),
+            LastChanged: new Date()
+          }
+        }
+      }
     })
   },
 
