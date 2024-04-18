@@ -32,9 +32,26 @@ const GardenPropItem = ({ type, onPress }) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const [value, setValue] = useState(0);
-  const gardata = useStore((state) => state.data)
+  
+    // Zustand stores
 
-  classStyling = "mx-auto w-[90%] h-28  rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
+    const gardata = useStore((state) => state.data)
+
+    const setTemperature = useStore((state) => state.setTemperature)
+    const setLight = useStore((state) => state.setLight)
+    const setSoilMoisture = useStore((state) => state.setSoilMoisture)
+    const setHumidity = useStore((state) => state.setHumidity)
+  
+    const addTemperatureHistory = useStore((state) => state.addTemperatureHistory)
+    const addLightHistory = useStore((state) => state.addLightHistory)
+    const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
+    const addHumidityHistory = useStore((state) => state.addHumidityHistory)
+  
+    const CurrentSensorValue = useStore((state) => state.CurrentSensorValue)
+
+    const [slide_debounce, setDebounce] = useState(false);
+
+  classStyling = "mx-auto w-[90%] h-28 rounded-2xl flex-1 flex-column drop-shadow-lg my-2"
 
   if (type === "Temperature") {
     classStyling += " bg-blue-200"
@@ -60,6 +77,34 @@ const GardenPropItem = ({ type, onPress }) => {
       return parseInt(gardata[type].Value)
     }
   }
+
+  // setValue(getValue())
+
+  function handleSlideComplete(newVal) {
+    //add other sensors
+        if (slide_debounce) return
+    
+        setDebounce(true)
+        setTimeout(() => {
+          setDebounce(false)
+        }, 500)
+    
+        newVal = newVal.toFixed(0)
+        console.log("[ADD HISTORY] Adding history for: " + type)
+        if (type === "Temperature") {
+          setTemperature(newVal)
+          addTemperatureHistory(newVal)
+        } else if (type === "Light Intensity") {
+          setLight(newVal)
+          addLightHistory(newVal)
+        } else if (type === "Soil Moisture") {
+          setSoilMoisture(newVal)
+          addSoilMoistureHistory(newVal)
+        } else if (type === "Humidity") {
+          setHumidity(newVal)
+          addHumidityHistory(newVal)
+        }
+      }
 
   return (
     <TouchableOpacity className={classStyling} onPress={() => onPress(type)}>
@@ -92,6 +137,7 @@ const GardenPropItem = ({ type, onPress }) => {
           minimumTrackTintColor="rgba(255, 255, 2555, 1)'"
           maximumTrackTintColor="rgba(52, 52, 52, 0.3)'"
           onValueChange={handleSlideChange}
+          onSlidingComplete={handleSlideComplete}
           value={getValue()}
         />
       </View>

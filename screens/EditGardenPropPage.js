@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, ScrollView, Switch, Platform, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Animated, { useSharedValue, withSpring, withRepeat, FadeIn, FadeOut, Easing, useAnimatedStyle, interpolateColor, withTiming, withSequence, cancelAnimation  } from 'react-native-reanimated';
+import Animated, { useSharedValue, withSpring, withRepeat, FadeIn, FadeOut, Easing, useAnimatedStyle, interpolateColor, withTiming, withSequence, cancelAnimation } from 'react-native-reanimated';
 
 import Leaf from '../assets/svg/Leaf'
 import BackButton from '../components/BackButton';
@@ -36,10 +36,15 @@ export default function EditGardenPropPage({ route, navigation }) {
   const gardata = useStore((state) => state.data)
 
   const setTemperature = useStore((state) => state.setTemperature)
+  const setLight = useStore((state) => state.setLight)
+  const setSoilMoisture = useStore((state) => state.setSoilMoisture)
+  const setHumidity = useStore((state) => state.setHumidity)
+
   const addTemperatureHistory = useStore((state) => state.addTemperatureHistory)
   const addLightHistory = useStore((state) => state.addLightHistory)
   const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
   const addHumidityHistory = useStore((state) => state.addHumidityHistory)
+
   const CurrentSensorValue = useStore((state) => state.CurrentSensorValue)
 
   const translateY = useSharedValue(-50);
@@ -48,8 +53,8 @@ export default function EditGardenPropPage({ route, navigation }) {
 
 
 
-  
-  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))){
+  //If target value === current value then go green
+  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) {
     initValue = 0
   } else {
     initValue = 2
@@ -66,7 +71,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     };
   });
 
-  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) { 
+  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) {
     // if the current value is equal to target
     progress.value = withRepeat(
       withTiming(1, { duration: 1000 }),
@@ -87,7 +92,6 @@ export default function EditGardenPropPage({ route, navigation }) {
   }
 
   function handleSlideComplete(newVal) {
-//add other sensors
     if (slide_debounce) return
 
     setDebounce(true)
@@ -100,11 +104,14 @@ export default function EditGardenPropPage({ route, navigation }) {
     if (type === "Temperature") {
       setTemperature(newVal)
       addTemperatureHistory(newVal)
-    } else if (type === "Light") {
+    } else if (type === "Light Intensity") {
+      setLight(newVal)
       addLightHistory(newVal)
     } else if (type === "Soil Moisture") {
+      setSoilMoisture(newVal)
       addSoilMoistureHistory(newVal)
     } else if (type === "Humidity") {
+      setHumidity(newVal)
       addHumidityHistory(newVal)
     }
   }
@@ -119,10 +126,6 @@ export default function EditGardenPropPage({ route, navigation }) {
     }
   }
 
-  const handlePress = () => {
-    translateY.value = withSpring(translateY.value + 50);
-  };
-  // handlePress()
   return (
     <SafeAreaView className={`${Platform.OS === 'android' ? 'mt-8' : ''}`}>
       <ScrollView bounces={false}>
@@ -144,15 +147,10 @@ export default function EditGardenPropPage({ route, navigation }) {
               />
             </View>
           </View>
-        </View> 
+        </View>
         <Text className="text-3xl font-bold mx-auto pt-4">{type}</Text>
         <Animated.View className="rounded-full aspect-square w-48 mx-auto mt-10 py-10shadow-lg" style={[animatedStyle]}>
-          <EditGardenPropText type={type} cancelColorAnim={cancelColorAnim}/>
-          {/* <Animated.Text
-            className="mx-auto my-auto text-5xl font-bold text-white"
-            entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}>
-            {CurrentSensorValue(type) + GardenPropDict[type].Suffix}
-          </Animated.Text> */}
+          <EditGardenPropText type={type} cancelColorAnim={cancelColorAnim} />
         </Animated.View>
         <View className="w-[70%] mx-auto pt-8">
           <Text className="mx-auto text-2xl font-semibold">{"N/A" && "Target: " + getValue().toFixed(0) + GardenPropDict[type].Suffix}</Text>
@@ -167,7 +165,7 @@ export default function EditGardenPropPage({ route, navigation }) {
             value={getValue()}
           />
         </View>
-        {/* <Button onPress={handlePress} title="Click me" /> */}
+
         <View className="mt-36 rounded-t-[40rem] w-full h-96 bg-slate-800 shadow-xl shadow-black">
           <Text className="pt-2 mx-auto text-2xl text-white font-semibold">History</Text>
           <View className="bg-slate-800">

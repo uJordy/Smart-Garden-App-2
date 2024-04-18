@@ -3,13 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 
 import useStore from '../stores/garden'
-const Rect = (props) => <rect vectorEffect="non-scaling-stroke" {...props} />;
-// import Background from "./Background";
 
-// const options = { weekday: "long" };
-
-//send historical data into here and convert json time into data object
-// export default class LineChart extends Component {
 export default function LineChart({ type }) {
 
   const gardata = useStore((state) => state.data)
@@ -56,7 +50,6 @@ export default function LineChart({ type }) {
       <VictoryChart
         scale={{ x: "date", y: "linear" }}
         domainPadding={{ y: 10 }}
-        // fill="#0f172a"
 
         style={{
           background: { fill: "#1e293b" },

@@ -363,27 +363,54 @@ useStore = create((set, get) => ({
   },
 
   addLightHistory: (newVal) => {
-    set((oldState) => {
-      newState = oldState.data;
-      newState.Light.History.push(newVal)
-      return { data: newState }
-    })
+    newVal = parseInt(newVal)
+    date = new Date()
+    dateJSON = date.toJSON()
+    const histData = [dateJSON, newVal]
+
+    set((state) => ({
+      data: {
+        ...state.data,
+        Light: {
+          ...state.data.Light,
+          History: state.data.Light.History.concat([histData])
+        }
+      },
+    }))
   },
 
   addSoilMoistureHistory: (newVal) => {
-    set((oldState) => {
-      newState = oldState.data;
-      newState.SoilMoisture.History.push(newVal)
-      return { data: newState }
-    })
+    newVal = parseInt(newVal)
+    date = new Date()
+    dateJSON = date.toJSON()
+    const histData = [dateJSON, newVal]
+
+    set((state) => ({
+      data: {
+        ...state.data,
+        SoilMoisture: {
+          ...state.data.SoilMoisture,
+          History: state.data.SoilMoisture.History.concat([histData])
+        }
+      },
+    }))
   },
 
   addLightHistory: (newVal) => {
-    set((oldState) => {
-      newState = oldState.data;
-      newState.Light.Light.push(newVal)
-      return { data: newState }
-    })
+    newVal = parseInt(newVal)
+    date = new Date()
+    dateJSON = date.toJSON()
+    const histData = [dateJSON, newVal]
+
+    set((state) => ({
+      data: {
+        ...state.data,
+        Light: {
+          ...state.data.Light,
+          History: state.data.Light.History.concat([histData])
+        }
+      },
+    }))
   },
 
   getAutomationList: () => {
