@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system';
-import { useShallow } from 'zustand/react/shallow';
 import hash from 'hash-it';
+
+import DBHandler from '../core/DBHandler';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
@@ -184,63 +185,6 @@ function SampleData() {
   }
 }
 
-function createFile() {
-  GardenData = sgDictExample;
-}
-
-function saveData() {
-  const id = FileSystem.documentDirectory + fileName;
-
-  FileSystem.getInfoAsync(id).then(file => {
-    if (file.exists) {
-      // Ensures garden data can't save null data
-      if (GardenData.Temperature != null &&
-        GardenData.Light != null &&
-        GardenData.SoilMoisture != null &&
-        GardenData.Humidity != null
-      ) {
-        const updatedPayload = sgDictExample;
-
-        FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload)).then(success => {
-          console.log("Successfully saved!")
-        })
-      }
-
-    } else {
-      console.warn("File Not Found, creating new..")
-      createFile()
-    }
-  })
-}
-
-function loadData() {
-  const id = FileSystem.documentDirectory + fileName;
-
-  FileSystem.getInfoAsync(id).then(file => {
-    if (file.exists) {
-      FileSystem.readAsStringAsync(id).then(payloadJson => {
-        const payload = JSON.parse(payloadJson)
-        console.log(payload);
-        GardenData = payload;
-        console.log("Successfully loaded")
-      })
-    } else {
-      console.warn("File Not Found, creating new..")
-      createFile()
-    }
-  }).catch((error) => {
-    console.error(error);
-  })
-}
-
-function addHistoryData(sensor, data) {
-  if (typeof (data) === "string") {
-    GardenData[sensor].History.append(data)
-    console.log("Successfully appended historical data for " + sensor)
-  } else {
-    console.error("History Data: Invalid data type")
-  }
-}
 
 function lerp(a, b, alpha) {
   return a + alpha * (b - a)
@@ -253,7 +197,16 @@ const clamp = (num, a, b) =>
 SampleData()
 
 useStore = create((set, get) => ({
-  data: sgDictExample,
+  data: DBHandler.getData(),
+
+  // SetDBData: (payload) => {
+  //   console.log(payload)
+  //   set((state) => {
+  //     return {payload}
+  //   })
+  //   // data = payload
+  //   console.log("DB data set")
+  // },
 
   CurrentSensorValue: (sensor) => { //This is for simulation purposes
 

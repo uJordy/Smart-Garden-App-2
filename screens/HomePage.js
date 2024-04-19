@@ -1,16 +1,12 @@
-import React, { useLayoutEffect, useState, useContext } from 'react';
-import { Text, SafeAreaView, View, ScrollView, Platform } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { SafeAreaView, View, ScrollView, Platform } from 'react-native';
 import GardenPropItem from '../components/GardenPropItem';
 
 import Leaf from '../assets/svg/Leaf';
 
-import AutomationHandler from '../core/AutomationHandler'
-
-
 
 function HomePage({navigation}) {
 
-    AutomationHandler()
 
     useLayoutEffect(() => {
         navigation.setOptions({
