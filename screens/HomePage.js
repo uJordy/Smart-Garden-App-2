@@ -1,31 +1,16 @@
 import React, { useLayoutEffect, useState, useContext } from 'react';
 import { Text, SafeAreaView, View, ScrollView, Platform } from 'react-native';
 import GardenPropItem from '../components/GardenPropItem';
-import useStore from '../stores/garden'
 
 import Leaf from '../assets/svg/Leaf';
-import AnimatedView from '../components/AnimatedView';
+
+import AutomationHandler from '../core/AutomationHandler'
+
 
 
 function HomePage({navigation}) {
 
-    // loadData()
-
-    const addTemperatureHistory = useStore((state) => state.addTemperatureHistory)
-    const addLightHistory = useStore((state) => state.addLightHistory)
-    const addSoilMoistureHistory = useStore((state) => state.addSoilMoistureHistory)
-    const addHumidityHistory = useStore((state) => state.addHumidityHistory)
-
-    const Data = useStore.getState().data
-    const TempVal = Data.Temperature.Value
-    const LightVal = Data.Light.Value
-    const SoilVal = Data.SoilMoisture.Value
-    const Humidity = Data.Humidity.Value
-
-
-    function handlePastData(cons) { //Data to handle historical data to display on graph
-        console.log(cons)
-    }
+    AutomationHandler()
 
     useLayoutEffect(() => {
         navigation.setOptions({

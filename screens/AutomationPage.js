@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useStore from '../stores/garden';
 
 import AutomationListItem from '../components/AutomationListItem';
+import AutomationListEmptyComponent from '../components/AutomationListEmptyComponent';
 
 
 function AutomationPage() {
@@ -44,7 +45,6 @@ function AutomationPage() {
                 </TouchableOpacity>
             </View>
 
-            {/* <ScrollView> */}
 
             {/* Header */}
             <View>
@@ -55,11 +55,8 @@ function AutomationPage() {
             <FlatList
                 data={Object.values(automationList())}
                 renderItem={({ item }) => <AutomationListItem data={item} onPress={() => pressHandler("edit", item)} />}
+                ListEmptyComponent={<AutomationListEmptyComponent/>}
             />
-
-
-            {/* <Toggle/> */}
-            {/* </ScrollView> */}
         </SafeAreaView>
     );
 }

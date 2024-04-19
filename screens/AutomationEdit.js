@@ -31,6 +31,7 @@ export default function AutomationEdit({ route, navigation }) {
   const [automationName, setAutomationName] = useState(data.Name ?? "");
 
   const submitAutomation = useStore((state) => state.submitAutomation)
+  const deleteAutomation = useStore((state) => state.deleteAutomation)
 
 
   //Nav
@@ -77,8 +78,6 @@ export default function AutomationEdit({ route, navigation }) {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    console.log(currentDate)
-    // setShow(false);
     setDate(currentDate);
   };
 
@@ -169,25 +168,16 @@ export default function AutomationEdit({ route, navigation }) {
         DaySelected: selectedDay
       }
     }
-    console.log(selectedDay)
-    console.log("submit automation....")
+
     submitAutomation(hashValue, data);
     navigation.goBack()
   }
 
-  function DeleteButton({ action, onPress }) {
-    if (action === "create") {
-      return null
-    } else {
-      return (
-        <View className="mt-6">
-          <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={onPress}>
-            <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
-          </TouchableOpacity>
-        </View>)
-    }
+  function handleDeleteAutomation() {
+    const hashValue = hash(automationName)
+    navigation.goBack()
+    deleteAutomation(hashValue);
   }
-
 
 
   return (
@@ -286,7 +276,7 @@ export default function AutomationEdit({ route, navigation }) {
 
           {action === "edit" ? (
             <View className="mt-6">
-              <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={handleAutomation}>
+              <TouchableOpacity className="w-40 h-10 rounded-3xl bg-red-500 border-4 border-red-300 mx-auto mt-auto " onPress={handleDeleteAutomation}>
                 <Text className="text-lg mx-auto my-auto text-white font-bold">Delete</Text>
               </TouchableOpacity>
             </View>) : ""}

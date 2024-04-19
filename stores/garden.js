@@ -38,11 +38,21 @@ var sgDictExample = {
   },
   Automations: {
 
-    // "Automation Example": {
-    //   Type: "Humidity",
+    // [hash("Automation Example 3")] = {
+    //   Name: "Automation Example 3",
+    //   Enabled: false,
+    //   Type: "Soil Moisture",
     //   Value: 30,
-    //   Time: "2020-08-22T01:15:30.000Z"
-    // }
+    //   Time: "2020-08-22T01:15:30.000Z",
+    //   DaySelected: {
+    //     ["Monday"]: true,
+    //     ["Tuesday"]: true,
+    //     ["Wednesday"]: true,
+    //     ["Thursday"]: true,
+    //     ["Friday"]: true,
+    //     ["Saturday"]: false,
+    //     ["Sunday"]: false,
+    //   }
   }
 }
 
@@ -106,45 +116,45 @@ function SampleData() {
 
     //Automations
 
-    sgDictExample.Automations[hash("Automation Example")] = {
-      Name: "Automation Example",
-      Enabled: true,
-      Type: "Humidity",
-      Value: 30,
-      Time: "2020-08-22T15:15:30.000Z",
-      DaySelected: {
-        ["Monday"]: true,
-        ["Tuesday"]: false,
-        ["Wednesday"]: false,
-        ["Thursday"]: true,
-        ["Friday"]: false,
-        ["Saturday"]: false,
-        ["Sunday"]: false,
-      }
-    }
+    // sgDictExample.Automations[hash("Automation Example")] = {
+    //   Name: "Automation Example",
+    //   Enabled: true,
+    //   Type: "Humidity",
+    //   Value: 30,
+    //   Time: "2020-08-22T15:15:30.000Z",
+    //   DaySelected: {
+    //     ["Monday"]: true,
+    //     ["Tuesday"]: false,
+    //     ["Wednesday"]: false,
+    //     ["Thursday"]: true,
+    //     ["Friday"]: false,
+    //     ["Saturday"]: false,
+    //     ["Sunday"]: false,
+    //   }
+    // }
 
-    sgDictExample.Automations[hash("Automation Example 2")] = {
-      Name: "Automation Example 2",
-      Enabled: false,
-      Type: "Temperature",
-      Value: 30,
-      Time: "2020-08-22T01:15:30.000Z",
-      DaySelected: {
-        ["Monday"]: false,
-        ["Tuesday"]: false,
-        ["Wednesday"]: false,
-        ["Thursday"]: false,
-        ["Friday"]: false,
-        ["Saturday"]: true,
-        ["Sunday"]: true,
-      }
-    }
+    // sgDictExample.Automations[hash("Automation Example 2")] = {
+    //   Name: "Automation Example 2",
+    //   Enabled: false,
+    //   Type: "Temperature",
+    //   Value: 30,
+    //   Time: "2020-08-22T01:15:30.000Z",
+    //   DaySelected: {
+    //     ["Monday"]: false,
+    //     ["Tuesday"]: false,
+    //     ["Wednesday"]: false,
+    //     ["Thursday"]: false,
+    //     ["Friday"]: false,
+    //     ["Saturday"]: true,
+    //     ["Sunday"]: true,
+    //   }
+    // }
     sgDictExample.Automations[hash("Automation Example 3")] = {
       Name: "Automation Example 3",
       Enabled: false,
       Type: "Soil Moisture",
       Value: 30,
-      Time: "2020-08-22T01:15:30.000Z",
+      Time: "2024-04-18T21:45:00.000Z",
       DaySelected: {
         ["Monday"]: true,
         ["Tuesday"]: true,
@@ -155,22 +165,22 @@ function SampleData() {
         ["Sunday"]: false,
       }
     }
-    sgDictExample.Automations[hash("Automation Example 4")] = {
-      Name: "Automation Example 4",
-      Enabled: true,
-      Type: "Humidity",
-      Value: 30,
-      Time: "2020-08-22T05:19:30.000Z",
-      DaySelected: {
-        ["Monday"]: false,
-        ["Tuesday"]: false,
-        ["Wednesday"]: false,
-        ["Thursday"]: false,
-        ["Friday"]: false,
-        ["Saturday"]: true,
-        ["Sunday"]: true,
-      }
-    }
+    // sgDictExample.Automations[hash("Automation Example 4")] = {
+    //   Name: "Automation Example 4",
+    //   Enabled: true,
+    //   Type: "Humidity",
+    //   Value: 30,
+    //   Time: "2020-08-22T05:19:30.000Z",
+    //   DaySelected: {
+    //     ["Monday"]: false,
+    //     ["Tuesday"]: false,
+    //     ["Wednesday"]: false,
+    //     ["Thursday"]: false,
+    //     ["Friday"]: false,
+    //     ["Saturday"]: true,
+    //     ["Sunday"]: true,
+    //   }
+    // }
   }
 }
 
@@ -434,9 +444,43 @@ useStore = create((set, get) => ({
       }
     })
     console.log("Submitted Automation!")
+    // console.log(get().data.Automations)
+  },
+
+  toggleAutomation: (hashName, bool) => {
+    console.log("switch")
+    console.log(bool)
+
+    set((state) => {
+      
+      return {
+        data:
+        {
+          ...state.data,
+          Automations: {
+            ...state.data.Automations,
+            [hashName]: {
+              ...state.data.Automations[hashName],
+              Enabled: bool
+            }
+          }
+        }
+      }
+    })
+  },
+
+
+  deleteAutomation: (hashName) => {
+    console.log("delete")
+    set((state) => {
+      delete state.data.Automations[hashName]
+      return state;
+    })
     console.log(get().data.Automations)
   }
+
 }))
+
 
 export default useStore;
 

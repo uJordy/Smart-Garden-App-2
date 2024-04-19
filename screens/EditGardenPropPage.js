@@ -47,8 +47,6 @@ export default function EditGardenPropPage({ route, navigation }) {
 
   const CurrentSensorValue = useStore((state) => state.CurrentSensorValue)
 
-  const translateY = useSharedValue(-50);
-
   const [slide_debounce, setDebounce] = useState(false);
 
 

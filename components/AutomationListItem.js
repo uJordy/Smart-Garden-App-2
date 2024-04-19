@@ -1,15 +1,25 @@
-import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native'
+import {Text, View, Switch, TouchableOpacity } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import hash from 'hash-it';
 
 import SunSVG from '../assets/svg/SunSVG'
 import TemperatureSVG from '../assets/svg/TemperatureSVG'
 import SoilMoisture from '../assets/svg/SoilMoisture'
 import Humidity from '../assets/svg/Humidity'
 
+import useStore from '../stores/garden';
+
 const AutomationItem = ({ data, onPress }) => {
+  
+  const toggleAutomation = useStore((state) => state.toggleAutomation)
   const [isEnabled, setIsEnabled] = useState(data.Enabled);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const toggleSwitch = () => {
+    toggleAutomation(hash(data.Name), !isEnabled)
+    setIsEnabled(previousState => !previousState)
+
+  };
 
   daySelected = data.DaySelected;
   time = new Date(data["Time"]);
