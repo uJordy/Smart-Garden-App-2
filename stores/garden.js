@@ -1,45 +1,14 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as FileSystem from 'expo-file-system';
 import hash from 'hash-it';
 
-// import DBHandler from '../core/DBHandler';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
 GardenData = sgDictExample; // Overwrite saved data
 const generateSampleData = true;
-
-
-// const storage = createJSONStorage(() => sessionStorage, {
-//   reviver: (key, value) => {
-//     if (value && value.type === 'date') {
-//       return new Date(value)
-//     }
-//     return value
-//   },
-//   replacer: (key, value) => {
-//     if (value instanceof Date) {
-//       return { type: 'date', value: value.toISOString() }
-//     }
-//     return value
-//   },
-// })
-
-// const zustandStorage = {
-//   setItem: (name, value) => {
-//     return storage.set(name, value)
-//   },
-//   getItem: (name) => {
-//     const value = storage.getString(name)
-//     return value ?? null
-//   },
-//   removeItem: (name) => {
-//     return storage.delete(name)
-//   },
-// }
 
 
 //LastChanged var is for "simulating" garden sensor changing to its target value
