@@ -64,7 +64,7 @@ function TabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={HomeStackNavigator} />
-      <Tab.Screen name="Plants" component={PlantPage} />
+      {/* <Tab.Screen name="Plants" component={PlantPage} /> */}
       <Tab.Screen name="Automations" component={AutomationStackNavigator} />
     </Tab.Navigator>
   )
