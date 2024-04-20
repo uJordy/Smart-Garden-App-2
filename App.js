@@ -9,135 +9,17 @@ import Home from './screens/HomePage';
 import EditGardenPropPage from './screens/EditGardenPropPage';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as FileSystem from 'expo-file-system';
 
-// import DBHandler from './core/DBHandler' // needs to be before useStore!
-import useStore from './stores/garden'
+import useStore from './stores/garden' //do not remove
 import AutomationEdit from './screens/AutomationEdit';
 
-import AutomationHandler from './core/AutomationHandler'
-
-
-var GardenData = {};
-const fileName = "GardenDictionary.json" //.json essential
+import AutomationHandler from './core/AutomationHandler' //do not remove
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-GardenData = {};
-GardenData = sgDictExample; // Overwrite saved data
-
-var sgDictExample = {
-  Temperature: { //Celcius 
-    Value: 0, //Current
-    History: []
-  },
-  Light: { //Percentage
-    Value: 0,
-    History: []
-  },
-  SoilMoisture: { //Percentage
-    Value: 0,
-    History: []
-  },
-  Humidity: { //Percentage
-    Value: 0,
-    History: []
-  },
-}
-
-// get GardenData() {
-//   return this.GardenData;
-// }
-
-// Must loadData() first!
-
-function createFile() {
-  GardenData = sgDictExample;
-}
-
-function saveData() {
-  const id = FileSystem.documentDirectory + fileName;
-
-  FileSystem.getInfoAsync(id).then(file => {
-    if (file.exists) {
-      // Ensures garden data can't save null data
-      if (GardenData.Temperature != null &&
-        GardenData.Light != null &&
-        GardenData.SoilMoisture != null &&
-        GardenData.Humidity != null
-      ) {
-        const updatedPayload = sgDictExample;
-
-        FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload)).then(success => {
-          console.log("Successfully saved!")
-        })
-      }
-
-    } else {
-      console.warn("File Not Found, creating new..")
-      createFile()
-    }
-  })
-}
-
-function loadData() {
-  const id = FileSystem.documentDirectory + fileName;
-
-  FileSystem.getInfoAsync(id).then(file => {
-    if (file.exists) {
-      FileSystem.readAsStringAsync(id).then(payloadJson => {
-        const payload = JSON.parse(payloadJson)
-        console.log(payload);
-        GardenData = payload;
-        console.log("Successfully loaded")
-      })
-    } else {
-      console.warn("File Not Found, creating new..")
-      createFile()
-    }
-  }).catch((error) => {
-    console.error(error);
-  })
-}
 
 
-// async update(id, updates) {
-//   id = FileSystem.documentDirectory + 'GardenDictionary.json'
-//   updates = { first: "added new content!" };
-//   try {
-//     console.log("checking if file exists")
-
-//     FileSystem.getInfoAsync(id).then(file => {
-//       if (file.exists) {
-//         console.log("file exists")
-
-//         FileSystem.readAsStringAsync(id).then(payloadJson => {
-//           // console.log(tmp)
-//           const payload = JSON.parse(payloadJson)
-//           console.log(payload)
-//         })
-//       }
-//       else {
-//         console.error("no FILE found, creating")
-//         FileSystem.writeAsStringAsync(id, JSON.stringify(updates))
-//       }
-//     }).catch((error) => {
-//       console.error(error);
-//     });
-//   } catch (e) {
-//     console.error(e)
-//   }
-// }
-
-function addHistoryData(sensor, data) {
-  if (typeof (data) === "string") {
-    GardenData[sensor].History.append(data)
-    console.log("Successfully appended historical data for " + sensor)
-  } else {
-    console.error("History Data: Invalid data type")
-  }
-}
 
 function HomeStackNavigator() {
   return (
@@ -190,9 +72,6 @@ function TabNavigator() {
 
 
 function App() {
-  // const gardata = useStore((state) => state.data)
-  // console.log(gardata)
-  // console.log("gar data content ^^^")
   return (
     <NavigationContainer>
       <TabNavigator />

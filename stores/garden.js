@@ -200,17 +200,7 @@ SampleData()
 useStore = create(
   persist(
     (set, get) => ({
-      // data: DBHandler.getData(),
       data: sgDictExample,
-
-      // SetDBData: (payload) => {
-      //   console.log(payload)
-      //   set((state) => {
-      //     return {payload}
-      //   })
-      //   // data = payload
-      //   console.log("DB data set")
-      // },
 
       CurrentSensorValue: (sensor) => { //This is for simulation purposes
 
@@ -435,40 +425,11 @@ useStore = create(
       }
     }),
     {
-      name: 'gamesphere-storage', // name of the item in the storage (must be unique)
-      // storage: createJSONStorage(() => zustandStorage)
-      storage: createJSONStorage(() => AsyncStorage),
-      // storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+      name: 'smarten-storage', // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => AsyncStorage)
     },
   )
 )
 
 
 export default useStore;
-
-// console.log("STARTING INITIATIONALISE")
-
-// const CurrentTempValue = useStore((state) => state.CurrentTempValue)
-// while (true) {
-//   console.log("iteration")
-//   CurrentTempValue()
-//   setTimeout(1000)
-// }
-
-
-
-// const userStore = create<Store>((set, get) => ({
-//   ...
-//   setFavoriteMovie: (id: number) => {
-//      set((state) => ({
-//        user: {
-//          ...state.user,
-//          favoriteMovies: [...state.user.favoriteMovies, id]
-//        }
-//      }))
-//    },
-//  }));
-
-// const addHistory = useStore((state) => state.addHistory)
-// return <button onClick={increasePopulation}>one up</button>
-
