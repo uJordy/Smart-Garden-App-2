@@ -188,6 +188,10 @@ DBHandler = {
   getData: () => {
     return GardenData;
   },
+  
+  setData: (data) => {
+    GardenData = data;
+  },
 
   saveData: () => {
     const id = FileSystem.documentDirectory + fileName;

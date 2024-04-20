@@ -1,14 +1,46 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
 import hash from 'hash-it';
 
-import DBHandler from '../core/DBHandler';
+// import DBHandler from '../core/DBHandler';
 
 var GardenData = {};
 const fileName = "GardenDictionary.json" //.json essential
 
 GardenData = sgDictExample; // Overwrite saved data
 const generateSampleData = true;
+
+
+// const storage = createJSONStorage(() => sessionStorage, {
+//   reviver: (key, value) => {
+//     if (value && value.type === 'date') {
+//       return new Date(value)
+//     }
+//     return value
+//   },
+//   replacer: (key, value) => {
+//     if (value instanceof Date) {
+//       return { type: 'date', value: value.toISOString() }
+//     }
+//     return value
+//   },
+// })
+
+// const zustandStorage = {
+//   setItem: (name, value) => {
+//     return storage.set(name, value)
+//   },
+//   getItem: (name) => {
+//     const value = storage.getString(name)
+//     return value ?? null
+//   },
+//   removeItem: (name) => {
+//     return storage.delete(name)
+//   },
+// }
+
 
 //LastChanged var is for "simulating" garden sensor changing to its target value
 
@@ -22,19 +54,19 @@ var sgDictExample = {
   Light: { //Percentage
     Value: 0,
     PrevValue: 0,
-    LastChanged: new Date(), 
+    LastChanged: new Date(),
     History: []
   },
   SoilMoisture: { //Percentage
     Value: 0,
     PrevValue: 0,
-    LastChanged: new Date(), 
+    LastChanged: new Date(),
     History: []
   },
   Humidity: { //Percentage
     Value: 0,
     PrevValue: 0,
-    LastChanged: new Date(), 
+    LastChanged: new Date(),
     History: []
   },
   Automations: {
@@ -196,243 +228,251 @@ const clamp = (num, a, b) =>
 //generateSampleData must be true!
 SampleData()
 
-useStore = create((set, get) => ({
-  data: DBHandler.getData(),
+useStore = create(
+  persist(
+    (set, get) => ({
+      // data: DBHandler.getData(),
+      data: sgDictExample,
 
-  // SetDBData: (payload) => {
-  //   console.log(payload)
-  //   set((state) => {
-  //     return {payload}
-  //   })
-  //   // data = payload
-  //   console.log("DB data set")
-  // },
+      // SetDBData: (payload) => {
+      //   console.log(payload)
+      //   set((state) => {
+      //     return {payload}
+      //   })
+      //   // data = payload
+      //   console.log("DB data set")
+      // },
 
-  CurrentSensorValue: (sensor) => { //This is for simulation purposes
+      CurrentSensorValue: (sensor) => { //This is for simulation purposes
 
-    if (sensor === "Light Intensity") {  //convert into dictionary compatible sensor names
-      sensor = "Light";
-    } else if (sensor === "Soil Moisture") {
-      sensor = "SoilMoisture";
-    }
-    const transTime = 0.1; //mins
-    const transTimeMs = transTime * 60 * 1000;
-    const lastChangedDate = get().data[sensor].LastChanged; //date object
-
-    if (lastChangedDate !== null) {
-      nowDate = new Date();
-      endDate = new Date(lastChangedDate.getTime() + transTimeMs)
-
-      elapsedTime = (new Date() - lastChangedDate)
-      const percentage = (elapsedTime / transTimeMs)
-
-      ActualValue = lerp(get().data[sensor].PrevValue, get().data[sensor].Value, clamp(percentage, 0, 1))
-
-
-      ActualValue = parseInt(ActualValue.toFixed(0))
-
-      return ActualValue;
-    } else {
-      return get().data[sensor].PrevValue;
-    }
-  },
-
-  setTemperature: (newVal) => {
-    set((state) => {
-      // newState = oldState.data;
-      // newState.Temperature.Value = newVal
-      // return { data: newState }
-      return {
-        data:
-        {
-          ...state.data,
-          Temperature: {
-            ...state.data.Temperature,
-            Value: newVal,
-            PrevValue: parseInt(get().data.Temperature.Value),
-            LastChanged: new Date()
-          }
+        if (sensor === "Light Intensity") {  //convert into dictionary compatible sensor names
+          sensor = "Light";
+        } else if (sensor === "Soil Moisture") {
+          sensor = "SoilMoisture";
         }
-      }
-    })
-  },
+        const transTime = 0.1; //mins
+        const transTimeMs = transTime * 60 * 1000;
+        const lastChangedDate = get().data[sensor].LastChanged; //date object
 
-  setLight: (newVal) => {
-    set((state) => {
-      return {
-        data:
-        {
-          ...state.data,
-          Light: {
-            ...state.data.Light,
-            Value: newVal,
-            PrevValue: parseInt(get().data.Light.Value),
-            LastChanged: new Date()
-          }
-        }
-      }
-    })
-  },
+        if (lastChangedDate !== null) {
+          nowDate = new Date();
+          endDate = new Date(lastChangedDate.getTime() + transTimeMs)
 
-  setSoilMoisture: (newVal) => {
-    set((state) => {
-      return {
-        data:
-        {
-          ...state.data,
-          SoilMoisture: {
-            ...state.data.SoilMoisture,
-            Value: newVal,
-            PrevValue: parseInt(get().data.SoilMoisture.Value),
-            LastChanged: new Date()
-          }
-        }
-      }
-    })
-  },
+          elapsedTime = (new Date() - lastChangedDate)
+          const percentage = (elapsedTime / transTimeMs)
 
-  setHumidity: (newVal) => {
-    set((state) => {
-      return {
-        data:
-        {
-          ...state.data,
-          Humidity: {
-            ...state.data.Humidity,
-            Value: newVal,
-            PrevValue: parseInt(get().data.Humidity.Value),
-            LastChanged: new Date()
-          }
-        }
-      }
-    })
-  },
+          ActualValue = lerp(get().data[sensor].PrevValue, get().data[sensor].Value, clamp(percentage, 0, 1))
 
-  addTemperatureHistory: (newVal) => {
-    newVal = parseInt(newVal)
-    date = new Date()
-    dateJSON = date.toJSON()
-    const histData = [dateJSON, newVal]
 
-    set((state) => ({
-      data: {
-        ...state.data,
-        Temperature: {
-          ...state.data.Temperature,
-          History: state.data.Temperature.History.concat([histData])
+          ActualValue = parseInt(ActualValue.toFixed(0))
+
+          return ActualValue;
+        } else {
+          return get().data[sensor].PrevValue;
         }
       },
-    }))
-  },
 
-  addLightHistory: (newVal) => {
-    newVal = parseInt(newVal)
-    date = new Date()
-    dateJSON = date.toJSON()
-    const histData = [dateJSON, newVal]
+      setTemperature: (newVal) => {
+        set((state) => {
 
-    set((state) => ({
-      data: {
-        ...state.data,
-        Light: {
-          ...state.data.Light,
-          History: state.data.Light.History.concat([histData])
-        }
-      },
-    }))
-  },
-
-  addSoilMoistureHistory: (newVal) => {
-    newVal = parseInt(newVal)
-    date = new Date()
-    dateJSON = date.toJSON()
-    const histData = [dateJSON, newVal]
-
-    set((state) => ({
-      data: {
-        ...state.data,
-        SoilMoisture: {
-          ...state.data.SoilMoisture,
-          History: state.data.SoilMoisture.History.concat([histData])
-        }
-      },
-    }))
-  },
-
-  addLightHistory: (newVal) => {
-    newVal = parseInt(newVal)
-    date = new Date()
-    dateJSON = date.toJSON()
-    const histData = [dateJSON, newVal]
-
-    set((state) => ({
-      data: {
-        ...state.data,
-        Light: {
-          ...state.data.Light,
-          History: state.data.Light.History.concat([histData])
-        }
-      },
-    }))
-  },
-
-  getAutomationList: () => {
-    return get().data.Automations
-  },
-
-  submitAutomation: (name, autoData) => {
-
-    autoData = autoData[name]
-    set((state) => {
-
-      return {
-        data:
-        {
-          ...state.data,
-          Automations: {
-            ...state.data.Automations,
-            autoData
-          }
-        }
-      }
-    })
-    console.log("Submitted Automation!")
-    // console.log(get().data.Automations)
-  },
-
-  toggleAutomation: (hashName, bool) => {
-    console.log("switch")
-    console.log(bool)
-
-    set((state) => {
-      
-      return {
-        data:
-        {
-          ...state.data,
-          Automations: {
-            ...state.data.Automations,
-            [hashName]: {
-              ...state.data.Automations[hashName],
-              Enabled: bool
+          return {
+            data:
+            {
+              ...state.data,
+              Temperature: {
+                ...state.data.Temperature,
+                Value: newVal,
+                PrevValue: parseInt(get().data.Temperature.Value),
+                LastChanged: new Date()
+              }
             }
           }
-        }
+        })
+      },
+
+      setLight: (newVal) => {
+        set((state) => {
+          return {
+            data:
+            {
+              ...state.data,
+              Light: {
+                ...state.data.Light,
+                Value: newVal,
+                PrevValue: parseInt(get().data.Light.Value),
+                LastChanged: new Date()
+              }
+            }
+          }
+        })
+      },
+
+      setSoilMoisture: (newVal) => {
+        set((state) => {
+          return {
+            data:
+            {
+              ...state.data,
+              SoilMoisture: {
+                ...state.data.SoilMoisture,
+                Value: newVal,
+                PrevValue: parseInt(get().data.SoilMoisture.Value),
+                LastChanged: new Date()
+              }
+            }
+          }
+        })
+      },
+
+      setHumidity: (newVal) => {
+        set((state) => {
+          return {
+            data:
+            {
+              ...state.data,
+              Humidity: {
+                ...state.data.Humidity,
+                Value: newVal,
+                PrevValue: parseInt(get().data.Humidity.Value),
+                LastChanged: new Date()
+              }
+            }
+          }
+        })
+      },
+
+      addTemperatureHistory: (newVal) => {
+        newVal = parseInt(newVal)
+        date = new Date()
+        dateJSON = date.toJSON()
+        const histData = [dateJSON, newVal]
+
+        set((state) => ({
+          data: {
+            ...state.data,
+            Temperature: {
+              ...state.data.Temperature,
+              History: state.data.Temperature.History.concat([histData])
+            }
+          },
+        }))
+      },
+
+      addLightHistory: (newVal) => {
+        newVal = parseInt(newVal)
+        date = new Date()
+        dateJSON = date.toJSON()
+        const histData = [dateJSON, newVal]
+
+        set((state) => ({
+          data: {
+            ...state.data,
+            Light: {
+              ...state.data.Light,
+              History: state.data.Light.History.concat([histData])
+            }
+          },
+        }))
+      },
+
+      addSoilMoistureHistory: (newVal) => {
+        newVal = parseInt(newVal)
+        date = new Date()
+        dateJSON = date.toJSON()
+        const histData = [dateJSON, newVal]
+
+        set((state) => ({
+          data: {
+            ...state.data,
+            SoilMoisture: {
+              ...state.data.SoilMoisture,
+              History: state.data.SoilMoisture.History.concat([histData])
+            }
+          },
+        }))
+      },
+
+      addHumidityHistory: (newVal) => {
+        newVal = parseInt(newVal)
+        date = new Date()
+        dateJSON = date.toJSON()
+        const histData = [dateJSON, newVal]
+
+        set((state) => ({
+          data: {
+            ...state.data,
+            Humidity: {
+              ...state.data.Humidity,
+              History: state.data.Humidity.History.concat([histData])
+            }
+          },
+        }))
+      },
+
+      getAutomationList: () => {
+        return get().data.Automations
+      },
+
+      submitAutomation: (name, autoData) => {
+
+        autoData = autoData[name]
+        set((state) => {
+
+          return {
+            data:
+            {
+              ...state.data,
+              Automations: {
+                ...state.data.Automations,
+                autoData
+              }
+            }
+          }
+        })
+        console.log("Submitted Automation!")
+        // console.log(get().data.Automations)
+      },
+
+      toggleAutomation: (hashName, bool) => {
+        console.log("switch")
+        console.log(bool)
+
+        set((state) => {
+
+          return {
+            data:
+            {
+              ...state.data,
+              Automations: {
+                ...state.data.Automations,
+                [hashName]: {
+                  ...state.data.Automations[hashName],
+                  Enabled: bool
+                }
+              }
+            }
+          }
+        })
+      },
+
+
+      deleteAutomation: (hashName) => {
+        console.log("delete")
+        set((state) => {
+          delete state.data.Automations[hashName]
+          return state;
+        })
+        console.log(get().data.Automations)
       }
-    })
-  },
-
-
-  deleteAutomation: (hashName) => {
-    console.log("delete")
-    set((state) => {
-      delete state.data.Automations[hashName]
-      return state;
-    })
-    console.log(get().data.Automations)
-  }
-
-}))
+    }),
+    {
+      name: 'gamesphere-storage', // name of the item in the storage (must be unique)
+      // storage: createJSONStorage(() => zustandStorage)
+      storage: createJSONStorage(() => AsyncStorage),
+      // storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+    },
+  )
+)
 
 
 export default useStore;

@@ -10,8 +10,8 @@ import EditGardenPropPage from './screens/EditGardenPropPage';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as FileSystem from 'expo-file-system';
-//Make sample data compatible with database in garden.js
-import DBHandler from './core/DBHandler' // needs to be before useStore!
+
+// import DBHandler from './core/DBHandler' // needs to be before useStore!
 import useStore from './stores/garden'
 import AutomationEdit from './screens/AutomationEdit';
 
