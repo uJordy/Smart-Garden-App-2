@@ -21,6 +21,8 @@ const AutomationItem = ({ data, onPress }) => {
 
   };
 
+  // console.log(data)
+  // console.log("^^^ automation list item")
   daySelected = data.DaySelected;
   time = new Date(data["Time"]);
   type = data.Type;

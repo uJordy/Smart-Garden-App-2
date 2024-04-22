@@ -32,6 +32,8 @@ function AutomationPage() {
     }
 
 
+    // console.log(automationList())
+    // console.log("automation page list")
 
     return (
         <SafeAreaView>

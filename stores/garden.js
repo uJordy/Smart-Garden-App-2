@@ -124,6 +124,7 @@ function SampleData() {
     //   Type: "Humidity",
     //   Value: 30,
     //   Time: "2020-08-22T15:15:30.000Z",
+    //   LastRan: null
     //   DaySelected: {
     //     ["Monday"]: true,
     //     ["Tuesday"]: false,
@@ -165,7 +166,8 @@ function SampleData() {
         ["Friday"]: true,
         ["Saturday"]: false,
         ["Sunday"]: false,
-      }
+      },
+      LastRan: null
     }
     // sgDictExample.Automations[hash("Automation Example 4")] = {
     //   Name: "Automation Example 4",
@@ -211,7 +213,11 @@ useStore = create(
         }
         const transTime = 0.1; //mins
         const transTimeMs = transTime * 60 * 1000;
-        const lastChangedDate = get().data[sensor].LastChanged; //date object
+        lastChangedDate = get().data[sensor].LastChanged; //date object
+        if (typeof(lastChangedDate === "string")) {
+          lastChangedDate = new Date(lastChangedDate);
+        }
+
 
         if (lastChangedDate !== null) {
           nowDate = new Date();
@@ -372,7 +378,7 @@ useStore = create(
         return get().data.Automations
       },
 
-      submitAutomation: (name, autoData) => {
+      submitAutomation: (name, autoData) => { //add automation
 
         autoData = autoData[name]
         set((state) => {
@@ -383,21 +389,17 @@ useStore = create(
               ...state.data,
               Automations: {
                 ...state.data.Automations,
-                autoData
+                [hash(name)]: autoData
               }
             }
           }
         })
+        console.log(get().data.Automations)
         console.log("Submitted Automation!")
-        // console.log(get().data.Automations)
       },
 
       toggleAutomation: (hashName, bool) => {
-        console.log("switch")
-        console.log(bool)
-
         set((state) => {
-
           return {
             data:
             {
@@ -412,7 +414,52 @@ useStore = create(
             }
           }
         })
+        console.log(get().data.Automations)
+        console.log("toggle automation ^^^^")
       },
+
+      invokeAutomation: (hashName, type, value) => {
+        if (type === "Soil Moisture") type = "SoilMoisture";
+        if (type === "Light Intensity") type = "Light";
+
+        if (get().data[type].Value === value) {
+          console.log("value matched")
+          return;
+        }
+        set((state) => {
+
+          return {
+            data:
+            {
+              ...state.data,
+              [type]: {
+                ...state.data[type],
+                Value: value,
+                PrevValue: parseInt(get().data[type].Value),
+                LastChanged: new Date(),
+              }
+            }
+          }
+        })
+
+        set((state) => {
+          return {
+            data:
+            {
+              ...state.data,
+              Automations: {
+                ...state.data.Automations,
+                [hashName]: {
+                  ...state.data.Automations[hashName],
+                  LastRan: new Date(),
+                }
+              }
+            }
+          }
+        })
+        console.log(get().data.Automations)
+        console.log("Invoke automation")
+      }, 
 
 
       deleteAutomation: (hashName) => {
@@ -421,11 +468,10 @@ useStore = create(
           delete state.data.Automations[hashName]
           return state;
         })
-        console.log(get().data.Automations)
-      }
+      },
     }),
     {
-      name: 'smarten-storage', // name of the item in the storage (must be unique)
+      name: 'smarten-storage-011', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => AsyncStorage)
     },
   )

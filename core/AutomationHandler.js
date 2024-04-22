@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import useStore from '../stores/garden'
 
-const checkAutomations = () => {
-
-  const [autoTimer, setAutoTimer] = useState(new Date())
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAutoTimer(new Date())
-    }
-      , 10000)
-  }, [autoTimer])
+import useStore from '../stores/garden';
+import hash from 'hash-it';
 
 
-  getAutomationList = useStore((state) => state.getAutomationList)
-  
+const checkAutomations = (getAutomationList, invokeAutomation) => {
+
+  console.log("running check automation")
+
   for (const [key, item] of Object.entries(getAutomationList())) {
 
     console.log(item.Enabled)
-    if (item.Enabled === false) return;
+    if (item.Enabled === false) continue;
 
     autoTime = new Date(item.Time) //time from automation
     currentTime = new Date() //UTC +00:00
@@ -27,28 +19,36 @@ const checkAutomations = () => {
 
     weekday = currentTime.toLocaleString("en-EN", { weekday: "long" })
 
+    console.log(item)
+    console.log("automation handler::::::")
+
     if (item.DaySelected[weekday] === true) {
+
       console.log("day is matched")
 
-      console.log(autoTime.getHours())
-      console.log(currentTime.getHours())
       if (autoTime.getHours() === currentTime.getHours()) {
-        console.log("hours matched")
+
         if (autoTime.getMinutes() === currentTime.getMinutes()) {
+
+          if (item.LastRan !== null) {
+            if (item.LastRan.getMonth() === currentTime.getMonth()) { //Check to see if automation has already been ran today
+              if (item.LastRan.getDate() === currentTime.getDate()) {
+                console.log("ran already today!")
+                continue
+              }
+            }
+          }
           console.log("minutes matched")
 
           console.log("automation name running!")
           console.log(item.Name)
+          invokeAutomation(key, item.Type, item.Value)
         }
       }
     }
   }
-
-  // setTimeout(5000)
 }
 
-// }
-// }
 
 
 export default checkAutomations;

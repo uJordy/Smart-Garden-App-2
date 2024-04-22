@@ -45,8 +45,7 @@ export default function AutomationEdit({ route, navigation }) {
   }
 
   const [date, setDate] = useState(new Date(data.Time ?? defaultTime));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+
 
   const [selectedAutoType, setSelectedAutoType] = useState(data.Type ?? defaultType);
 
@@ -55,10 +54,10 @@ export default function AutomationEdit({ route, navigation }) {
   initSMState = false
   initHState = false
 
-  if (data.Type === "Temperature") initTState = true;
-  if (data.Type === "Light Intensity") initLIState = true;
-  if (data.Type === "Soil Moisture") initSMState = true;
-  if (data.Type === "Humidity") initHState = true;
+  if (selectedAutoType === "Temperature") initTState = true;
+  if (selectedAutoType === "Light Intensity") initLIState = true;
+  if (selectedAutoType === "Soil Moisture") initSMState = true;
+  if (selectedAutoType === "Humidity") initHState = true;
 
   const [checkboxTState, setCheckboxTState] = useState(initTState); //Temperature
   const [checkboxLIState, setCheckboxLIState] = useState(initLIState); //Light Intensity
@@ -126,7 +125,7 @@ export default function AutomationEdit({ route, navigation }) {
     }
 
     if (automationName.length > 20) {
-      warn("Automation name is too long")
+      console.log("Automation name is too long")
       return "auto length"
     }
 
@@ -139,21 +138,21 @@ export default function AutomationEdit({ route, navigation }) {
       }
     }
     if (!found) {
-      warn("Automation type invalid")
+      console.log("Automation type invalid")
       return "auto type"
     }
 
     if (value < GardenPropDict[selectedAutoType].MinVal) {
-      warn("Automation value smaller than min")
+      console.log("Automation value smaller than min")
       return "slider min"
     }
     if (value > GardenPropDict[selectedAutoType].MaxVal) {
-      warn("Automation value bigger than max")
+      console.log("Automation value bigger than max")
       return "slider max"
     }
 
     if (date.constructor !== Date) {
-      warn("Date object actually not date")
+      console.log("Date object actually not date")
       return "date invalid"
     }
 
@@ -165,7 +164,8 @@ export default function AutomationEdit({ route, navigation }) {
         Type: type,
         Value: value,
         Time: date.toJSON(),
-        DaySelected: selectedDay
+        DaySelected: selectedDay,
+        LastRan: null
       }
     }
 

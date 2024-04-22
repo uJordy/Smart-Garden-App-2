@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -72,6 +72,15 @@ function TabNavigator() {
 
 
 function App() {
+
+  gardata = useStore((state) => state.data)
+  getAutomationList = useStore((state) => state.getAutomationList)
+  invokeAutomation = useStore((state) => state.invokeAutomation)
+
+    useEffect(() => {
+      AutomationHandler(getAutomationList,invokeAutomation)
+  })
+
   return (
     <NavigationContainer>
       <TabNavigator />
