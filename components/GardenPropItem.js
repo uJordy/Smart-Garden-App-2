@@ -28,7 +28,7 @@ function GardenPropIcon({ type }) {
 }
 
 const GardenPropItem = ({ type, onPress }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const [value, setValue] = useState(0);
