@@ -23,7 +23,7 @@ export default function AutomationEdit({ route, navigation }) {
   const defaultType = "Temperature";
   const defaultTime = 1598051730000
 
-  const { action, data } = route.params; //create or edit
+  const { action, hashValue, data } = route.params; //create or edit
 
   const [value, setValue] = useState(data.Value ?? 0); //Slider value
   const [type, setType] = useState(defaultType); //Slider value
@@ -165,7 +165,8 @@ export default function AutomationEdit({ route, navigation }) {
         Value: value,
         Time: date.toJSON(),
         DaySelected: selectedDay,
-        LastRan: null
+        LastRan: null,
+        Id: hashValue
       }
     }
 
@@ -174,9 +175,10 @@ export default function AutomationEdit({ route, navigation }) {
   }
 
   function handleDeleteAutomation() {
-    const hashValue = hash(automationName)
+    // console.log(automationName)
+    // const hashValue = hash(automationName)
+    deleteAutomation(data.Id);
     navigation.goBack()
-    deleteAutomation(hashValue);
   }
 
 

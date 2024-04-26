@@ -26,10 +26,10 @@ function AutomationPage() {
     const pressHandler = (action, data) => {
         data ??= {} //if data is null, assign empty object
 
-        if (data.LastRan) {
+        if (data.LastRan) { //React navigation doesn't accept objects and fucntions in .navigate()
             if (data.LastRan.constructor === Date) {
                 console.log("date matched in press handler")
-                data.LastRan = new Date(data.LastRan.toJSON())
+                data.LastRan = data.LastRan.toJSON()
             }
         }
         navigation.navigate('AutomationEdit', {

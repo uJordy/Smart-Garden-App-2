@@ -16,7 +16,7 @@ function HomePage({navigation}) {
 
     const pressHandler = (gardenprop) => {
         navigation.navigate('EditGardenPropPage', {
-            gardenprop: gardenprop,
+            gardenprop: gardenprop, 
         })
     }
 

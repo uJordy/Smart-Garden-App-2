@@ -40,12 +40,15 @@ var sgDictExample = {
   },
   Automations: {
 
-    // [hash("Automation Example 3")] = {
+    // const name = "Automation Example 3"
+    // const hashValue = hash(name)
+
+    // sgDictExample.Automations[hashValue] = {
     //   Name: "Automation Example 3",
     //   Enabled: false,
     //   Type: "Soil Moisture",
     //   Value: 30,
-    //   Time: "2020-08-22T01:15:30.000Z",
+    //   Time: "2024-04-18T21:45:00.000Z",
     //   DaySelected: {
     //     ["Monday"]: true,
     //     ["Tuesday"]: true,
@@ -54,7 +57,10 @@ var sgDictExample = {
     //     ["Friday"]: true,
     //     ["Saturday"]: false,
     //     ["Sunday"]: false,
-    //   }
+    //   },
+    //   Id: hashValue,
+    //   LastRan: null
+    // }
   }
 }
 
@@ -117,8 +123,9 @@ function SampleData() {
 
 
     //Automations
-
-    sgDictExample.Automations[hash("Automation Example 3")] = {
+    const name = "Automation Example 3"
+    const hashValue = hash(name)
+    sgDictExample.Automations[hashValue] = {
       Name: "Automation Example 3",
       Enabled: false,
       Type: "Soil Moisture",
@@ -133,6 +140,7 @@ function SampleData() {
         ["Saturday"]: false,
         ["Sunday"]: false,
       },
+      Id: hashValue,
       LastRan: null
     }
   }
@@ -413,7 +421,7 @@ useStore = create(
 
 
       deleteAutomation: (hashName) => {
-        console.log("delete")
+        console.log("Deleting automation")
         set((state) => {
           delete state.data.Automations[hashName]
           return state;
@@ -421,7 +429,7 @@ useStore = create(
       },
     }),
     {
-      name: 'smarten-storage-011', // name of the item in the storage (must be unique)
+      name: 'smarten-storage-013', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => AsyncStorage)
     },
   )
