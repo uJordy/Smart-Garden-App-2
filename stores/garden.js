@@ -118,40 +118,6 @@ function SampleData() {
 
     //Automations
 
-    // sgDictExample.Automations[hash("Automation Example")] = {
-    //   Name: "Automation Example",
-    //   Enabled: true,
-    //   Type: "Humidity",
-    //   Value: 30,
-    //   Time: "2020-08-22T15:15:30.000Z",
-    //   LastRan: null
-    //   DaySelected: {
-    //     ["Monday"]: true,
-    //     ["Tuesday"]: false,
-    //     ["Wednesday"]: false,
-    //     ["Thursday"]: true,
-    //     ["Friday"]: false,
-    //     ["Saturday"]: false,
-    //     ["Sunday"]: false,
-    //   }
-    // }
-
-    // sgDictExample.Automations[hash("Automation Example 2")] = {
-    //   Name: "Automation Example 2",
-    //   Enabled: false,
-    //   Type: "Temperature",
-    //   Value: 30,
-    //   Time: "2020-08-22T01:15:30.000Z",
-    //   DaySelected: {
-    //     ["Monday"]: false,
-    //     ["Tuesday"]: false,
-    //     ["Wednesday"]: false,
-    //     ["Thursday"]: false,
-    //     ["Friday"]: false,
-    //     ["Saturday"]: true,
-    //     ["Sunday"]: true,
-    //   }
-    // }
     sgDictExample.Automations[hash("Automation Example 3")] = {
       Name: "Automation Example 3",
       Enabled: false,
@@ -169,22 +135,6 @@ function SampleData() {
       },
       LastRan: null
     }
-    // sgDictExample.Automations[hash("Automation Example 4")] = {
-    //   Name: "Automation Example 4",
-    //   Enabled: true,
-    //   Type: "Humidity",
-    //   Value: 30,
-    //   Time: "2020-08-22T05:19:30.000Z",
-    //   DaySelected: {
-    //     ["Monday"]: false,
-    //     ["Tuesday"]: false,
-    //     ["Wednesday"]: false,
-    //     ["Thursday"]: false,
-    //     ["Friday"]: false,
-    //     ["Saturday"]: true,
-    //     ["Sunday"]: true,
-    //   }
-    // }
   }
 }
 

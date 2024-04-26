@@ -31,6 +31,7 @@ const checkAutomations = (getAutomationList, invokeAutomation) => {
         if (autoTime.getMinutes() === currentTime.getMinutes()) {
 
           if (item.LastRan !== null) {
+            if (item.LastRan.constructor !== Date) item.LastRan = new Date(item.LastRan)
             if (item.LastRan.getMonth() === currentTime.getMonth()) { //Check to see if automation has already been ran today
               if (item.LastRan.getDate() === currentTime.getDate()) {
                 console.log("ran already today!")

@@ -25,6 +25,13 @@ function AutomationPage() {
 
     const pressHandler = (action, data) => {
         data ??= {} //if data is null, assign empty object
+
+        if (data.LastRan) {
+            if (data.LastRan.constructor === Date) {
+                console.log("date matched in press handler")
+                data.LastRan = new Date(data.LastRan.toJSON())
+            }
+        }
         navigation.navigate('AutomationEdit', {
             action: action,
             data: data
@@ -57,7 +64,7 @@ function AutomationPage() {
             <FlatList
                 data={Object.values(automationList())}
                 renderItem={({ item }) => <AutomationListItem data={item} onPress={() => pressHandler("edit", item)} />}
-                ListEmptyComponent={<AutomationListEmptyComponent/>}
+                ListEmptyComponent={<AutomationListEmptyComponent />}
             />
         </SafeAreaView>
     );
