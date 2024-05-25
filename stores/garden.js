@@ -61,7 +61,9 @@ var sgDictExample = {
     //   Id: hashValue,
     //   LastRan: null
     // }
-  }
+  },
+  Watering: false,
+  BlindsOpen: true
 }
 
 function generateRandom(min, max) {
