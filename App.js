@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import PlantPage from './screens/PlantPage';
 import AutomationPage from './screens/AutomationPage';
 import Home from './screens/HomePage';
 import EditGardenPropPage from './screens/EditGardenPropPage';
@@ -17,7 +16,6 @@ import AutomationHandler from './core/AutomationHandler' //do not remove
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 
 
 
@@ -64,7 +62,6 @@ function TabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={HomeStackNavigator} />
-      {/* <Tab.Screen name="Plants" component={PlantPage} /> */}
       <Tab.Screen name="Automations" component={AutomationStackNavigator} />
     </Tab.Navigator>
   )
