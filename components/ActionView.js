@@ -47,17 +47,16 @@ const ActionView = () => {
         <Animated.Text
           className="mx-auto text-lg text-red-500"
           style={[opacityStyle]}
-          entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}
+          entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut.duration(500).easing(Easing.ease)}
         >{waterRes[1]}</Animated.Text>
         :
         <Animated.Text
           className="mx-auto text-lg text-green-500"
           style={[opacityStyle]}
-          entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut}
+          entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut.duration(500).easing(Easing.ease)}
         >{waterRes[1]}</Animated.Text>
       }
 
-      {/* entering={FadeIn.duration(500).easing(Easing.ease).delay(400)} exiting={FadeOut} */}
     </View>
   )
 }
