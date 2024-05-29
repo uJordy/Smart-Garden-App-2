@@ -10,6 +10,7 @@ import ActionView from '../components/ActionView';
 function HomePage({ navigation }) {
 
 
+    //removes screen header
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false

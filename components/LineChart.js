@@ -32,7 +32,6 @@ export default function LineChart({ type }) {
   const lastWeekdaysIndex = () => { //Returns last week's days in date object
     returnval = []
 
-    // new Date().setDate((new Date().getDate() -7))
     dayIterator = new Date()
     indexstart = (dayIterator.getDate() - 7)
     indexend = dayIterator.getDate()

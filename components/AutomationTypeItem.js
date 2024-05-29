@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text, View, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, {  } from 'react'
 
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
@@ -50,10 +50,8 @@ export default function AutomationTypeItem({ type, checkboxState, onPress }) {
         <View className="">
           <BouncyCheckbox
             className="m-auto mx-auto ml-2"
-            // size={25}
             fillColor="#6b7280"
             unfillColor="#f3f4f6"
-            // text="Custom Checkbox"
             iconStyle={{ borderColor: "red" }}
             innerIconStyle={{ borderWidth: 2 }}
             onPress={()=> onPress(type)}

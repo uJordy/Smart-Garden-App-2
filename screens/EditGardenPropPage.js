@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, ScrollView, Switch, Platform, Button } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import Animated, { useSharedValue, withSpring, withRepeat, FadeIn, FadeOut, Easing, useAnimatedStyle, interpolateColor, withTiming, withSequence, cancelAnimation } from 'react-native-reanimated';
 
 import Leaf from '../assets/svg/Leaf'
@@ -7,22 +7,12 @@ import BackButton from '../components/BackButton';
 import LineChart from '../components/LineChart';
 import Slider from '@react-native-community/slider';
 
-
 import GardenPropDict from '../static/GardenPropDict';
-
 import useStore from '../stores/garden'
 import EditGardenPropText from '../components/EditGardenPropText';
 
 
-
 export default function EditGardenPropPage({ route, navigation }) {
-
-
-
-  // useEffect(() => {
-  //   progress.value = withRepeat(withTiming(1 - progress.value, { duration: 1000 }), 2);
-  // }, []);
-
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -51,7 +41,7 @@ export default function EditGardenPropPage({ route, navigation }) {
 
 
 
-  //If target value === current value then go green
+  //If target value === current value then go green 
   if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) {
     initValue = 0
   } else {
@@ -59,7 +49,7 @@ export default function EditGardenPropPage({ route, navigation }) {
   }
   const progress = useSharedValue(initValue);
 
-  const animatedStyle = useAnimatedStyle(() => {
+  const animatedStyle = useAnimatedStyle(() => {  //Animates between different colours depending on its target value status
     return {
       backgroundColor: interpolateColor(
         progress.value,
@@ -69,7 +59,7 @@ export default function EditGardenPropPage({ route, navigation }) {
     };
   });
 
-  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) {
+  if (CurrentSensorValue(type) !== parseInt(getValue().toFixed(0))) { //If current value !== target value, flash orange and red on indicator
     // if the current value is equal to target
     progress.value = withRepeat(
       withTiming(1, { duration: 1000 }),

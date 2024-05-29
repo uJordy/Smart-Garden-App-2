@@ -9,7 +9,6 @@ const checkAutomations = (getAutomationList, invokeAutomation) => {
 
   for (const [key, item] of Object.entries(getAutomationList())) {
 
-    console.log(item.Enabled)
     if (item.Enabled === false) continue;
 
     autoTime = new Date(item.Time) //time from automation

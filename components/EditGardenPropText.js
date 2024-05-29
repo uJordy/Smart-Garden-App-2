@@ -1,6 +1,6 @@
-import { View, Text } from 'react-native'
+
 import React, { useState, useEffect } from 'react'
-import Animated, { useSharedValue, withSpring, withRepeat, FadeIn, FadeOut, Easing, useAnimatedStyle, interpolateColor, withTiming } from 'react-native-reanimated';
+import Animated, {FadeIn, FadeOut, Easing } from 'react-native-reanimated';
 import GardenPropDict from '../static/GardenPropDict';
 
 import useStore from '../stores/garden';
@@ -15,7 +15,6 @@ const EditGardenPropText = ({type, cancelColorAnim}) => {
 
   useEffect(() => {
     setTimeout(() => {
-      // console.log("refresh");
       setFakeCurrentDate(new Date())
     }
       , 1000)

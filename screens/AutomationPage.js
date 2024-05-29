@@ -11,12 +11,12 @@ import AutomationListEmptyComponent from '../components/AutomationListEmptyCompo
 
 function AutomationPage() {
 
-    const isFocused = useIsFocused();
+    const isFocused = useIsFocused(); //Do not remove
     const navigation = useNavigation();
-    // Zustand stores
 
     const automationList = useStore((state) => state.getAutomationList)
 
+    //Removes screen header
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false
@@ -25,10 +25,11 @@ function AutomationPage() {
 
     const pressHandler = (action, data) => {
         data ??= {} //if data is null, assign empty object
+        //data contains automation data
 
-        if (data.LastRan) { //React navigation doesn't accept objects and fucntions in .navigate()
+        if (data.LastRan) { //React navigation doesn't accept objects and functions in .navigate()
             if (data.LastRan.constructor === Date) {
-                console.log("date matched in press handler")
+                console.log("Date matched in press handler")
                 data.LastRan = data.LastRan.toJSON()
             }
         }
@@ -37,10 +38,6 @@ function AutomationPage() {
             data: data
         })
     }
-
-
-    // console.log(automationList())
-    // console.log("automation page list")
 
     return (
         <SafeAreaView>

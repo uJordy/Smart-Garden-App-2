@@ -21,12 +21,12 @@ const AutomationItem = ({ data, onPress }) => {
 
   };
 
-  // console.log(data)
-  // console.log("^^^ automation list item")
   daySelected = data.DaySelected;
   time = new Date(data["Time"]);
   type = data.Type;
 
+
+  //Displays automation item days 
   const daysSelectedParsed = () => {
     if (
       daySelected["Monday"] === true &&

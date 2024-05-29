@@ -1,18 +1,19 @@
+//Zustand stores with persistant storage
+//State management
+
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import hash from 'hash-it';
 
-
 var GardenData = {};
-const fileName = "GardenDictionary.json" //.json essential
 
 GardenData = sgDictExample; // Overwrite saved data
-const generateSampleData = true;
+const generateSampleData = true; //Historical data
 
 
 //LastChanged var is for "simulating" garden sensor changing to its target value
-
+//Smart Garden base data
 var sgDictExample = {
   Temperature: { //Celcius 
     Value: 0, //Current (Target value)
@@ -76,7 +77,14 @@ function generateRandom(min, max) {
   return rand;
 }
 
-//Returns last week data for each sensor within min and max ranges
+//Maths function
+function lerp(a, b, alpha) {
+  return a + alpha * (b - a)
+}
+const clamp = (num, a, b) =>
+  Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
+
+//Returns last week's data for each sensor within min and max ranges
 function generateWeekData(min, max) {
   returnval = []
   dayIterator = new Date()
@@ -92,6 +100,7 @@ function generateWeekData(min, max) {
   return returnval;
 }
 
+//Generate sample historical data for each sensor
 function SampleData() {
   if (generateSampleData === true) {
 
@@ -149,13 +158,6 @@ function SampleData() {
 }
 
 
-function lerp(a, b, alpha) {
-  return a + alpha * (b - a)
-}
-
-const clamp = (num, a, b) =>
-  Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
-
 //generateSampleData must be true!
 SampleData()
 
@@ -166,22 +168,24 @@ useStore = create(
 
       CurrentSensorValue: (sensor) => { //This is for simulation purposes
 
+        //Current sensor value is calculated via how much time has passed from when its been last changed
+        //Eg. If transition time is 5 minutes then the current value reaches the target value 5 minutes or longer from the last time the user changed the target value
         if (sensor === "Light Intensity") {  //convert into dictionary compatible sensor names
           sensor = "Light";
         } else if (sensor === "Soil Moisture") {
           sensor = "SoilMoisture";
         }
-        const transTime = 0.1; //mins
+        const transTime = 0.1; //mins // transition time to get to target value
         const transTimeMs = transTime * 60 * 1000;
         lastChangedDate = get().data[sensor].LastChanged; //date object
-        if (typeof (lastChangedDate === "string")) {
+        if (typeof (lastChangedDate === "string")) { //deserialise dates to data object
           lastChangedDate = new Date(lastChangedDate);
         }
 
 
         if (lastChangedDate !== null) {
           nowDate = new Date();
-          endDate = new Date(lastChangedDate.getTime() + transTimeMs)
+          endDate = new Date(lastChangedDate.getTime() + transTimeMs) 
 
           elapsedTime = (new Date() - lastChangedDate)
           const percentage = (elapsedTime / transTimeMs)
@@ -374,11 +378,11 @@ useStore = create(
             }
           }
         })
-        console.log(get().data.Automations)
-        console.log("toggle automation ^^^^")
+        // console.log(get().data.Automations)
+        // console.log("Automation list ^^^")
       },
 
-      invokeAutomation: (hashName, type, value) => {
+      invokeAutomation: (hashName, type, value) => { //If automation matches time and day then this function is ran
         if (type === "Soil Moisture") type = "SoilMoisture";
         if (type === "Light Intensity") type = "Light";
 
@@ -482,7 +486,7 @@ useStore = create(
       },
     }),
     {
-      name: 'smarten-storage-013', // name of the item in the storage (must be unique)
+      name: 'smarten-storage-014', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => AsyncStorage)
     },
   )

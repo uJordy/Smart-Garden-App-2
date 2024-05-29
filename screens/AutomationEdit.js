@@ -1,6 +1,6 @@
-import { View, SafeAreaView, ScrollView, Platform, Text, TouchableOpacity, TextInput, Button, Touchable } from 'react-native'
+import { View, SafeAreaView, ScrollView, Platform, Text, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import Animated, { useSharedValue, withSpring, FadeIn, FadeOut, Easing } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, Easing } from 'react-native-reanimated';
 import hash from 'hash-it';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -14,16 +14,12 @@ import AutomationTypeItem from '../components/AutomationTypeItem';
 import GardenPropDict from '../static/GardenPropDict';
 
 
-
-
-
-
 export default function AutomationEdit({ route, navigation }) {
 
   const defaultType = "Temperature";
   const defaultTime = 1598051730000
 
-  const { action, hashValue, data } = route.params; //create or edit
+  const { action, hashValue, data } = route.params; // action = create or edit
 
   const [value, setValue] = useState(data.Value ?? 0); //Slider value
   const [type, setType] = useState(defaultType); //Slider value
@@ -47,6 +43,7 @@ export default function AutomationEdit({ route, navigation }) {
   const [date, setDate] = useState(new Date(data.Time ?? defaultTime));
 
 
+  //State management for automation types toggle buttons
   const [selectedAutoType, setSelectedAutoType] = useState(data.Type ?? defaultType);
 
   initTState = false
@@ -117,8 +114,7 @@ export default function AutomationEdit({ route, navigation }) {
   }
 
   function handleAutomation() {
-    //send data to stores which can be saved to expo file system
-    console.log("handle automation!!")
+    //Sanity checks for submited data
     if (typeof (automationName) !== "string") {
       warn("Automation name is not a string")
       return "auto string"
@@ -175,8 +171,6 @@ export default function AutomationEdit({ route, navigation }) {
   }
 
   function handleDeleteAutomation() {
-    // console.log(automationName)
-    // const hashValue = hash(automationName)
     deleteAutomation(data.Id);
     navigation.goBack()
   }
@@ -203,7 +197,6 @@ export default function AutomationEdit({ route, navigation }) {
         </View>
         {/* Main Content */}
         <View className="mx-4">
-
           <View>
             {action === "create" ? (
               <TextInput

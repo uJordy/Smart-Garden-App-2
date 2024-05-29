@@ -7,12 +7,10 @@ import useStore from '../stores/garden';
 const ActionView = () => {
 
   const waterGarden = useStore((state) => state.waterGarden)
-  const getBlinds = useStore((state) => state.getBlinds)
   const toggleBlinds = useStore((state) => state.toggleBlinds)
   const blinds = useStore((state) => state.data.BlindsOpen)
   const [waterRes, setWaterRes] = useState([null, null]); //Response from watering action
   const feedbackTransparency = useSharedValue(1);
-  // const blinds = getBlinds()
 
 
   const opacityStyle = useAnimatedStyle(() => ({
