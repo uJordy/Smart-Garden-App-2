@@ -73,6 +73,7 @@ function App() {
   gardata = useStore((state) => state.data)
   getAutomationList = useStore((state) => state.getAutomationList)
   invokeAutomation = useStore((state) => state.invokeAutomation)
+  StopWateringGarden = useStore((state) => state.StopWateringGarden)
 
     useEffect(() => {
       AutomationHandler(getAutomationList,invokeAutomation)

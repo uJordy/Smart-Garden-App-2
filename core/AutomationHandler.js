@@ -5,7 +5,7 @@ import hash from 'hash-it';
 
 const checkAutomations = (getAutomationList, invokeAutomation) => {
 
-  console.log("running check automation")
+  console.log("Checking automations...")
 
   for (const [key, item] of Object.entries(getAutomationList())) {
 
@@ -19,8 +19,6 @@ const checkAutomations = (getAutomationList, invokeAutomation) => {
 
     weekday = currentTime.toLocaleString("en-EN", { weekday: "long" })
 
-    console.log(item)
-    console.log("automation handler::::::")
 
     if (item.DaySelected[weekday] === true) {
 

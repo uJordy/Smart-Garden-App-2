@@ -62,7 +62,7 @@ var sgDictExample = {
     //   LastRan: null
     // }
   },
-  Watering: false,
+  LastWatered: null,
   BlindsOpen: true
 }
 
@@ -174,7 +174,7 @@ useStore = create(
         const transTime = 0.1; //mins
         const transTimeMs = transTime * 60 * 1000;
         lastChangedDate = get().data[sensor].LastChanged; //date object
-        if (typeof(lastChangedDate === "string")) {
+        if (typeof (lastChangedDate === "string")) {
           lastChangedDate = new Date(lastChangedDate);
         }
 
@@ -419,7 +419,7 @@ useStore = create(
         })
         console.log(get().data.Automations)
         console.log("Invoke automation")
-      }, 
+      },
 
 
       deleteAutomation: (hashName) => {
@@ -427,6 +427,57 @@ useStore = create(
         set((state) => {
           delete state.data.Automations[hashName]
           return state;
+        })
+      },
+
+      waterGarden: () => {
+        //Garden can only be watered every 30 seconds (by default)
+
+        LastWatered = get().data.LastWatered
+        if (LastWatered !== null) {
+          LastWatered = new Date(LastWatered)
+          elapsedTime = new Date() - LastWatered.getTime()
+
+          if (elapsedTime > 30000) { // If 30 seconds past since the last time its been watered
+            set((state) => {
+
+              return {
+                data:
+                {
+                  ...state.data,
+                  LastWatered: new Date()
+                }
+              }
+            })
+            return [true, "Watering.."]
+          } else {
+            return [false, "Garden already watering"]
+          }
+        } else {
+          set((state) => {
+
+            return {
+              data:
+              {
+                ...state.data,
+                LastWatered: new Date()
+              }
+            }
+          })
+          return [true, "Watering.."]
+        }
+      },
+      toggleBlinds: () => {
+        const BlindsOpen = get().data.BlindsOpen;
+        set((state) => {
+
+          return {
+            data:
+            {
+              ...state.data,
+              BlindsOpen: !BlindsOpen
+            }
+          }
         })
       },
     }),
