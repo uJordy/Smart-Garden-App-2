@@ -1,10 +1,10 @@
 //Zustand stores with persistant storage
-//State management
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import hash from 'hash-it';
+
 
 var GardenData = {};
 
