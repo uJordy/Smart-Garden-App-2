@@ -40,6 +40,7 @@ const checkAutomations = (getAutomationList, invokeAutomation) => {
 
           console.log("automation name running!")
           console.log(item.Name)
+          console.log(item.Type)
           invokeAutomation(key, item.Type, item.Value)
         }
       }

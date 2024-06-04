@@ -486,8 +486,8 @@ useStore = create(
       },
     }),
     {
-      name: 'smarten-storage-014', // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => AsyncStorage)
+      name: 'smarten-storage-016', // storage name
+      storage: createJSONStorage(() => AsyncStorage) //storage system
     },
   )
 )
