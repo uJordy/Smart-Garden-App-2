@@ -23,4 +23,6 @@ The mobile app main goal is to control and monitor various smart garden sensors.
 1. In the root directory, run `npm i` to install dependencies 
 2. Run `npx expo start` to start the server
 3. Press `i` to open iOS emulator
+4. In the top bar menu, select File > Open Simulator > iOS 17.0 > iPhone 15 Pro Max
 4. When finished, type `control + c` to stop server or manually kill terminal
+
